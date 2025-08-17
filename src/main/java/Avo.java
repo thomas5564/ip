@@ -87,6 +87,13 @@ public class Avo {
         String result = input.substring(firstSpace + 1);
         return result;
     }
+    public static Command parseCommand(String input) throws UnknownCommandException {
+        try {
+            return Command.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new UnknownCommandException();
+        }
+    }
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
@@ -98,36 +105,37 @@ public class Avo {
                     String input = scanner.nextLine();
                     String[] words = input.split( " ");
                     String firstWord = words[0];
-                    switch(firstWord) {
-                        case "bye":
+                    Command command = parseCommand(firstWord);
+                    switch(command) {
+                        case BYE:
                             bye();
                             running = false;
                             break;
-                        case "list":
+                        case LIST:
                             String showList = "Here are the tasks in your list:";
                             System.out.println(borderfy(showList + listString(tasks)));
                             break;
-                        case "mark":
+                        case MARK:
                             indexSelected = Integer.parseInt(words[1]) - 1;
                             mark(indexSelected);
                             break;
-                        case "unmark":
+                        case UNMARK:
                             indexSelected = Integer.parseInt(words[1]) - 1;
                             unmark(indexSelected);
                             break;
-                        case "deadline":
+                        case DEADLINE:
                             Deadline currentDeadline = Deadline.parseDeadline(input.strip());
                             addToList(currentDeadline);
                             break;
-                        case "event":
+                        case EVENT:
                             Event currentEvent = Event.parseEvent(input.strip());
                             addToList(currentEvent);
                             break;
-                        case "todo":
+                        case TODO:
                             Task currentTask = Task.parseTask(input.strip());
                             addToList(currentTask);
                             break;
-                        case "delete":
+                        case DELETE:
                             indexSelected = Integer.parseInt(words[1]) - 1;
                             deleteTask(indexSelected);
                             break;
