@@ -46,21 +46,22 @@ public class Avo {
         }
     }
     public static void deleteTask(int index) throws InvalidIndexException {
-        Task selectedTask = tasks[index];
-        if(index > numberOfTasks-1 || index<0){
-            throw new InvalidIndexException(index,numberOfTasks);
-        }else{
-            for(int i = index + 1; i<numberOfTasks-1;i++){
-                tasks[i] = tasks[i-1];
-            }
+        if (index >= numberOfTasks || index < 0) {
+            throw new InvalidIndexException(index + 1, numberOfTasks);
         }
+        Task selectedTask = tasks[index];
+        for (int i = index; i < numberOfTasks - 1; i++) {
+            tasks[i] = tasks[i + 1];
+        }
+        tasks[numberOfTasks - 1] = null;
+        numberOfTasks--;
         String fullResponse = "Noted. I've removed this task:\n "
                 + "         "
                 + selectedTask.toString()
-                + String.format("\n         Now you have %d tasks in the list.", numberOfTasks - 1);
+                + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
         System.out.println(borderfy(fullResponse));
-        numberOfTasks--;
     }
+
     public static void mark(int index) throws InvalidIndexException {
         if(index > numberOfTasks-1 || index<0){
             throw new InvalidIndexException(index,numberOfTasks);
