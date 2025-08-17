@@ -20,7 +20,7 @@ public class Avo {
                 """,s);
         return output;
     }
-    public static void respond(Scanner scanner,String response){
+    public static void respond(String response){
         String borderfiedResponse = borderfy(response);
         System.out.println(borderfiedResponse);
     }
@@ -47,6 +47,18 @@ public class Avo {
         output = "Nice! I've marked this task as done:"+listString(tasks);
         System.out.println(borderfy(output));
     }
+    public static void addToList(Task currentTask){
+        tasks[taskIndex] = currentTask;
+        taskIndex++;
+        String fullResponse = "Got it. I've added this task:\n " + "         "+currentTask.toString();
+        respond(fullResponse);
+    }
+
+    public static String excludeFirstWord(String input){
+        int firstSpace = input.indexOf(" ");
+        String result = input.substring(firstSpace + 1);
+        return result;
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -55,7 +67,6 @@ public class Avo {
         int indexSelected;
         while(running){
             String input = scanner.nextLine();
-            Task currentTask = new Task(input);
             String[] words = input.split( " ");
             String firstWord = words[0];
             switch(firstWord){
@@ -75,11 +86,20 @@ public class Avo {
                     indexSelected = Integer.parseInt(words[1]) - 1;
                     unmark(indexSelected);
                     break;
+                case "deadline":
+                    Deadline currentDeadline = Deadline.parseDeadline(input);
+                    addToList(currentDeadline);
+                    break;
+                case "event":
+                    Event currentEvent = Event.parseEvent(input);
+                    addToList(currentEvent);
+                    break;
+                case "todo":
+                    Task currentTask = Task.parseTask(input);
+                    addToList(currentTask);
+                    break;
                 default:
-                    tasks[taskIndex] = currentTask;
-                    taskIndex++;
-                    String fullResponse = "added: " + input;
-                    respond(scanner,fullResponse);
+
             }
         }
     }

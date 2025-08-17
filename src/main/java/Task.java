@@ -13,6 +13,10 @@ public class Task {
     }
     public String toString(){
         String mark = isDone?"[x]":"[ ]";
-        return String.format("%s %s",mark,text);
+        return String.format("%s%s",mark,text);
+    }
+    public static Task parseTask(String input){
+        Task currentTask = new Task(Avo.excludeFirstWord(input));
+        return currentTask;
     }
 }
