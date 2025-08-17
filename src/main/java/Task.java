@@ -1,7 +1,7 @@
-public class Instruction {
+public class Task {
     private String text;
     private boolean isDone;
-    public Instruction(String text){
+    public Task(String text){
         this.isDone = false;
         this.text = text;
     }
@@ -11,10 +11,8 @@ public class Instruction {
     public void unmark(){
         isDone = false;
     }
-    public String getText(){
-        return text;
-    }
-    public boolean getIsDone(){
-        return isDone;
+    public String toString(){
+        String mark = isDone?"[x]":"[ ]";
+        return String.format("%s %s",mark,text);
     }
 }
