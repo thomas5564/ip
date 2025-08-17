@@ -4,7 +4,7 @@ public class Avo {
     private static int taskIndex = 0;
     private static Task[] tasks = new Task[100];
     public static void greet(){
-        String greetString = "Hello! I'm Avo \n         What can I do for you?";
+        String greetString = "Hello! I'm Avo\n         What can I do for you?";
         System.out.println(borderfy(greetString));
     }
     public static void bye(){
@@ -49,9 +49,12 @@ public class Avo {
     }
     public static void addToList(Task currentTask){
         tasks[taskIndex] = currentTask;
-        taskIndex++;
-        String fullResponse = "Got it. I've added this task:\n " + "         "+currentTask.toString();
+        String fullResponse = "Got it. I've added this task:\n "
+                + "         "
+                + currentTask.toString()
+                + String.format("\n         Now you have %d tasks in the list.", taskIndex + 1);
         respond(fullResponse);
+        taskIndex++;
     }
 
     public static String excludeFirstWord(String input){
@@ -75,8 +78,8 @@ public class Avo {
                     running = false;
                     break;
                 case "list":
-                    System.out.println("Here are the tasks in your list:");
-                    System.out.println(borderfy(listString(tasks)));
+                    String showList = "Here are the tasks in your list:";
+                    System.out.println(borderfy(showList + listString(tasks)));
                     break;
                 case "mark":
                     indexSelected = Integer.parseInt(words[1]) - 1;
