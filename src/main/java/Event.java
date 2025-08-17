@@ -6,8 +6,11 @@ public class Event extends Task{
         this.startTime = startTime;
         this.endTime = endTime;
     }
-    public static Event parseEvent(String input){
+    public static Event parseEvent(String input) throws EmptyInstructionException {
         String eventInstruction = Avo.excludeFirstWord(input.split("/")[0]);
+        if(eventInstruction.isEmpty()){
+            throw new EmptyInstructionException();
+        }
         String startTime = Avo.excludeFirstWord(input.split("/")[2]);
         String endTime = Avo.excludeFirstWord(input.split("/")[1]);
         Event currentEvent = new Event(eventInstruction, startTime,endTime);

@@ -63,47 +63,51 @@ public class Avo {
         return result;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         greet();
         boolean running = true;
         int indexSelected;
         while(running){
-            String input = scanner.nextLine();
-            String[] words = input.split( " ");
-            String firstWord = words[0];
-            switch(firstWord){
-                case "bye":
-                    bye();
-                    running = false;
-                    break;
-                case "list":
-                    String showList = "Here are the tasks in your list:";
-                    System.out.println(borderfy(showList + listString(tasks)));
-                    break;
-                case "mark":
-                    indexSelected = Integer.parseInt(words[1]) - 1;
-                    mark(indexSelected);
-                    break;
-                case "unmark":
-                    indexSelected = Integer.parseInt(words[1]) - 1;
-                    unmark(indexSelected);
-                    break;
-                case "deadline":
-                    Deadline currentDeadline = Deadline.parseDeadline(input);
-                    addToList(currentDeadline);
-                    break;
-                case "event":
-                    Event currentEvent = Event.parseEvent(input);
-                    addToList(currentEvent);
-                    break;
-                case "todo":
-                    Task currentTask = Task.parseTask(input);
-                    addToList(currentTask);
-                    break;
-                default:
-
-            }
+                try{
+                    String input = scanner.nextLine();
+                    String[] words = input.split( " ");
+                    String firstWord = words[0];
+                    switch(firstWord) {
+                        case "bye":
+                            bye();
+                            running = false;
+                            break;
+                        case "list":
+                            String showList = "Here are the tasks in your list:";
+                            System.out.println(borderfy(showList + listString(tasks)));
+                            break;
+                        case "mark":
+                            indexSelected = Integer.parseInt(words[1]) - 1;
+                            mark(indexSelected);
+                            break;
+                        case "unmark":
+                            indexSelected = Integer.parseInt(words[1]) - 1;
+                            unmark(indexSelected);
+                            break;
+                        case "deadline":
+                            Deadline currentDeadline = Deadline.parseDeadline(input);
+                            addToList(currentDeadline);
+                            break;
+                        case "event":
+                            Event currentEvent = Event.parseEvent(input);
+                            addToList(currentEvent);
+                            break;
+                        case "todo":
+                            Task currentTask = Task.parseTask(input);
+                            addToList(currentTask);
+                            break;
+                        default:
+                            throw new UnknownCommandException();
+                    }
+                } catch (UnknownCommandException | EmptyInstructionException e) {
+                    System.out.println(borderfy(e.getMessage()));
+                }
         }
     }
 }

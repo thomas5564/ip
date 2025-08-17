@@ -1,9 +1,9 @@
 public class Task {
-    private String text;
+    private String instruction;
     private boolean isDone;
-    public Task(String text){
+    public Task(String instruction){
         this.isDone = false;
-        this.text = text;
+        this.instruction = instruction;
     }
     public void mark(){
         isDone = true;
@@ -13,10 +13,13 @@ public class Task {
     }
     public String toString(){
         String mark = isDone?"[x]":"[ ]";
-        return String.format("%s%s",mark,text);
+        return String.format("%s%s",mark, instruction);
     }
-    public static Task parseTask(String input){
-        Task currentTask = new Task(Avo.excludeFirstWord(input));
-        return currentTask;
+    public static Task parseTask(String input) throws EmptyInstructionException{
+        String instruction = Avo.excludeFirstWord(input);
+        if(instruction.isEmpty()){
+            throw new EmptyInstructionException();
+        }
+        return new Task(instruction);
     }
 }
