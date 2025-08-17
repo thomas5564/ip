@@ -17,7 +17,7 @@ public class Task {
     }
     public static Task parseTask(String input) throws EmptyInstructionException{
         String instruction = Avo.excludeFirstWord(input);
-        if(instruction.isEmpty()){
+        if(instruction.equals(input)){
             throw new EmptyInstructionException();
         }
         return new Task(instruction);

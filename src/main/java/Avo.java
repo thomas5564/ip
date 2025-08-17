@@ -9,7 +9,7 @@ public class Avo {
     }
     public static void bye(){
         String byeString = "Bye. Hope to see you again soon!";
-        System.out.println(borderfy(byeString));
+        System.out.println(borderfy(byeString).stripTrailing());
     }
     public static String borderfy(String s){
         String output = String.format(
@@ -116,15 +116,15 @@ public class Avo {
                             unmark(indexSelected);
                             break;
                         case "deadline":
-                            Deadline currentDeadline = Deadline.parseDeadline(input);
+                            Deadline currentDeadline = Deadline.parseDeadline(input.strip());
                             addToList(currentDeadline);
                             break;
                         case "event":
-                            Event currentEvent = Event.parseEvent(input);
+                            Event currentEvent = Event.parseEvent(input.strip());
                             addToList(currentEvent);
                             break;
                         case "todo":
-                            Task currentTask = Task.parseTask(input);
+                            Task currentTask = Task.parseTask(input.strip());
                             addToList(currentTask);
                             break;
                         case "delete":

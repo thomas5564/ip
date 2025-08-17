@@ -8,17 +8,17 @@ public class Event extends Task{
     }
     public static Event parseEvent(String input) throws EmptyInstructionException {
         String eventInstruction = Avo.excludeFirstWord(input.split("/")[0]);
-        if(eventInstruction.isEmpty()){
+        if(eventInstruction.equals(input)){
             throw new EmptyInstructionException();
         }
-        String startTime = Avo.excludeFirstWord(input.split("/")[2]);
-        String endTime = Avo.excludeFirstWord(input.split("/")[1]);
+        String startTime = Avo.excludeFirstWord(input.split("/")[1]);
+        String endTime = Avo.excludeFirstWord(input.split("/")[2]);
         Event currentEvent = new Event(eventInstruction, startTime,endTime);
         return currentEvent;
     }
     @Override
     public String toString(){
-        String duration = String.format("(from: %s to: %s)",startTime,endTime);
+        String duration = String.format("(from: %sto: %s)",startTime,endTime);
         return String.format("[E]%s%s",super.toString(),duration);
     }
 }

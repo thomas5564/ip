@@ -17,7 +17,7 @@
 
         ____________________________________________________________
          Got it. I've added this task:
-          [E][ ]project meeting (from: 4pm to: Mon 2pm )
+          [E][ ]project meeting (from: Mon 2pm to: 4pm)
          Now you have 3 tasks in the list.
         ____________________________________________________________
 
@@ -25,24 +25,37 @@
          Here are the tasks in your list:
          1.[ ]borrow book
          2.[D][ ]return book (by: Sunday)
-         3.[E][ ]project meeting (from: 4pm to: Mon 2pm )
+         3.[E][ ]project meeting (from: Mon 2pm to: 4pm)
         ____________________________________________________________
 
         ____________________________________________________________
          Nice! I've marked this task as done:
          1.[ ]borrow book
          2.[D][ ]return book (by: Sunday)
-         3.[E][x]project meeting (from: 4pm to: Mon 2pm )
+         3.[E][x]project meeting (from: Mon 2pm to: 4pm)
         ____________________________________________________________
 
         ____________________________________________________________
          OK, I've marked this task as not done yet:
          1.[ ]borrow book
          2.[D][ ]return book (by: Sunday)
-         3.[E][ ]project meeting (from: 4pm to: Mon 2pm )
+         3.[E][ ]project meeting (from: Mon 2pm to: 4pm)
+        ____________________________________________________________
+
+        ____________________________________________________________
+         Noted. I've removed this task:
+          [D][ ]return book (by: Sunday)
+         Now you have 2 tasks in the list.
+        ____________________________________________________________
+
+        ____________________________________________________________
+         index 5 does not exist, select a index from 1 to 2
+        ____________________________________________________________
+
+        ____________________________________________________________
+         OOPS!!! The description of a todo cannot be empty.
         ____________________________________________________________
 
         ____________________________________________________________
          Bye. Hope to see you again soon!
         ____________________________________________________________
-
