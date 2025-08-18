@@ -87,7 +87,7 @@ public class Avo {
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
         respond(fullResponse);
         numberOfTasks++;
-        appendToFile(pathName, currentTask.toString());
+        appendToFile(pathName, currentTask.getStorageString());
     }
 
     public static String excludeFirstWord(String input){
@@ -108,7 +108,29 @@ public class Avo {
             storageFile  = new File(pathName);
             fileScanner = new Scanner(storageFile);
             while (fileScanner.hasNext()) {
-                System.out.println(fileScanner.nextLine());
+                Task nextTask;
+                String nextEntry =  fileScanner.nextLine();
+                String[] elements = nextEntry.split("\\|");
+                char firstLetter = nextEntry.charAt(0);
+                switch(firstLetter){
+                    case 'T':
+                        nextTask = Task.parseFromStorage(elements);
+                        tasks[numberOfTasks] = nextTask;
+                        numberOfTasks++;
+                        break;
+                    case 'D':
+                        nextTask = Deadline.parseFromStorage(elements);
+                        tasks[numberOfTasks] = nextTask;
+                        numberOfTasks++;
+                        break;
+                    case 'E':
+                        nextTask = Event.parseFromStorage(elements);
+                        tasks[numberOfTasks] = nextTask;
+                        numberOfTasks++;
+                        break;
+                    default:
+                        System.out.println("invalid entry!");
+                }
             }
         }catch(FileNotFoundException e){
             System.out.println("File is not found. Add the file and start the program again");

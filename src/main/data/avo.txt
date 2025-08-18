@@ -1,2 +1,4 @@
-[T][ ]eat
-[T][ ]play
+E|o|playing |2pm |3pm
+T|o|eat
+D|o|drink |2pm
+E|o|frolick |2pm |3pm
