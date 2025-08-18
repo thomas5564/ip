@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Avo {
-    private static String pathName = "C:\\Users\\thoma\\Downloads\\ip\\src\\main\\data\\avo.txt";
+    private static String pathName = "data" + File.separator + "avo.txt";
     private static Scanner fileScanner;
     private static File storageFile;
     private static int numberOfTasks = 0;
@@ -132,8 +132,10 @@ public class Avo {
                         System.out.println("invalid entry!");
                 }
             }
+            fileScanner.close();
         }catch(FileNotFoundException e){
-            System.out.println("File is not found. Add the file and start the program again");
+            System.out.println("File is not found. If you want your tasks to be saved,\n " +
+                    "add the file and start the program again");
         }
     }
 
