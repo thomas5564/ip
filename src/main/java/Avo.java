@@ -1,6 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Avo {
+    private static Scanner fileScanner;
+    private static File storageFile;
     private static int numberOfTasks = 0;
     private static Task[] tasks = new Task[100];
     public static void greet(){
@@ -94,8 +98,22 @@ public class Avo {
             throw new UnknownCommandException();
         }
     }
+    public static void readFile(String pathName){
+        try{
+            System.out.println(String.format("checking %s",pathName));
+            storageFile  = new File(pathName);
+            fileScanner = new Scanner(storageFile);
+            while (fileScanner.hasNext()) {
+                System.out.println(fileScanner.nextLine());
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("File is not found. Add the file and start the program again");
+        }
+    }
 
     public static void main(String[] args){
+        String pathName = "C:\\Users\\thoma\\Downloads\\ip\\src\\main\\data\\avo.txt";
+        readFile(pathName);
         Scanner scanner = new Scanner(System.in);
         greet();
         boolean running = true;
