@@ -107,40 +107,40 @@ public class Avo {
                     String firstWord = words[0];
                     Command command = parseCommand(firstWord);
                     switch(command) {
-                        case BYE:
-                            bye();
-                            running = false;
-                            break;
-                        case LIST:
-                            String showList = "Here are the tasks in your list:";
-                            System.out.println(borderfy(showList + listString(tasks)));
-                            break;
-                        case MARK:
-                            indexSelected = Integer.parseInt(words[1]) - 1;
-                            mark(indexSelected);
-                            break;
-                        case UNMARK:
-                            indexSelected = Integer.parseInt(words[1]) - 1;
-                            unmark(indexSelected);
-                            break;
-                        case DEADLINE:
-                            Deadline currentDeadline = Deadline.parseDeadline(input.strip());
-                            addToList(currentDeadline);
-                            break;
-                        case EVENT:
-                            Event currentEvent = Event.parseEvent(input.strip());
-                            addToList(currentEvent);
-                            break;
-                        case TODO:
-                            Task currentTask = Task.parseTask(input.strip());
-                            addToList(currentTask);
-                            break;
-                        case DELETE:
-                            indexSelected = Integer.parseInt(words[1]) - 1;
-                            deleteTask(indexSelected);
-                            break;
-                        default:
-                            throw new UnknownCommandException();
+                    case BYE:
+                        bye();
+                        running = false;
+                        break;
+                    case LIST:
+                        String showList = "Here are the tasks in your list:";
+                        System.out.println(borderfy(showList + listString(tasks)));
+                        break;
+                    case MARK:
+                        indexSelected = Integer.parseInt(words[1]) - 1;
+                        mark(indexSelected);
+                        break;
+                    case UNMARK:
+                        indexSelected = Integer.parseInt(words[1]) - 1;
+                        unmark(indexSelected);
+                        break;
+                    case DEADLINE:
+                        Deadline currentDeadline = Deadline.parseDeadline(input.strip());
+                        addToList(currentDeadline);
+                        break;
+                    case EVENT:
+                        Event currentEvent = Event.parseEvent(input.strip());
+                        addToList(currentEvent);
+                        break;
+                    case TODO:
+                        Task currentTask = Task.parseTask(input.strip());
+                        addToList(currentTask);
+                        break;
+                    case DELETE:
+                        indexSelected = Integer.parseInt(words[1]) - 1;
+                        deleteTask(indexSelected);
+                        break;
+                    default:
+                        throw new UnknownCommandException();
                     }
                 } catch (UnknownCommandException | EmptyInstructionException | InvalidIndexException e) {
                     System.out.println(borderfy(e.getMessage()));

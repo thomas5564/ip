@@ -13,7 +13,7 @@ public class Task {
     }
     public String toString(){
         String mark = isDone?"[x]":"[ ]";
-        return String.format("%s%s",mark, instruction);
+        return String.format("[T]%s%s",mark, instruction);
     }
     public static Task parseTask(String input) throws EmptyInstructionException{
         String instruction = Avo.excludeFirstWord(input);
