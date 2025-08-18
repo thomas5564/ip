@@ -1,8 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Avo {
+    private static String pathName = "C:\\Users\\thoma\\Downloads\\ip\\src\\main\\data\\avo.txt";
     private static Scanner fileScanner;
     private static File storageFile;
     private static int numberOfTasks = 0;
@@ -84,6 +87,7 @@ public class Avo {
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
         respond(fullResponse);
         numberOfTasks++;
+        appendToFile(pathName, currentTask.toString());
     }
 
     public static String excludeFirstWord(String input){
@@ -111,8 +115,17 @@ public class Avo {
         }
     }
 
+    private static void appendToFile(String filePath, String textToAdd){
+        try{
+            FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+            fw.write(textToAdd + "\n");
+            fw.close();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args){
-        String pathName = "C:\\Users\\thoma\\Downloads\\ip\\src\\main\\data\\avo.txt";
         readFile(pathName);
         Scanner scanner = new Scanner(System.in);
         greet();
