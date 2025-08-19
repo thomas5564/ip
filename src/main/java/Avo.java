@@ -42,6 +42,7 @@ public class Avo {
         }
         return listString.toString();
     }
+
     public static void unmark(int index) throws InvalidIndexException {
         if(index > numberOfTasks-1 || index<0){
             throw new InvalidIndexException(index,numberOfTasks);
@@ -51,6 +52,7 @@ public class Avo {
             output = "OK, I've marked this task as not done yet:"+listString(tasks);
             System.out.println(borderfy(output));
         }
+        rewriteFileFromList();
     }
     public static void deleteTask(int index) throws InvalidIndexException {
         if (index >= numberOfTasks || index < 0) {
@@ -67,6 +69,7 @@ public class Avo {
                 + selectedTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
         System.out.println(borderfy(fullResponse));
+        rewriteFileFromList();
     }
 
     public static void mark(int index) throws InvalidIndexException {
@@ -78,7 +81,9 @@ public class Avo {
             output = "Nice! I've marked this task as done:"+listString(tasks);
             System.out.println(borderfy(output));
         }
+        rewriteFileFromList();
     }
+
     public static void addToList(Task currentTask){
         tasks[numberOfTasks] = currentTask;
         String fullResponse = "Got it. I've added this task:\n "
@@ -136,6 +141,22 @@ public class Avo {
         }catch(FileNotFoundException e){
             System.out.println("File is not found. If you want your tasks to be saved,\n " +
                     "add the file and start the program again");
+        }
+    }
+    public static void rewriteFileFromList(){
+        try{
+            int counter = 0;
+            FileWriter fileClearer = new FileWriter(pathName, false);
+            fileClearer.append("");
+            while(counter<numberOfTasks){
+                appendToFile(pathName,tasks[counter].getStorageString());
+                counter++;
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("File is not found. If you want your tasks to be saved,\n " +
+                    "add the file and start the program again");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
