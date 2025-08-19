@@ -62,7 +62,7 @@ public class Ui {
                 String input = scanner.nextLine();
                 String[] words = input.split(" ");
                 String firstWord = words[0];
-                Command command = Avo.parseCommand(firstWord);
+                Command command = Parser.parseCommand(firstWord);
                 switch (command) {
                     case BYE:
                         Ui.bye();
@@ -81,15 +81,15 @@ public class Ui {
                         Avo.taskList.unmark(indexSelected);
                         break;
                     case DEADLINE:
-                        Deadline currentDeadline = Deadline.parseDeadline(input.strip());
+                        Deadline currentDeadline = Parser.parseDeadline(input.strip());
                         Avo.taskList.addTask(currentDeadline,false);
                         break;
                     case EVENT:
-                        Event currentEvent = Event.parseEvent(input.strip());
+                        Event currentEvent = Parser.parseEvent(input.strip());
                         Avo.taskList.addTask(currentEvent,false);
                         break;
                     case TODO:
-                        Task currentTask = Task.parseTask(input.strip());
+                        Task currentTask = Parser.parseTask(input.strip());
                         Avo.taskList.addTask(currentTask,false);
                         break;
                     case DELETE:

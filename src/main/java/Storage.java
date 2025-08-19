@@ -46,26 +46,9 @@ public class Storage {
     public void readFile(){
         System.out.println(String.format("checking %s",filePath));
         while (fileScanner.hasNext()) {
-            Task nextTask;
             String nextEntry =  fileScanner.nextLine();
-            String[] elements = nextEntry.split("\\|");
-            char firstLetter = nextEntry.charAt(0);
-            switch(firstLetter){
-                case 'T':
-                    nextTask = Task.parseFromStorage(elements);
-                    Avo.taskList.addTask(nextTask,true);
-                    break;
-                case 'D':
-                    nextTask = Deadline.parseFromStorage(elements);
-                    Avo.taskList.addTask(nextTask,true);
-                    break;
-                case 'E':
-                    nextTask = Event.parseFromStorage(elements);
-                    Avo.taskList.addTask(nextTask,true);
-                    break;
-                default:
-                    System.out.println("invalid entry!");
-            }
+            Task nextTask = Parser.parseTaskFromStorage(nextEntry);
+            Avo.taskList.addTask(nextTask,true);
         }
         fileScanner.close();
     }
