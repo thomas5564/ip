@@ -45,13 +45,13 @@ public class Ui {
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
         Ui.respond(fullResponse);
     }
-    public static void markTaskResponse(String listString){
-        String output = "OK, I've marked this task as done:";
-        Ui.respond(output);
+    public static void markTaskResponse(String taskString){
+        String output = "OK, I've marked this task as done:\n";
+        Ui.respond(output + taskString);
     }
-    public static void unmarkTaskResponse(String listString){
-        String output = "OK, I've marked this task as not done yet:";
-        Ui.respond(output);
+    public static void unmarkTaskResponse(String taskString){
+        String output = "OK, I've marked this task as not done yet:\n";
+        Ui.respond(output + taskString);
     }
     public static void uiLoop() {
         Scanner scanner = new Scanner(System.in);

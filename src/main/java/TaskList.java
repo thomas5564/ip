@@ -30,8 +30,9 @@ public class TaskList {
             throw new InvalidIndexException(index,numberOfTasks);
         }else{
             tasks[index].mark();
-            Ui.markTaskResponse(this.toString());
+            Ui.markTaskResponse(tasks[index].toString());
         }
+        Avo.rewriteFileFromList(numberOfTasks,tasks);
     }
 
     public void addTask (Task currentTask,boolean isAddingFromMemory){
@@ -48,7 +49,8 @@ public class TaskList {
             throw new InvalidIndexException(index,numberOfTasks);
         }else{
             tasks[index].unmark();
-            Ui.unmarkTaskResponse(this.toString());
+            Ui.unmarkTaskResponse(tasks[index].toString());
         }
+        Avo.rewriteFileFromList(numberOfTasks,tasks);
     }
 }

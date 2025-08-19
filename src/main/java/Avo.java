@@ -67,6 +67,22 @@ public class Avo {
             System.out.println(e.getMessage());
         }
     }
+    public static void rewriteFileFromList(int numberOfTasks, Task[] tasks){
+        try{
+            int counter = 0;
+            FileWriter fileClearer = new FileWriter(pathName, false);
+            fileClearer.append("");
+            while(counter<numberOfTasks){
+                appendToFile(pathName,tasks[counter].getStorageString());
+                counter++;
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("File is not found. If you want your tasks to be saved,\n " +
+                    "add the file and start the program again");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args){
         readFile(pathName);
