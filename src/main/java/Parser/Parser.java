@@ -1,3 +1,11 @@
+package Parser;
+
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.Task;
+import Commands.Command;
+import Exceptions.UnknownCommandException;
+import Exceptions.EmptyInstructionException;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -35,7 +43,7 @@ public class Parser {
         Event currentEvent = new Event(eventInstruction, startTime ,endTime);
         return currentEvent;
     }
-    public static Task parseTask(String input) throws EmptyInstructionException{
+    public static Task parseTask(String input) throws EmptyInstructionException {
         String instruction = excludeFirstWord(input);
         if(instruction.equals(input) || instruction.isBlank()){
             throw new EmptyInstructionException();

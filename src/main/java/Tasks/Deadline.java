@@ -1,9 +1,9 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+package Tasks;
 
-public class Deadline extends Task{
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Deadline extends Task {
     private LocalDate deadline;
     public Deadline(String instruction,LocalDate deadline){
         super(instruction);

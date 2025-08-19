@@ -1,8 +1,9 @@
+package Tasks;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
-public class Event extends Task{
+public class Event extends Task {
     private final LocalDate startTime;
     private final LocalDate endTime;
     public Event(String instruction,LocalDate startTime,LocalDate endTime) {

@@ -1,3 +1,5 @@
+package Exceptions;
+
 public class InvalidIndexException extends Exception {
     public InvalidIndexException(int selectedIndex, int numberOfEntries) {
         super(numberOfEntries == 0
