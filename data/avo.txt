@@ -1,4 +1,5 @@
-E|o|playing |2pm |3pm
-T|o|eat
-E|o|frolick |2pm |3pm
-T|o|sing songs
+D|o|sleep |2100-02-02
+E|o|play |2003-02-17|2004-12-21
+D|o|live |2003-02-07
+E|o|learn |2003-02-07|2100-02-07
+E|o|have fun |2025-08-16|2030-09-10
