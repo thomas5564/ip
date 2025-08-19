@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Ui {
     public static void greet(){
         String greetString = """
+                    
                     Hello! I'm Avo
                     Let me organise your tasks for the day
                     Input your tasks as such:
@@ -30,6 +31,28 @@ public class Ui {
         String borderfiedResponse = borderfy(response);
         System.out.println(borderfiedResponse);
     }
+    public static void removeTaskResponse(Task selectedTask, int numberOfTasks){
+        String fullResponse = "Noted. I've removed this task:\n "
+                + "         "
+                + selectedTask.toString()
+                + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
+        Ui.respond(fullResponse);
+    }
+    public static void addTaskResponse(Task currentTask, int numberOfTasks){
+        String fullResponse = "Got it. I've added this task:\n "
+                + "         "
+                + currentTask.toString()
+                + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
+        Ui.respond(fullResponse);
+    }
+    public static void markTaskResponse(String listString){
+        String output = "OK, I've marked this task as done:";
+        Ui.respond(output);
+    }
+    public static void unmarkTaskResponse(String listString){
+        String output = "OK, I've marked this task as not done yet:";
+        Ui.respond(output);
+    }
     public static void uiLoop() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -47,31 +70,31 @@ public class Ui {
                         break;
                     case LIST:
                         String showList = "Here are the tasks in your list:";
-                        System.out.println(Ui.borderfy(showList + Avo.listString(Avo.tasks)));
+                        System.out.println(Ui.borderfy(showList + Avo.taskList.toString()));
                         break;
                     case MARK:
                         indexSelected = Integer.parseInt(words[1]) - 1;
-                        Avo.mark(indexSelected);
+                        Avo.taskList.mark(indexSelected);
                         break;
                     case UNMARK:
                         indexSelected = Integer.parseInt(words[1]) - 1;
-                        Avo.unmark(indexSelected);
+                        Avo.taskList.unmark(indexSelected);
                         break;
                     case DEADLINE:
                         Deadline currentDeadline = Deadline.parseDeadline(input.strip());
-                        Avo.addToList(currentDeadline);
+                        Avo.taskList.addTask(currentDeadline,false);
                         break;
                     case EVENT:
                         Event currentEvent = Event.parseEvent(input.strip());
-                        Avo.addToList(currentEvent);
+                        Avo.taskList.addTask(currentEvent,false);
                         break;
                     case TODO:
                         Task currentTask = Task.parseTask(input.strip());
-                        Avo.addToList(currentTask);
+                        Avo.taskList.addTask(currentTask,false);
                         break;
                     case DELETE:
                         indexSelected = Integer.parseInt(words[1]) - 1;
-                        Avo.deleteTask(indexSelected);
+                        Avo.taskList.deleteTask(indexSelected);
                         break;
                     default:
                         throw new UnknownCommandException();
