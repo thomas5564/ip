@@ -8,8 +8,7 @@ public class Avo {
     //C:\Users\thoma\Downloads\ip\data\avo.txt
     //"data" + File.separator + "avo.txt"
     static String pathName = "C:\\Users\\thoma\\Downloads\\ip\\data\\avo.txt";
-    private static Scanner fileScanner;
-    private static File storageFile;
+    public static Storage storage = new Storage(pathName);
     public static TaskList taskList = new TaskList();
 
     public static String excludeFirstWord(String input){
@@ -24,68 +23,9 @@ public class Avo {
             throw new UnknownCommandException();
         }
     }
-    public static void readFile(String pathName){
-        try{
-            System.out.println(String.format("checking %s",pathName));
-            storageFile  = new File(pathName);
-            fileScanner = new Scanner(storageFile);
-            while (fileScanner.hasNext()) {
-                Task nextTask;
-                String nextEntry =  fileScanner.nextLine();
-                String[] elements = nextEntry.split("\\|");
-                char firstLetter = nextEntry.charAt(0);
-                switch(firstLetter){
-                    case 'T':
-                        nextTask = Task.parseFromStorage(elements);
-                        taskList.addTask(nextTask,true);
-                        break;
-                    case 'D':
-                        nextTask = Deadline.parseFromStorage(elements);
-                        taskList.addTask(nextTask,true);
-                        break;
-                    case 'E':
-                        nextTask = Event.parseFromStorage(elements);
-                        taskList.addTask(nextTask,true);
-                        break;
-                    default:
-                        System.out.println("invalid entry!");
-                }
-            }
-            fileScanner.close();
-        }catch(FileNotFoundException e){
-            System.out.println("File is not found. If you want your tasks to be saved,\n " +
-                    "add the file and start the program again");
-        }
-    }
-
-    static void appendToFile(String filePath, String textToAdd){
-        try{
-            FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-            fw.write(textToAdd + "\n");
-            fw.close();
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        }
-    }
-    public static void rewriteFileFromList(int numberOfTasks, Task[] tasks){
-        try{
-            int counter = 0;
-            FileWriter fileClearer = new FileWriter(pathName, false);
-            fileClearer.append("");
-            while(counter<numberOfTasks){
-                appendToFile(pathName,tasks[counter].getStorageString());
-                counter++;
-            }
-        }catch(FileNotFoundException e){
-            System.out.println("File is not found. If you want your tasks to be saved,\n " +
-                    "add the file and start the program again");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static void main(String[] args){
-        readFile(pathName);
+        storage.readFile();
         Ui.greet();
         Ui.uiLoop();
     }

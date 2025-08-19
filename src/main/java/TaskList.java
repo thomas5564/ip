@@ -32,14 +32,14 @@ public class TaskList {
             tasks[index].mark();
             Ui.markTaskResponse(tasks[index].toString());
         }
-        Avo.rewriteFileFromList(numberOfTasks,tasks);
+        Avo.storage.rewriteFileFromList(numberOfTasks,tasks);
     }
 
     public void addTask (Task currentTask,boolean isAddingFromMemory){
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
         if(!isAddingFromMemory){
-            Avo.appendToFile(Avo.pathName, currentTask.getStorageString());
+            Avo.storage.appendToFile(Avo.pathName, currentTask.getStorageString());
             Ui.addTaskResponse(currentTask,numberOfTasks);
         }
     }
@@ -51,6 +51,6 @@ public class TaskList {
             tasks[index].unmark();
             Ui.unmarkTaskResponse(tasks[index].toString());
         }
-        Avo.rewriteFileFromList(numberOfTasks,tasks);
+        Avo.storage.rewriteFileFromList(numberOfTasks,tasks);
     }
 }
