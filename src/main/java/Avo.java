@@ -2,16 +2,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Avo {
-    private static String pathName = "data" + File.separator + "avo.txt";
+    //"C:/Users/thoma/Downloads/ip/data/avo.txt"
+    //"data" + File.separator + "avo.txt";
+    private static String pathName = "C:/Users/thoma/Downloads/ip/data/avo.txt";
     private static Scanner fileScanner;
     private static File storageFile;
     private static int numberOfTasks = 0;
     private static Task[] tasks = new Task[100];
     public static void greet(){
-        String greetString = "Hello! I'm Avo\n         What can I do for you?";
+    String greetString = """
+                
+                        Hello! I'm Avo
+                        Let me organise your tasks for the day
+                        Input your tasks as such:
+                        Todo - todo <instruction>
+                        Deadline - deadline <instruction> /by <deadline in YYYY-MM-DD>
+                        Event - event <instruction> /from <start date in YYYY-MM-DD> /to <end date in YYYY-MM-DD>
+                """;
         System.out.println(borderfy(greetString));
     }
     public static void bye(){
@@ -109,7 +120,6 @@ public class Avo {
     }
     public static void readFile(String pathName){
         try{
-            System.out.println(String.format("checking %s",pathName));
             storageFile  = new File(pathName);
             fileScanner = new Scanner(storageFile);
             while (fileScanner.hasNext()) {
@@ -220,6 +230,8 @@ public class Avo {
                     }
                 } catch (UnknownCommandException | EmptyInstructionException | InvalidIndexException e) {
                     System.out.println(borderfy(e.getMessage()));
+                } catch (DateTimeParseException e){
+                    System.out.println(borderfy("Invalid date format! try again but in yyyy-mm-dd"));
                 }
         }
     }
