@@ -41,6 +41,7 @@ public class Storage {
                 appendToFile(filePath,tasks[counter].getStorageString());
                 counter++;
             }
+            fileClearer.close();
         }catch(FileNotFoundException e){
             System.out.println("File is not found. If you want your tasks to be saved,\n " +
                     "add the file and start the program again");
