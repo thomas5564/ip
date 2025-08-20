@@ -1,14 +1,14 @@
-package Ui;
+package ui;
 import main.Avo;
 import Exceptions.EmptyInstructionException;
 import Exceptions.InvalidIndexException;
 import Exceptions.UnknownCommandException;
-import Tasks.Task;
-import Tasks.Deadline;
-import Tasks.Event;
+import tasks.Task;
+import tasks.Deadline;
+import tasks.Event;
 import Commands.Command;
 import java.util.Scanner;
-import Parser.Parser;
+import parser.Parser;
 
 public class Ui {
     public static void greet(){

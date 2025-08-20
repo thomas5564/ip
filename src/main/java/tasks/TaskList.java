@@ -1,7 +1,6 @@
-package Tasks;
-import Storage.Storage;
+package tasks;
 import Exceptions.InvalidIndexException;
-import Ui.Ui;
+import ui.Ui;
 import main.Avo;
 
 public class TaskList {

@@ -26,13 +26,12 @@ test {
         showStandardStreams = false
     }
 }
-
 application {
-    mainClass.set("seedu.duke.Duke")
+    mainClass.set("main.Avo")
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "Avo"
     archiveClassifier = null
 }
 
