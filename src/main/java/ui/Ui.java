@@ -1,4 +1,5 @@
 package ui;
+import Exceptions.IncompleteInputException;
 import main.Avo;
 import Exceptions.EmptyInstructionException;
 import Exceptions.InvalidIndexException;
@@ -7,6 +8,8 @@ import tasks.Task;
 import tasks.Deadline;
 import tasks.Event;
 import Commands.Command;
+
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import parser.Parser;
 
@@ -15,7 +18,7 @@ public class Ui {
         String greetString = """
                     
                     Hello! I'm Avo
-                    Let me organise your tasks for the day
+                    Let me organise your tasks
                     Input your tasks as such:
                     Todo - todo <instruction>
                     Deadline - deadline <instruction> /by <deadline in YYYY-MM-DD>
@@ -109,8 +112,12 @@ public class Ui {
                     default:
                         throw new UnknownCommandException();
                 }
-            } catch (UnknownCommandException | EmptyInstructionException | InvalidIndexException e) {
+            } catch (UnknownCommandException | EmptyInstructionException | InvalidIndexException |
+                     IllegalArgumentException | IncompleteInputException e) {
                 Ui.respond(e.getMessage());
+            } catch(DateTimeParseException e){
+                String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
+                System.out.println(e.getParsedString()+customMessage);
             }
         }
     }

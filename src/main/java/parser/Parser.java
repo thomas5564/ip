@@ -1,5 +1,6 @@
 package parser;
 
+import Exceptions.IncompleteInputException;
 import tasks.Deadline;
 import tasks.Event;
 import tasks.Task;
@@ -22,17 +23,16 @@ public class Parser {
         }
     }
     public static Deadline parseDeadline(String input) throws EmptyInstructionException {
-        if (!input.startsWith("deadline ")) {
+        if (!input.startsWith("deadline")) {
             throw new IllegalArgumentException("Input must start with 'deadline'");
         }
 
-        // Split into 2 parts: instruction and date
         String[] parts = input.split(" /by ");
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Input must follow: deadline <instruction> /by <date>");
+            throw new IncompleteInputException("deadline <instruction> /by <date>");
         }
 
-        String instruction = parts[0].substring("deadline ".length()).trim();
+        String instruction = parts[0].substring("deadline".length()).trim();
         if (instruction.isEmpty()) {
             throw new EmptyInstructionException();
         }
@@ -44,16 +44,16 @@ public class Parser {
     }
 
     public static Event parseEvent(String input) throws EmptyInstructionException {
-        if (!input.startsWith("event ")) {
+        if (!input.startsWith("event")) {
             throw new IllegalArgumentException("Input must start with 'event'");
         }
 
         String[] parts = input.split(" /from | /to ");
         if (parts.length != 3) {
-            throw new IllegalArgumentException("Input must follow: event <instruction> /from <date> /to <date>");
+            throw new IncompleteInputException("event <instruction> /from <date> /to <date>");
         }
 
-        String eventInstruction = parts[0].substring("event ".length()).trim();
+        String eventInstruction = parts[0].substring("event".length()).trim();
         if (eventInstruction.isEmpty()) {
             throw new EmptyInstructionException();
         }
@@ -68,11 +68,10 @@ public class Parser {
     }
 
     public static Task parseTask(String input) throws EmptyInstructionException {
-        if (!input.startsWith("todo ")) {
+        if (!input.startsWith("todo")) {
             throw new IllegalArgumentException("Input must start with 'todo'");
         }
-
-        String instruction = input.substring("todo ".length()).trim();
+        String instruction = input.substring("todo".length()).trim();
         if (instruction.isEmpty()) {
             throw new EmptyInstructionException();
         }

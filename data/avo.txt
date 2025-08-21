@@ -26,3 +26,4 @@ E|x|charge phone |2025-08-09|2025-08-08
 E|o|charge phone |2025-08-09|2025-08-08
 E|x|charge phone |2025-08-09|2025-08-08
 E|x|charge phone |2025-08-09|2025-08-08
+D|o|go to class|2010-01-01
