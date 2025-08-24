@@ -1,8 +1,8 @@
-package Storage;
+package storage;
 
-import Tasks.Task;
+import tasks.Task;
 import main.Avo;
-import Parser.Parser;
+import parser.Parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

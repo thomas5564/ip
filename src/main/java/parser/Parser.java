@@ -1,8 +1,9 @@
-package Parser;
+package parser;
 
-import Tasks.Deadline;
-import Tasks.Event;
-import Tasks.Task;
+import Exceptions.IncompleteInputException;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
 import Commands.Command;
 import Exceptions.UnknownCommandException;
 import Exceptions.EmptyInstructionException;
@@ -10,10 +11,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Parser {
-    public static String excludeFirstWord(String input){
-        int firstSpace = input.indexOf(" ");
-        return input.substring(firstSpace + 1);
-    }
     public static Command parseCommand(String input) throws UnknownCommandException {
         try {
             return Command.valueOf(input.toUpperCase());
@@ -22,34 +19,62 @@ public class Parser {
         }
     }
     public static Deadline parseDeadline(String input) throws EmptyInstructionException {
-        String instruction = Parser.excludeFirstWord(input.split("/")[0]);
-        if(instruction.isEmpty()){
+        if (!input.startsWith("deadline")) {
+            throw new IllegalArgumentException("Input must start with 'deadline'");
+        }
+
+        String[] parts = input.split(" /by ");
+        if (parts.length != 2) {
+            throw new IncompleteInputException("deadline <instruction> /by <date>");
+        }
+
+        String instruction = parts[0].substring("deadline".length()).trim();
+        if (instruction.isEmpty()) {
             throw new EmptyInstructionException();
         }
-        String deadlineString = excludeFirstWord(input.split("/")[1]);
-        LocalDate deadline = LocalDate.parse(deadlineString);
-        return new Deadline(instruction, deadline);
+
+        String deadlineDateString = parts[1].trim();
+        LocalDate deadlineDate = LocalDate.parse(deadlineDateString);
+
+        return new Deadline(instruction, deadlineDate);
     }
 
     public static Event parseEvent(String input) throws EmptyInstructionException {
-        String eventInstruction = excludeFirstWord(input.split("/")[0]);
-        if(eventInstruction.equals(input)){
+        if (!input.startsWith("event")) {
+            throw new IllegalArgumentException("Input must start with 'event'");
+        }
+
+        String[] parts = input.split(" /from | /to ");
+        if (parts.length != 3) {
+            throw new IncompleteInputException("event <instruction> /from <date> /to <date>");
+        }
+
+        String eventInstruction = parts[0].substring("event".length()).trim();
+        if (eventInstruction.isEmpty()) {
             throw new EmptyInstructionException();
         }
-        String startTimeString = excludeFirstWord(input.split("/")[1]).strip();
-        String endTimeString = excludeFirstWord(input.split("/")[2]).strip();
+
+        String startTimeString = parts[1].trim();
+        String endTimeString = parts[2].trim();
+
         LocalDate startTime = LocalDate.parse(startTimeString);
         LocalDate endTime = LocalDate.parse(endTimeString);
-        Event currentEvent = new Event(eventInstruction, startTime ,endTime);
-        return currentEvent;
+
+        return new Event(eventInstruction, startTime, endTime);
     }
+
     public static Task parseTask(String input) throws EmptyInstructionException {
-        String instruction = excludeFirstWord(input);
-        if(instruction.equals(input) || instruction.isBlank()){
+        if (!input.startsWith("todo")) {
+            throw new IllegalArgumentException("Input must start with 'todo'");
+        }
+        String instruction = input.substring("todo".length()).trim();
+        if (instruction.isEmpty()) {
             throw new EmptyInstructionException();
         }
+
         return new Task(instruction);
     }
+
     public static Task parseTaskFromStorage(String entryString){
         Task currentTask;
         char firstLetter = entryString.charAt(0);
@@ -101,5 +126,4 @@ public class Parser {
         }
         return storedTask;
     }
-
 }

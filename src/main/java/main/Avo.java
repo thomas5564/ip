@@ -1,7 +1,7 @@
 package main;
-import Storage.Storage;
-import Ui.Ui;
-import Tasks.TaskList;
+import storage.Storage;
+import ui.Ui;
+import tasks.TaskList;
 
 import java.io.File;
 
