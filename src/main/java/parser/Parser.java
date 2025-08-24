@@ -11,10 +11,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Parser {
-    public static String excludeFirstWord(String input){
-        int firstSpace = input.indexOf(" ");
-        return input.substring(firstSpace + 1);
-    }
     public static Command parseCommand(String input) throws UnknownCommandException {
         try {
             return Command.valueOf(input.toUpperCase());
