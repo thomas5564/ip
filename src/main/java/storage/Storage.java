@@ -18,9 +18,12 @@ public class Storage {
             this.filePath = filePath;
             storageFile  = new File(filePath);
             fileScanner = new Scanner(storageFile);
+            readFile();
         }catch(FileNotFoundException e){
-            System.out.println("File is not found. If you want your tasks to be saved,\n " +
-                    "add the file and start the program again");
+            System.out.println("Data file is not found. If you want your tasks to be saved,\n " +
+                    "Do the following:\n" +
+                    "1. Make a folder named \"data\" in your current directory\n" +
+                    "2. Add a text file named Avo.txt into it");
         }
     }
     public void appendToFile(String filePath, String textToAdd){
@@ -50,7 +53,6 @@ public class Storage {
         }
     }
     public void readFile(){
-        System.out.println(String.format("checking %s",filePath));
         while (fileScanner.hasNext()) {
             String nextEntry =  fileScanner.nextLine();
             Task nextTask = Parser.parseTaskFromStorage(nextEntry);
