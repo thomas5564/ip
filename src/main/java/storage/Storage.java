@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**Represents the storage file and contains methods with regard to it
+ *
+ */
 public class Storage {
     private String filePath;
     private File storageFile;
@@ -26,7 +29,12 @@ public class Storage {
                     "2. Add a text file named Avo.txt into it");
         }
     }
-    public void appendToFile(String filePath, String textToAdd){
+
+    /**Adds a storage string to the end of the storage file
+     *
+     * @param textToAdd text to be added to the bottom of storage file
+     */
+    public void appendToFile(String textToAdd){
         try{
             FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
             fw.write(textToAdd + "\n");
@@ -35,13 +43,19 @@ public class Storage {
             System.out.println(e.getMessage());
         }
     }
+
+    /**Rewrites the storage file, writing the input tasks as their respective storage strings
+     *
+     * @param numberOfTasks current number of tasks in the task list
+     * @param tasks task list itself
+     */
     public void rewriteFileFromList(int numberOfTasks, Task[] tasks){
         try{
             int counter = 0;
             FileWriter fileClearer = new FileWriter(filePath, false);
             fileClearer.append("");
             while(counter<numberOfTasks){
-                appendToFile(filePath,tasks[counter].getStorageString());
+                appendToFile(tasks[counter].getStorageString());
                 counter++;
             }
             fileClearer.close();
@@ -52,6 +66,10 @@ public class Storage {
             throw new RuntimeException(e);
         }
     }
+
+    /**Reads the storage file and adds the stored tasks to the Task List
+     *
+     */
     public void readFile(){
         while (fileScanner.hasNext()) {
             String nextEntry =  fileScanner.nextLine();

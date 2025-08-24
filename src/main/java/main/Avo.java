@@ -5,8 +5,10 @@ import tasks.TaskList;
 
 import java.io.File;
 
+/**Main file used to run Avo
+ *
+ */
 public class Avo {
-    //C:\Users\thoma\Downloads\ip\data\avo.txt
     public static String pathName = "data" + File.separator + "avo.txt";
     public static Storage storage = new Storage(pathName);
     public static TaskList taskList = new TaskList();

@@ -17,6 +17,11 @@ public class Task {
         String mark = isDone?"[x]":"[ ]";
         return String.format("[T]%s%s",mark, instruction);
     }
+
+    /**
+     *
+     * @return String representation of to-do task in the storage file
+     */
     public String getStorageString() {
         String mark = isDone?"x":"o";
         return String.format("T|%s|%s",mark, instruction);
