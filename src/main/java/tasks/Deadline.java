@@ -16,6 +16,11 @@ public class Deadline extends Task {
         String deadline = String.format("(by: %s)", formattedDate);
         return String.format("[D]%s%s",super.toString(),deadline);
     }
+
+    /**
+     *
+     * @return String representation of deadline in the storage file
+     */
     @Override
     public String getStorageString(){
         return String.format("D|%s|%s",super.getStorageString().substring(2),deadline);

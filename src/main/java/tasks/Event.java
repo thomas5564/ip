@@ -20,6 +20,11 @@ public class Event extends Task {
         String duration = String.format("(from: %sto: %s)",formattedStartTime,formattedEndTime);
         return String.format("[E]%s%s",super.toString(),duration);
     }
+
+    /**
+     *
+     * @return String representation of event in the storage file
+     */
     @Override
     public String getStorageString(){
         return String.format("E|%s|%s|%s",super.getStorageString().substring(2),

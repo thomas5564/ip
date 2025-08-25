@@ -3,6 +3,9 @@ import Exceptions.InvalidIndexException;
 import ui.Ui;
 import main.Avo;
 
+/**List of tasks where the tasks are added. Has a maximum capacity of 100.
+ *
+ */
 public class TaskList {
     private static int numberOfTasks = 0;
     private static Task[] tasks = new Task[100];
@@ -18,6 +21,11 @@ public class TaskList {
         return listString.toString();
     }
 
+    /**deletes task, changes the storage file accordingly
+     *
+     * @param index index for the task to be deleted
+     * @throws InvalidIndexException if the index is less than 1 or more than the total number of tasks
+     */
     public void deleteTask(int index) throws InvalidIndexException {
         if (index >= numberOfTasks || index < 0) {
             throw new InvalidIndexException(index + 1, numberOfTasks);
@@ -30,6 +38,12 @@ public class TaskList {
         numberOfTasks--;
         Ui.removeTaskResponse(selectedTask, numberOfTasks);
     }
+
+    /**marks task as completed, changes the storage file accordingly
+     *
+     * @param index index of task to be marked
+     * @throws InvalidIndexException if the index is less than 1 or more than the total number of tasks
+     */
     public void mark(int index) throws InvalidIndexException {
         if(index > numberOfTasks-1 || index<0){
             throw new InvalidIndexException(index,numberOfTasks);
@@ -40,15 +54,21 @@ public class TaskList {
         Avo.storage.rewriteFileFromList(numberOfTasks,tasks);
     }
 
+    /**adds task, changes the storage file accordingly
+     *
+     * @param currentTask current task to be added
+     * @param isAddingFromMemory if the index is less than 1 or more than the total number of tasks
+     */
     public void addTask (Task currentTask,boolean isAddingFromMemory){
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
         if(!isAddingFromMemory){
-            Avo.storage.appendToFile(Avo.pathName, currentTask.getStorageString());
+            Avo.storage.appendToFile(currentTask.getStorageString());
             Ui.addTaskResponse(currentTask,numberOfTasks);
         }
     }
 
+    //unmarks task, changes the storage file accordingly
     public void unmark(int index) throws InvalidIndexException {
         if(index > numberOfTasks-1 || index<0){
             throw new InvalidIndexException(index,numberOfTasks);

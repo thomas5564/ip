@@ -10,7 +10,11 @@ import Exceptions.EmptyInstructionException;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**contains all methods used to interpret strings
+ *
+ */
 public class Parser {
+    //interprets strings as commands
     public static Command parseCommand(String input) throws UnknownCommandException {
         try {
             return Command.valueOf(input.toUpperCase());
@@ -18,6 +22,14 @@ public class Parser {
             throw new UnknownCommandException();
         }
     }
+
+    /**
+     * Converts a valid user input string to a {@code Deadline}.
+     *
+     * @param input the input string from the user
+     * @return a {@code Deadline} object created from the input
+     * @throws EmptyInstructionException if the input is empty or invalid
+     */
     public static Deadline parseDeadline(String input) throws EmptyInstructionException {
         if (!input.startsWith("deadline")) {
             throw new IllegalArgumentException("Input must start with 'deadline'");
@@ -39,6 +51,13 @@ public class Parser {
         return new Deadline(instruction, deadlineDate);
     }
 
+    /**
+     * Converts a valid user input string to a {@code Event}.
+     *
+     * @param input the input string from the user
+     * @return a {@code Event} object created from the input
+     * @throws EmptyInstructionException if the input is empty or invalid
+     */
     public static Event parseEvent(String input) throws EmptyInstructionException {
         if (!input.startsWith("event")) {
             throw new IllegalArgumentException("Input must start with 'event'");
@@ -63,6 +82,13 @@ public class Parser {
         return new Event(eventInstruction, startTime, endTime);
     }
 
+    /**
+     * Converts a valid user input string to a {@code Task}.
+     *
+     * @param input the input string from the user
+     * @return a {@code Task} object created from the input
+     * @throws EmptyInstructionException if the input is empty or invalid
+     */
     public static Task parseTask(String input) throws EmptyInstructionException {
         if (!input.startsWith("todo")) {
             throw new IllegalArgumentException("Input must start with 'todo'");
@@ -75,6 +101,11 @@ public class Parser {
         return new Task(instruction);
     }
 
+    /**Converts storage string to the task that it represents
+     *
+     * @param entryString storage string of the task it represents
+     * @return the task that the input string represents
+     */
     public static Task parseTaskFromStorage(String entryString){
         Task currentTask;
         char firstLetter = entryString.charAt(0);
@@ -95,6 +126,11 @@ public class Parser {
         return currentTask;
     }
 
+    /**Converts storage string to the event that it represents
+     *
+     * @param string storage string for a event
+     * @return a {@code Event} object created from the storage string
+     */
     public static Task parseEventFromStorage(String string){
         String[] a = string.split("\\|");
         LocalDate startTime = LocalDate.parse(a[3].strip());
@@ -106,6 +142,12 @@ public class Parser {
         }
         return storedEvent;
     }
+
+    /**Converts storage string to the deadline that it represents
+     *
+     * @param string storage string for a deadline
+     * @return a {@code Deadline} object created from the storage string
+     */
     public static Task parseDeadlineFromStorage(String string){
         String[] a = string.split("\\|");
         LocalDate deadline = LocalDate.parse(a[3]);
@@ -116,7 +158,11 @@ public class Parser {
         }
         return storedEvent;
     }
-
+    /**Converts storage string to the to-do that it represents
+     *
+     * @param string storage string for a to-do
+     * @return a {@code Task} object created from the storage string
+     */
     public static Task parseTodoFromStorage(String string){
         String[] a = string.split("//|");
         Task storedTask = new Task(a[2]);
