@@ -8,5 +8,6 @@ public enum Command {
     EVENT,
     TODO,
     DELETE,
-    BYE
+    BYE,
+    FIND
 }

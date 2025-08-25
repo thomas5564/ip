@@ -95,20 +95,23 @@ public class Ui {
                         break;
                     case DEADLINE:
                         Deadline currentDeadline = Parser.parseDeadline(input.strip());
-                        Avo.taskList.addTask(currentDeadline,false);
+                        Avo.taskList.addTask(currentDeadline,true);
                         break;
                     case EVENT:
                         Event currentEvent = Parser.parseEvent(input.strip());
-                        Avo.taskList.addTask(currentEvent,false);
+                        Avo.taskList.addTask(currentEvent,true);
                         break;
                     case TODO:
                         Task currentTask = Parser.parseTask(input.strip());
-                        Avo.taskList.addTask(currentTask,false);
+                        Avo.taskList.addTask(currentTask,true);
                         break;
                     case DELETE:
                         indexSelected = Integer.parseInt(words[1]) - 1;
                         Avo.taskList.deleteTask(indexSelected);
                         break;
+                    case FIND:
+//                        String searchedString =
+//                        Avo.taskList.searchAll(searchedString);
                     default:
                         throw new UnknownCommandException();
                 }

@@ -3,9 +3,18 @@ import Exceptions.InvalidIndexException;
 import ui.Ui;
 import main.Avo;
 
+import java.util.ArrayList;
+
 public class TaskList {
     private static int numberOfTasks = 0;
     private static Task[] tasks = new Task[100];
+    public static TaskList of(Task[] tasks){
+        TaskList taskList = new TaskList();
+        for(Task t:tasks){
+            taskList.addTask(t,false);
+        }
+        return taskList;
+    }
     public String toString(){
         StringBuilder listString = new StringBuilder();
         for(int i = 0; i< tasks.length; i++){
@@ -40,10 +49,10 @@ public class TaskList {
         Avo.storage.rewriteFileFromList(numberOfTasks,tasks);
     }
 
-    public void addTask (Task currentTask,boolean isAddingFromMemory){
+    public void addTask (Task currentTask,boolean isAddingToMemory){
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
-        if(!isAddingFromMemory){
+        if(isAddingToMemory){
             Avo.storage.appendToFile(Avo.pathName, currentTask.getStorageString());
             Ui.addTaskResponse(currentTask,numberOfTasks);
         }
@@ -57,5 +66,23 @@ public class TaskList {
             Ui.unmarkTaskResponse(tasks[index].toString());
         }
         Avo.storage.rewriteFileFromList(numberOfTasks,tasks);
+    }
+
+    /**
+     *
+     * @param tasks array of tasks in the tasklist
+     * @param keyword word that the user searched up
+     * @return list of tasks with that word in their instruction
+     */
+    public Task[] searchAll(String keyword) {
+        Task[] results = new Task[100];
+        int numberOfResults = 0;
+        for (Task task : tasks) {
+            if (task.getInstruction().contains(keyword)) {
+                results[numberOfResults] = task;
+                numberOfResults++;
+            }
+        }
+        return results;
     }
 }
