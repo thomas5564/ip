@@ -1,14 +1,29 @@
 package tasks;
+import Exceptions.EmptySearchStringException;
 import Exceptions.InvalidIndexException;
 import ui.Ui;
 import main.Avo;
 
+
 /**List of tasks where the tasks are added. Has a maximum capacity of 100.
  *
  */
+
 public class TaskList {
-    private static int numberOfTasks = 0;
-    private static Task[] tasks = new Task[100];
+    private int numberOfTasks = 0;
+    private final Task[] tasks = new Task[100];
+
+    public static TaskList of(Task[] tasks){
+        TaskList taskList = new TaskList();
+        for(Task t:tasks){
+            taskList.addTask(t,false);
+        }
+        return taskList;
+    }
+    public boolean isEmpty(){
+        return numberOfTasks == 0;
+    }
+
     public String toString(){
         StringBuilder listString = new StringBuilder();
         for(int i = 0; i< tasks.length; i++){
@@ -57,18 +72,17 @@ public class TaskList {
     /**adds task, changes the storage file accordingly
      *
      * @param currentTask current task to be added
-     * @param isAddingFromMemory if the index is less than 1 or more than the total number of tasks
+     * @param isAddingToMemory if the task is being added to the data file
      */
-    public void addTask (Task currentTask,boolean isAddingFromMemory){
+    public void addTask (Task currentTask,boolean isAddingToMemory){
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
-        if(!isAddingFromMemory){
+        if(isAddingToMemory){
             Avo.storage.appendToFile(currentTask.getStorageString());
             Ui.addTaskResponse(currentTask,numberOfTasks);
         }
     }
 
-    //unmarks task, changes the storage file accordingly
     public void unmark(int index) throws InvalidIndexException {
         if(index > numberOfTasks-1 || index<0){
             throw new InvalidIndexException(index,numberOfTasks);
@@ -77,5 +91,23 @@ public class TaskList {
             Ui.unmarkTaskResponse(tasks[index].toString());
         }
         Avo.storage.rewriteFileFromList(numberOfTasks,tasks);
+    }
+
+    /**
+     *
+     * @param keyword word that the user searched up
+     * @return list of tasks with that word in their instruction
+     */
+    public void searchAll(String keyword) throws EmptySearchStringException {
+        if(keyword.isEmpty()){
+            throw new EmptySearchStringException();
+        }
+        TaskList results= new TaskList();
+        for (int i = 0; i<numberOfTasks; i++) {
+            if (tasks[i].getInstruction().contains(keyword)) {
+                results.addTask(tasks[i],false);
+            }
+        }
+        Ui.findTaskResponse(results,keyword);
     }
 }

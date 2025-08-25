@@ -10,8 +10,8 @@ import java.io.File;
  */
 public class Avo {
     public static String pathName = "data" + File.separator + "avo.txt";
-    public static Storage storage = new Storage(pathName);
     public static TaskList taskList = new TaskList();
+    public static Storage storage = new Storage(pathName);
     public static void main(String[] args){
         Ui.greet();
         Ui.uiLoop();

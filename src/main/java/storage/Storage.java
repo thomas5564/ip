@@ -74,7 +74,7 @@ public class Storage {
         while (fileScanner.hasNext()) {
             String nextEntry =  fileScanner.nextLine();
             Task nextTask = Parser.parseTaskFromStorage(nextEntry);
-            Avo.taskList.addTask(nextTask,true);
+            Avo.taskList.addTask(nextTask,false);
         }
         fileScanner.close();
     }

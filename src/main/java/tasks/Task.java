@@ -1,7 +1,7 @@
 package tasks;
 
 public class Task {
-    private String instruction;
+    private final String instruction;
     private boolean isDone;
     public Task(String instruction){
         this.isDone = false;
@@ -25,5 +25,8 @@ public class Task {
     public String getStorageString() {
         String mark = isDone?"x":"o";
         return String.format("T|%s|%s",mark, instruction);
+    }
+    public String getInstruction(){
+        return instruction;
     }
 }

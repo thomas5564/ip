@@ -1,9 +1,6 @@
 package ui;
-import Exceptions.IncompleteInputException;
+import Exceptions.*;
 import main.Avo;
-import Exceptions.EmptyInstructionException;
-import Exceptions.InvalidIndexException;
-import Exceptions.UnknownCommandException;
 import tasks.Task;
 import tasks.Deadline;
 import tasks.Event;
@@ -12,6 +9,7 @@ import Commands.Command;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import parser.Parser;
+import tasks.TaskList;
 
 /**contains all methods with regard to the UI
  *
@@ -105,7 +103,14 @@ public class Ui {
         String output = "OK, I've marked this task as not done yet:\n";
         Ui.respond(output + taskString);
     }
-
+    public static void findTaskResponse(TaskList taskList,String searchedString){
+        if(taskList.isEmpty()){
+            Ui.respond(String.format("No tasks containing \"%s\" found!",searchedString));
+        }else{
+            String output = "Here are the matching tasks in your list:\n";
+            Ui.respond(output + taskList);
+        }
+    }
     /**
      * while loop that continuously gets the users input and responds accordingly
      */
@@ -152,11 +157,17 @@ public class Ui {
                     indexSelected = Integer.parseInt(words[1]) - 1;
                     Avo.taskList.deleteTask(indexSelected);
                     break;
+                case FIND:
+                    String searchedString = (words.length > 1 && words[1] != null)
+                            ? words[1].strip()
+                            : "";
+                    Avo.taskList.searchAll(searchedString);
+                    break;
                 default:
                     throw new UnknownCommandException();
-                }
+                 }
             } catch (UnknownCommandException | EmptyInstructionException | InvalidIndexException |
-                     IllegalArgumentException | IncompleteInputException e) {
+                     IllegalArgumentException | IncompleteInputException | EmptySearchStringException e) {
                 Ui.respond(e.getMessage());
             } catch(DateTimeParseException e){
                 String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
