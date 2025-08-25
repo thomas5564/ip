@@ -66,6 +66,10 @@ public class Ui {
         String output = "OK, I've marked this task as not done yet:\n";
         Ui.respond(output + taskString);
     }
+    public static void findTaskResponse(String taskListString){
+        String output = "Here are the matching tasks in your list:\n";
+        Ui.respond(output+taskListString);
+    }
     public static void uiLoop() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -110,8 +114,9 @@ public class Ui {
                         Avo.taskList.deleteTask(indexSelected);
                         break;
                     case FIND:
-//                        String searchedString =
-//                        Avo.taskList.searchAll(searchedString);
+                        String searchedString = words[1].strip();
+                        Avo.taskList.searchAll(searchedString);
+                        break;
                     default:
                         throw new UnknownCommandException();
                 }

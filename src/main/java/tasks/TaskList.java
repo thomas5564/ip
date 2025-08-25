@@ -6,8 +6,9 @@ import main.Avo;
 import java.util.ArrayList;
 
 public class TaskList {
-    private static int numberOfTasks = 0;
-    private static Task[] tasks = new Task[100];
+    private int numberOfTasks = 0;
+    private final Task[] tasks = new Task[100];
+
     public static TaskList of(Task[] tasks){
         TaskList taskList = new TaskList();
         for(Task t:tasks){
@@ -15,6 +16,7 @@ public class TaskList {
         }
         return taskList;
     }
+
     public String toString(){
         StringBuilder listString = new StringBuilder();
         for(int i = 0; i< tasks.length; i++){
@@ -70,19 +72,19 @@ public class TaskList {
 
     /**
      *
-     * @param tasks array of tasks in the tasklist
      * @param keyword word that the user searched up
      * @return list of tasks with that word in their instruction
      */
-    public Task[] searchAll(String keyword) {
+    public void searchAll(String keyword) {
         Task[] results = new Task[100];
         int numberOfResults = 0;
-        for (Task task : tasks) {
-            if (task.getInstruction().contains(keyword)) {
-                results[numberOfResults] = task;
+        for (int i = 0; i<numberOfTasks; i++) {
+            if (tasks[i].getInstruction().contains(keyword)) {
+                results[numberOfResults] = tasks[i];
                 numberOfResults++;
             }
         }
-        return results;
+        TaskList tl = TaskList.of(results);
+        Ui.findTaskResponse(tl.toString());
     }
 }
