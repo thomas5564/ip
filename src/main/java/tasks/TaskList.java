@@ -1,4 +1,5 @@
 package tasks;
+import Exceptions.EmptySearchStringException;
 import Exceptions.InvalidIndexException;
 import ui.Ui;
 import main.Avo;
@@ -15,6 +16,9 @@ public class TaskList {
             taskList.addTask(t,false);
         }
         return taskList;
+    }
+    public boolean isEmpty(){
+        return numberOfTasks == 0;
     }
 
     public String toString(){
@@ -75,16 +79,16 @@ public class TaskList {
      * @param keyword word that the user searched up
      * @return list of tasks with that word in their instruction
      */
-    public void searchAll(String keyword) {
-        Task[] results = new Task[100];
-        int numberOfResults = 0;
+    public void searchAll(String keyword) throws EmptySearchStringException {
+        if(keyword.isEmpty()){
+            throw new EmptySearchStringException();
+        }
+        TaskList results= new TaskList();
         for (int i = 0; i<numberOfTasks; i++) {
             if (tasks[i].getInstruction().contains(keyword)) {
-                results[numberOfResults] = tasks[i];
-                numberOfResults++;
+                results.addTask(tasks[i],false);
             }
         }
-        TaskList tl = TaskList.of(results);
-        Ui.findTaskResponse(tl.toString());
+        Ui.findTaskResponse(results,keyword);
     }
 }
