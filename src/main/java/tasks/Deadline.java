@@ -23,6 +23,8 @@ public class Deadline extends Task {
      */
     @Override
     public String getStorageString(){
-        return String.format("D|%s|%s",super.getStorageString().substring(2),deadline);
+        return String.format("D|%s|%s"
+                ,super.getStorageString().substring(2)
+                ,deadline);
     }
 }
