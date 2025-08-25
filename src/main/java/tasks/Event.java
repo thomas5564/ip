@@ -17,7 +17,7 @@ public class Event extends Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         String formattedStartTime = startTime.format(formatter);
         String formattedEndTime = endTime.format(formatter);
-        String duration = String.format("(from: %sto: %s)",formattedStartTime,formattedEndTime);
+        String duration = String.format("(from: %s to: %s)",formattedStartTime,formattedEndTime);
         return String.format("[E]%s%s",super.toString(),duration);
     }
 

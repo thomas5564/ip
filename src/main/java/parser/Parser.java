@@ -30,7 +30,7 @@ public class Parser {
      * @return a {@code Deadline} object created from the input
      * @throws EmptyInstructionException if the input is empty or invalid
      */
-    public static Deadline parseDeadline(String input) throws EmptyInstructionException {
+    public static Deadline parseDeadline(String input) throws EmptyInstructionException, IncompleteInputException {
         if (!input.startsWith("deadline")) {
             throw new IllegalArgumentException("Input must start with 'deadline'");
         }
@@ -58,7 +58,7 @@ public class Parser {
      * @return a {@code Event} object created from the input
      * @throws EmptyInstructionException if the input is empty or invalid
      */
-    public static Event parseEvent(String input) throws EmptyInstructionException {
+    public static Event parseEvent(String input) throws EmptyInstructionException, IncompleteInputException {
         if (!input.startsWith("event")) {
             throw new IllegalArgumentException("Input must start with 'event'");
         }

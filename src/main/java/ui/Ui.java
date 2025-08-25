@@ -111,19 +111,27 @@ public class Ui {
             Ui.respond(output + taskList);
         }
     }
+    public static int getSelectedIndex(String[] words) throws NoIndexException {
+        if(words.length > 1){
+            return Integer.parseInt(words[1]) - 1;
+        }else {
+            throw new NoIndexException(Avo.taskList.length());
+        }
+    }
     /**
      * while loop that continuously gets the users input and responds accordingly
      */
     public static void uiLoop() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        int indexSelected;
+        String[] words = new String[50];
         while (running) {
             try {
                 String input = scanner.nextLine();
-                String[] words = input.split(" ");
+                words = input.split(" ");
                 String firstWord = words[0];
                 Command command = Parser.parseCommand(firstWord);
+                int indexSelected;
                 switch (command) {
                 case BYE:
                     Ui.bye();
@@ -134,11 +142,11 @@ public class Ui {
                     System.out.println(Ui.borderfy(showList + Avo.taskList.toString()));
                     break;
                 case MARK:
-                    indexSelected = Integer.parseInt(words[1]) - 1;
+                    indexSelected = getSelectedIndex(words);
                     Avo.taskList.mark(indexSelected);
                     break;
                 case UNMARK:
-                    indexSelected = Integer.parseInt(words[1]) - 1;
+                    indexSelected = getSelectedIndex(words);
                     Avo.taskList.unmark(indexSelected);
                     break;
                 case DEADLINE:
@@ -154,11 +162,11 @@ public class Ui {
                     Avo.taskList.addTask(currentTask,false);
                     break;
                 case DELETE:
-                    indexSelected = Integer.parseInt(words[1]) - 1;
+                    indexSelected = getSelectedIndex(words);
                     Avo.taskList.deleteTask(indexSelected);
                     break;
                 case FIND:
-                    String searchedString = (words.length > 1 && words[1] != null)
+                    String searchedString = words.length > 1
                             ? words[1].strip()
                             : "";
                     Avo.taskList.searchAll(searchedString);
@@ -166,12 +174,13 @@ public class Ui {
                 default:
                     throw new UnknownCommandException();
                  }
-            } catch (UnknownCommandException | EmptyInstructionException | InvalidIndexException |
-                     IllegalArgumentException | IncompleteInputException | EmptySearchStringException e) {
+            } catch (AvoException e) {
                 Ui.respond(e.getMessage());
             } catch(DateTimeParseException e){
                 String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
-                System.out.println(e.getParsedString()+customMessage);
+                Ui.respond(e.getParsedString()+customMessage);
+            } catch (NumberFormatException e){
+                Ui.respond(words[1]+" is not a valid index");
             }
         }
     }

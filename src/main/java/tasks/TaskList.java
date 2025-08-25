@@ -13,12 +13,8 @@ public class TaskList {
     private int numberOfTasks = 0;
     private final Task[] tasks = new Task[100];
 
-    public static TaskList of(Task[] tasks){
-        TaskList taskList = new TaskList();
-        for(Task t:tasks){
-            taskList.addTask(t,false);
-        }
-        return taskList;
+    public int length(){
+        return numberOfTasks;
     }
     public boolean isEmpty(){
         return numberOfTasks == 0;
