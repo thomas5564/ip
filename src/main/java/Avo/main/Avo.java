@@ -1,7 +1,7 @@
-package main;
-import storage.Storage;
-import ui.Ui;
-import tasks.TaskList;
+package Avo.main;
+import Avo.storage.Storage;
+import Avo.ui.Ui;
+import Avo.tasks.TaskList;
 
 import java.io.File;
 

@@ -1,12 +1,12 @@
-package parser;
+package Avo.parser;
 
-import Exceptions.IncompleteInputException;
-import tasks.Deadline;
-import tasks.Event;
-import tasks.Task;
-import Commands.Command;
-import Exceptions.UnknownCommandException;
-import Exceptions.EmptyInstructionException;
+import Avo.Exceptions.IncompleteInputException;
+import Avo.tasks.Deadline;
+import Avo.tasks.Event;
+import Avo.tasks.Task;
+import Avo.Commands.Command;
+import Avo.Exceptions.UnknownCommandException;
+import Avo.Exceptions.EmptyInstructionException;
 import java.time.LocalDate;
 import java.util.Objects;
 

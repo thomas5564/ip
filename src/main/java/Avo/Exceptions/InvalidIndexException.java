@@ -1,4 +1,4 @@
-package Exceptions;
+package Avo.Exceptions;
 
 public class InvalidIndexException extends AvoException {
     public InvalidIndexException(int selectedIndex, int numberOfEntries) {
