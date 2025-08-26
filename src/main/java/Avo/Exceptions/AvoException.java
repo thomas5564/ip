@@ -1,4 +1,4 @@
-package Exceptions;
+package Avo.Exceptions;
 
 public class AvoException extends Exception {
     public AvoException(String message) {

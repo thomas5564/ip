@@ -1,8 +1,8 @@
-package storage;
+package Avo.storage;
 
-import tasks.Task;
-import main.Avo;
-import parser.Parser;
+import Avo.tasks.Task;
+import Avo.main.Avo;
+import Avo.parser.Parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

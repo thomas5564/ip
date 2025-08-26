@@ -1,8 +1,8 @@
-package tasks;
-import Exceptions.EmptySearchStringException;
-import Exceptions.InvalidIndexException;
-import ui.Ui;
-import main.Avo;
+package Avo.tasks;
+import Avo.Exceptions.EmptySearchStringException;
+import Avo.Exceptions.InvalidIndexException;
+import Avo.ui.Ui;
+import Avo.main.Avo;
 
 
 /**List of tasks where the tasks are added. Has a maximum capacity of 100.

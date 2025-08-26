@@ -1,4 +1,4 @@
-package Exceptions;
+package Avo.Exceptions;
 
 public class EmptyInstructionException extends AvoException {
     public EmptyInstructionException() {

@@ -1,15 +1,17 @@
-package ui;
-import Exceptions.*;
-import main.Avo;
-import tasks.Task;
-import tasks.Deadline;
-import tasks.Event;
-import Commands.Command;
+package Avo.ui;
+import Avo.Exceptions.AvoException;
+import Avo.Exceptions.NoIndexException;
+import Avo.Exceptions.UnknownCommandException;
+import Avo.main.Avo;
+import Avo.tasks.Task;
+import Avo.tasks.Deadline;
+import Avo.tasks.Event;
+import Avo.Commands.Command;
 
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import parser.Parser;
-import tasks.TaskList;
+import Avo.parser.Parser;
+import Avo.tasks.TaskList;
 
 /**contains all methods with regard to the UI
  *
