@@ -17,7 +17,7 @@ import avo.tasks.TaskList;
 /**
  * Contains all methods with regard to the UI.
  */
-public class Ui {
+public class AvoSpeaker {
 
     /**
      * Greets the user.
@@ -79,7 +79,7 @@ public class Ui {
                 + "         "
                 + selectedTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
-        Ui.respond(fullResponse);
+        AvoSpeaker.respond(fullResponse);
     }
 
     /**
@@ -93,7 +93,7 @@ public class Ui {
                 + "         "
                 + currentTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
-        Ui.respond(fullResponse);
+        AvoSpeaker.respond(fullResponse);
     }
 
     /**
@@ -103,7 +103,7 @@ public class Ui {
      */
     public static void markTaskResponse(String taskString) {
         String output = "OK, I've marked this task as done:\n";
-        Ui.respond(output + taskString);
+        AvoSpeaker.respond(output + taskString);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Ui {
      */
     public static void unmarkTaskResponse(String taskString) {
         String output = "OK, I've marked this task as not done yet:\n";
-        Ui.respond(output + taskString);
+        AvoSpeaker.respond(output + taskString);
     }
 
     /**
@@ -124,10 +124,10 @@ public class Ui {
      */
     public static void findTaskResponse(TaskList taskList, String searchedString) {
         if (taskList.isEmpty()) {
-            Ui.respond(String.format("No tasks containing \"%s\" found!", searchedString));
+            AvoSpeaker.respond(String.format("No tasks containing \"%s\" found!", searchedString));
         } else {
             String output = "Here are the matching tasks in your list:\n";
-            Ui.respond(output + taskList);
+            AvoSpeaker.respond(output + taskList);
         }
     }
 
@@ -162,12 +162,12 @@ public class Ui {
                 int indexSelected;
                 switch (command) {
                 case BYE:
-                    Ui.bye();
+                    AvoSpeaker.bye();
                     running = false;
                     break;
                 case LIST:
                     String showList = "Here are the tasks in your list:";
-                    System.out.println(Ui.borderfy(showList + Avo.getTaskList().toString()));
+                    System.out.println(AvoSpeaker.borderfy(showList + Avo.getTaskList().toString()));
                     break;
                 case MARK:
                     indexSelected = getSelectedIndex(words);
@@ -203,12 +203,12 @@ public class Ui {
                     throw new UnknownCommandException();
                 }
             } catch (AvoException e) {
-                Ui.respond(e.getMessage());
+                AvoSpeaker.respond(e.getMessage());
             } catch (DateTimeParseException e) {
                 String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
-                Ui.respond(e.getParsedString() + customMessage);
+                AvoSpeaker.respond(e.getParsedString() + customMessage);
             } catch (NumberFormatException e) {
-                Ui.respond(words[1] + " is not a valid index");
+                AvoSpeaker.respond(words[1] + " is not a valid index");
             }
         }
     }

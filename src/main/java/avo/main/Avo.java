@@ -3,7 +3,7 @@ import java.io.File;
 
 import avo.storage.Storage;
 import avo.tasks.TaskList;
-import avo.ui.Ui;
+import avo.ui.AvoSpeaker;
 
 
 /**
@@ -14,8 +14,8 @@ public class Avo {
     private static TaskList taskList = new TaskList();
     private static Storage storage = new Storage(getPathName());
     public static void main(String[] args) {
-        Ui.greet();
-        Ui.uiLoop();
+        AvoSpeaker.greet();
+        AvoSpeaker.uiLoop();
     }
 
     public static String getPathName() {

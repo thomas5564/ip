@@ -2,7 +2,7 @@ package avo.tasks;
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
 import avo.main.Avo;
-import avo.ui.Ui;
+import avo.ui.AvoSpeaker;
 
 
 /**
@@ -47,7 +47,7 @@ public class TaskList {
         }
         tasks[numberOfTasks - 1] = null;
         numberOfTasks--;
-        Ui.removeTaskResponse(selectedTask, numberOfTasks);
+        AvoSpeaker.removeTaskResponse(selectedTask, numberOfTasks);
     }
 
     /**
@@ -60,7 +60,7 @@ public class TaskList {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
             tasks[index].mark();
-            Ui.markTaskResponse(tasks[index].toString());
+            AvoSpeaker.markTaskResponse(tasks[index].toString());
         }
         Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
     }
@@ -75,7 +75,7 @@ public class TaskList {
         numberOfTasks++;
         if (isAddingToMemory) {
             Avo.getStorage().appendToFile(currentTask.getStorageString());
-            Ui.addTaskResponse(currentTask, numberOfTasks);
+            AvoSpeaker.addTaskResponse(currentTask, numberOfTasks);
         }
     }
 
@@ -89,7 +89,7 @@ public class TaskList {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
             tasks[index].unmark();
-            Ui.unmarkTaskResponse(tasks[index].toString());
+            AvoSpeaker.unmarkTaskResponse(tasks[index].toString());
         }
         Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
     }
@@ -108,6 +108,6 @@ public class TaskList {
                 results.addTask(tasks[i], false);
             }
         }
-        Ui.findTaskResponse(results, keyword);
+        AvoSpeaker.findTaskResponse(results, keyword);
     }
 }
