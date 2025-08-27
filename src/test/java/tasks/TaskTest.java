@@ -1,9 +1,9 @@
 package tasks;
 
 
-import Avo.tasks.Deadline;
-import Avo.tasks.Event;
-import Avo.tasks.Task;
+import avo.tasks.Deadline;
+import avo.tasks.Event;
+import avo.tasks.Task;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

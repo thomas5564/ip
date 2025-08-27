@@ -1,4 +1,4 @@
-package Avo.Exceptions;
+package avo.exceptions;
 
 public class EmptySearchStringException extends AvoException {
     public EmptySearchStringException() {
