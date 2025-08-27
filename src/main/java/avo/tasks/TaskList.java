@@ -1,7 +1,7 @@
 package avo.tasks;
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
-import avo.main.Avo;
+import avo.storage.Storage;
 
 /**
  * List of tasks where the tasks are added. Has a maximum capacity of 100.
@@ -10,6 +10,26 @@ import avo.main.Avo;
 public class TaskList {
     private int numberOfTasks = 0;
     private final Task[] tasks = new Task[100];
+    private Storage storage;
+    private boolean isStored = false;
+
+    /**
+     * Constructor to use for the tasklist that Avo is managing
+     * @param storage storage instance where the tasks are stored
+     */
+    public TaskList(Storage storage) {
+        this.storage = storage;
+        this.isStored = true;
+        storage.readFile(this);
+    }
+
+    /**
+     * Constructor to use for any task lists made for
+     * ad-hoc use
+     */
+    public TaskList() {
+        this.storage = null;
+    }
 
     public int length() {
         return numberOfTasks;
@@ -47,6 +67,9 @@ public class TaskList {
         }
         tasks[numberOfTasks - 1] = null;
         numberOfTasks--;
+        if (isStored) {
+            storage.rewriteFileFromList(numberOfTasks, tasks);
+        }
     }
 
     /**
@@ -60,7 +83,9 @@ public class TaskList {
         } else {
             tasks[index].mark();
         }
-        Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
+        if (isStored) {
+            storage.rewriteFileFromList(numberOfTasks, tasks);
+        }
     }
 
     /**
@@ -71,8 +96,8 @@ public class TaskList {
     public void addTask(Task currentTask, boolean isAddingToMemory) {
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
-        if (isAddingToMemory) {
-            Avo.getStorage().appendToFile(currentTask.getStorageString());
+        if (isStored && isAddingToMemory) {
+            storage.appendToFile(currentTask.getStorageString());
         }
     }
 
@@ -87,7 +112,9 @@ public class TaskList {
         } else {
             tasks[index].unmark();
         }
-        Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
+        if (isStored) {
+            storage.rewriteFileFromList(numberOfTasks, tasks);
+        }
     }
 
     /**

@@ -10,21 +10,24 @@ import avo.ui.AvoSpeaker;
  * Main file used to run Avo
  */
 public class Avo {
-    private static String pathName = "data" + File.separator + "avo.txt";
-    private static TaskList taskList = new TaskList();
-    private static Storage storage = new Storage(getPathName());
-    public static void main(String[] args) {
-        AvoSpeaker.greet();
-    }
-    public static String getPathName() {
+    private String pathName = "data" + File.separator + "avo.txt";
+    private Storage storage = new Storage(getPathName());
+    private TaskList taskList = new TaskList(storage);
+    private AvoSpeaker speaker = new AvoSpeaker(taskList);
+
+    public String getPathName() {
         return pathName;
     }
 
-    public static TaskList getTaskList() {
+    public TaskList getTaskList() {
         return taskList;
     }
 
-    public static Storage getStorage() {
+    public Storage getStorage() {
         return storage;
+    }
+
+    public AvoSpeaker getSpeaker() {
+        return speaker;
     }
 }

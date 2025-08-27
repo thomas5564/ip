@@ -21,6 +21,7 @@ public class MainWindow extends AnchorPane {
     private Avo avo;
     private Image avoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/avo.jpg")));
     private Image userImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/user.jpg")));
+    private AvoSpeaker speaker;
 
     @FXML
     private ScrollPane scrollPane;
@@ -32,6 +33,16 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     public void setAvo(Avo avo) {
         this.avo = avo;
+        this.speaker = avo.getSpeaker();
+    }
+
+    /**
+     * Adds greeting dialog box from avo
+     */
+    public void greet() {
+        String greetString = speaker.greet();
+        DialogBox greetDialog = DialogBox.getDukeDialog(greetString, avoImage);
+        dialogContainer.getChildren().add(greetDialog);
     }
 
     /**
@@ -39,9 +50,10 @@ public class MainWindow extends AnchorPane {
      */
     public void handleUserInput() {
         String input = userInput.getText();
+        String response = speaker.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(input, avoImage)
+                DialogBox.getDukeDialog(response, avoImage)
         );
     }
 }

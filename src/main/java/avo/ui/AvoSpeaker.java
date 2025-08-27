@@ -6,7 +6,6 @@ import avo.commands.Command;
 import avo.exceptions.AvoException;
 import avo.exceptions.NoIndexException;
 import avo.exceptions.UnknownCommandException;
-import avo.main.Avo;
 import avo.parser.Parser;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
@@ -17,11 +16,15 @@ import avo.tasks.TaskList;
  * Contains all methods with regard to the UI.
  */
 public class AvoSpeaker {
+    private TaskList taskList;
+    public AvoSpeaker(TaskList taskList) {
+        this.taskList = taskList;
+    }
 
     /**
      * Greets the user.
      */
-    public static String greet() {
+    public String greet() {
         String greetString = """
                 Hello! I'm Avo
                 Let me organise your tasks
@@ -37,7 +40,7 @@ public class AvoSpeaker {
     /**
      * Bids goodbye to the user.
      */
-    public static String bye() {
+    public String bye() {
         String byeString = "Bye. Hope to see you again soon!";
         return byeString.stripTrailing();
     }
@@ -49,7 +52,7 @@ public class AvoSpeaker {
      * @param numberOfTasks  The total number of tasks.
      * @return Full response for removing a task
      */
-    public static String removeTaskResponse(Task selectedTask, int numberOfTasks) {
+    public String removeTaskResponse(Task selectedTask, int numberOfTasks) {
         String fullResponse = "Noted. I've removed this task:\n "
                 + "         "
                 + selectedTask.toString()
@@ -64,7 +67,7 @@ public class AvoSpeaker {
      * @param numberOfTasks  The total number of tasks in the task list.
      * @return Full response for adding a task
      */
-    public static String addTaskResponse(Task currentTask, int numberOfTasks) {
+    public String addTaskResponse(Task currentTask, int numberOfTasks) {
         String fullResponse = "Got it. I've added this task:\n "
                 + "         "
                 + currentTask.toString()
@@ -77,7 +80,7 @@ public class AvoSpeaker {
      * @param taskList being managed by Avo
      * @return Appropriate response
      */
-    public static String markTaskResponse(TaskList taskList) {
+    public String markTaskResponse(TaskList taskList) {
         String output = "OK, I've marked this task as done:\n";
         return output + taskList.toString();
     }
@@ -87,7 +90,7 @@ public class AvoSpeaker {
      * @param taskList being managed by Avo
      * @return Appropriate response
      */
-    public static String unmarkTaskResponse(TaskList taskList) {
+    public String unmarkTaskResponse(TaskList taskList) {
         String output = "OK, I've marked this task as not done yet:\n";
         return output + taskList.toString();
     }
@@ -98,7 +101,7 @@ public class AvoSpeaker {
      * @param searchedString String that is searched for bu the user
      * @return Appropriate response
      */
-    public static String findTaskResponse(TaskList taskList, String searchedString) {
+    public String findTaskResponse(TaskList taskList, String searchedString) {
         if (taskList.isEmpty()) {
             return String.format("No tasks containing \"%s\" found!", searchedString);
         } else {
@@ -114,11 +117,11 @@ public class AvoSpeaker {
      * @return The selected index.
      * @throws NoIndexException If no index was provided.
      */
-    public static int getSelectedIndex(String[] words) throws NoIndexException {
+    public int getSelectedIndex(String[] words, TaskList taskList) throws NoIndexException {
         if (words.length > 1) {
             return Integer.parseInt(words[1]) - 1;
         } else {
-            throw new NoIndexException(Avo.getTaskList().length());
+            throw new NoIndexException(taskList.length());
         }
     }
 
@@ -126,14 +129,13 @@ public class AvoSpeaker {
      * Returns the appropriate response given the user's input
      * @param input from the user
      */
-    public static String getResponse(String input) {
+    public String getResponse(String input) {
         String[] words = new String[50];
         try {
             words = input.split(" ");
             String firstWord = words[0];
             Command command = Parser.parseCommand(firstWord);
             int indexSelected;
-            TaskList taskList = Avo.getTaskList();
             switch (command) {
             case BYE:
                 return bye();
@@ -141,11 +143,11 @@ public class AvoSpeaker {
                 String prefix = "Here are the tasks in your list:";
                 return prefix + taskList.toString();
             case MARK:
-                indexSelected = getSelectedIndex(words);
+                indexSelected = getSelectedIndex(words, taskList);
                 taskList.mark(indexSelected);
                 return markTaskResponse(taskList);
             case UNMARK:
-                indexSelected = getSelectedIndex(words);
+                indexSelected = getSelectedIndex(words, taskList);
                 taskList.unmark(indexSelected);
                 return unmarkTaskResponse(taskList);
             case DEADLINE:
@@ -161,7 +163,7 @@ public class AvoSpeaker {
                 taskList.addTask(currentTask, false);
                 return addTaskResponse(currentTask, taskList.length());
             case DELETE:
-                indexSelected = getSelectedIndex(words);
+                indexSelected = getSelectedIndex(words, taskList);
                 taskList.deleteTask(indexSelected);
                 return removeTaskResponse(taskList.get(indexSelected),
                         taskList.length());

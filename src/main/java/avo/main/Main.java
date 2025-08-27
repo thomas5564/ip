@@ -13,12 +13,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
         MainWindow mainWindow = new MainWindow();
+        Avo avo = new Avo();
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
         loader.setRoot(mainWindow);
         AnchorPane rootNode = loader.load();
         Scene scene = new Scene(rootNode);
         stage.setScene(scene);
+        loader.<MainWindow>getController().setAvo(avo);
+        loader.<MainWindow>getController().greet();
         stage.show();
     }
 }
