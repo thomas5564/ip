@@ -1,4 +1,4 @@
-package Avo.Exceptions;
+package avo.exceptions;
 
 public class NoIndexException extends AvoException {
     public NoIndexException(int numberOfTasks) {

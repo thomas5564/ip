@@ -1,4 +1,4 @@
-package Avo.tasks;
+package avo.tasks;
 
 public class Task {
     private final String instruction;

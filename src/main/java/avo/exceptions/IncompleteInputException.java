@@ -1,4 +1,4 @@
-package Avo.Exceptions;
+package avo.exceptions;
 
 public class IncompleteInputException extends AvoException {
   public IncompleteInputException(String correctFormat) {

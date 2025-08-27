@@ -1,4 +1,4 @@
-package Avo.Exceptions;
+package avo.exceptions;
 
 public class UnknownCommandException extends AvoException {
     public UnknownCommandException() {

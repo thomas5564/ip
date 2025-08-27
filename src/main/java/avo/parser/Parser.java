@@ -1,20 +1,24 @@
-package Avo.parser;
-
-import Avo.Exceptions.IncompleteInputException;
-import Avo.tasks.Deadline;
-import Avo.tasks.Event;
-import Avo.tasks.Task;
-import Avo.Commands.Command;
-import Avo.Exceptions.UnknownCommandException;
-import Avo.Exceptions.EmptyInstructionException;
+package avo.parser;
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**contains all methods used to interpret strings
- *
+import avo.commands.Command;
+import avo.exceptions.EmptyInstructionException;
+import avo.exceptions.IncompleteInputException;
+import avo.exceptions.UnknownCommandException;
+import avo.tasks.Deadline;
+import avo.tasks.Event;
+import avo.tasks.Task;
+
+
+/**
+ * contains all methods used to interpret strings
  */
+@SuppressWarnings("checkstyle:Regexp")
 public class Parser {
-    //interprets strings as commands
+    /**
+     * interprets strings as commands
+     */
     public static Command parseCommand(String input) throws UnknownCommandException {
         try {
             return Command.valueOf(input.toUpperCase());
@@ -101,73 +105,73 @@ public class Parser {
         return new Task(instruction);
     }
 
-    /**Converts storage string to the task that it represents
-     *
+    /**
+     * Converts storage string to the task that it represents
      * @param entryString storage string of the task it represents
      * @return the task that the input string represents
      */
-    public static Task parseTaskFromStorage(String entryString){
+    public static Task parseTaskFromStorage(String entryString) {
         Task currentTask;
         char firstLetter = entryString.charAt(0);
         switch (firstLetter) {
-            case 'T':
-                currentTask = Parser.parseTodoFromStorage(entryString);
-                break;
-            case 'D':
-                currentTask = Parser.parseDeadlineFromStorage(entryString);
-                break;
-            case 'E':
-                currentTask = Parser.parseEventFromStorage(entryString);
-                break;
-            default:
-                System.out.println("invalid entry!");
-                return null;
+        case 'T':
+            currentTask = Parser.parseTodoFromStorage(entryString);
+            break;
+        case 'D':
+            currentTask = Parser.parseDeadlineFromStorage(entryString);
+            break;
+        case 'E':
+            currentTask = Parser.parseEventFromStorage(entryString);
+            break;
+        default:
+            System.out.println("invalid entry!");
+            return null;
         }
         return currentTask;
     }
 
-    /**Converts storage string to the event that it represents
-     *
+    /**
+     * Converts storage string to the event that it represents
      * @param string storage string for a event
      * @return a {@code Event} object created from the storage string
      */
-    public static Task parseEventFromStorage(String string){
+    public static Task parseEventFromStorage(String string) {
         String[] a = string.split("\\|");
         LocalDate startTime = LocalDate.parse(a[3].strip());
         LocalDate endTime = LocalDate.parse(a[4].strip());
-        Event storedEvent =  new Event(a[2],endTime,startTime);
+        Event storedEvent = new Event(a[2], endTime, startTime);
         boolean isDone = Objects.equals(a[1], "x");
-        if(isDone){
+        if (isDone) {
             storedEvent.mark();
         }
         return storedEvent;
     }
 
-    /**Converts storage string to the deadline that it represents
-     *
+    /**
+     * Converts storage string to the deadline that it represents
      * @param string storage string for a deadline
      * @return a {@code Deadline} object created from the storage string
      */
-    public static Task parseDeadlineFromStorage(String string){
+    public static Task parseDeadlineFromStorage(String string) {
         String[] a = string.split("\\|");
         LocalDate deadline = LocalDate.parse(a[3]);
-        Deadline storedEvent =  new Deadline(a[2],deadline);
+        Deadline storedEvent = new Deadline(a[2], deadline);
         boolean isDone = Objects.equals(a[1], "x");
-        if(isDone){
+        if (isDone) {
             storedEvent.mark();
         }
         return storedEvent;
     }
-    /**Converts storage string to the to-do that it represents
-     *
+    /**
+     * Converts storage string to the to-do that it represents
      * @param string storage string for a to-do
      * @return a {@code Task} object created from the storage string
      */
-    public static Task parseTodoFromStorage(String string){
+    public static Task parseTodoFromStorage(String string) {
         String[] a = string.split("//|");
         Task storedTask = new Task(a[2]);
         boolean isDone = Objects.equals(a[1], "x");
-        if(isDone){
+        if (isDone) {
             storedTask.mark();
         }
         return storedTask;
