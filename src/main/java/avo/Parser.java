@@ -1,4 +1,4 @@
-package avo.parser;
+package avo;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,7 +14,6 @@ import avo.tasks.Task;
 /**
  * contains all methods used to interpret strings
  */
-@SuppressWarnings("checkstyle:Regexp")
 public class Parser {
     /**
      * interprets strings as commands

@@ -1,18 +1,15 @@
-package tasks;
-
-
-import avo.tasks.Deadline;
-import avo.tasks.Event;
-import avo.tasks.Task;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
+package avo.tasks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
+
+
 public class TaskTest {
     @Test
-    public void storageStringTest(){
+    public void storageStringTest() {
         Event event = new Event("play games",
                 LocalDate.parse("2003-02-07"),
                 LocalDate.parse("2004-12-21"));

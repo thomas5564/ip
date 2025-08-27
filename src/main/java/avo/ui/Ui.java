@@ -8,7 +8,7 @@ import avo.exceptions.AvoException;
 import avo.exceptions.NoIndexException;
 import avo.exceptions.UnknownCommandException;
 import avo.main.Avo;
-import avo.parser.Parser;
+import avo.Parser;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
 import avo.tasks.Task;
@@ -29,7 +29,7 @@ public class Ui {
                 Input your tasks as such:
                 Todo - todo <instruction>
                 Deadline - deadline <instruction> /by <deadline in YYYY-MM-DD>
-                Event - event <instruction> /from <start date in YYYY-MM-DD> 
+                Event - event <instruction> /from <start date in YYYY-MM-DD>
                        /to <end date in YYYY-MM-DD>
                 """;
         System.out.println(borderfy(greetString));
@@ -142,7 +142,7 @@ public class Ui {
         if (words.length > 1) {
             return Integer.parseInt(words[1]) - 1;
         } else {
-            throw new NoIndexException(Avo.taskList.length());
+            throw new NoIndexException(Avo.getTaskList().length());
         }
     }
 
@@ -161,46 +161,46 @@ public class Ui {
                 Command command = Parser.parseCommand(firstWord);
                 int indexSelected;
                 switch (command) {
-                    case BYE:
-                        Ui.bye();
-                        running = false;
-                        break;
-                    case LIST:
-                        String showList = "Here are the tasks in your list:";
-                        System.out.println(Ui.borderfy(showList + Avo.taskList.toString()));
-                        break;
-                    case MARK:
-                        indexSelected = getSelectedIndex(words);
-                        Avo.taskList.mark(indexSelected);
-                        break;
-                    case UNMARK:
-                        indexSelected = getSelectedIndex(words);
-                        Avo.taskList.unmark(indexSelected);
-                        break;
-                    case DEADLINE:
-                        Deadline currentDeadline = Parser.parseDeadline(input.strip());
-                        Avo.taskList.addTask(currentDeadline, false);
-                        break;
-                    case EVENT:
-                        Event currentEvent = Parser.parseEvent(input.strip());
-                        Avo.taskList.addTask(currentEvent, false);
-                        break;
-                    case TODO:
-                        Task currentTask = Parser.parseTask(input.strip());
-                        Avo.taskList.addTask(currentTask, false);
-                        break;
-                    case DELETE:
-                        indexSelected = getSelectedIndex(words);
-                        Avo.taskList.deleteTask(indexSelected);
-                        break;
-                    case FIND:
-                        String searchedString = words.length > 1
-                                ? words[1].strip()
-                                : "";
-                        Avo.taskList.searchAll(searchedString);
-                        break;
-                    default:
-                        throw new UnknownCommandException();
+                case BYE:
+                    Ui.bye();
+                    running = false;
+                    break;
+                case LIST:
+                    String showList = "Here are the tasks in your list:";
+                    System.out.println(Ui.borderfy(showList + Avo.getTaskList().toString()));
+                    break;
+                case MARK:
+                    indexSelected = getSelectedIndex(words);
+                    Avo.getTaskList().mark(indexSelected);
+                    break;
+                case UNMARK:
+                    indexSelected = getSelectedIndex(words);
+                    Avo.getTaskList().unmark(indexSelected);
+                    break;
+                case DEADLINE:
+                    Deadline currentDeadline = Parser.parseDeadline(input.strip());
+                    Avo.getTaskList().addTask(currentDeadline, false);
+                    break;
+                case EVENT:
+                    Event currentEvent = Parser.parseEvent(input.strip());
+                    Avo.getTaskList().addTask(currentEvent, false);
+                    break;
+                case TODO:
+                    Task currentTask = Parser.parseTask(input.strip());
+                    Avo.getTaskList().addTask(currentTask, false);
+                    break;
+                case DELETE:
+                    indexSelected = getSelectedIndex(words);
+                    Avo.getTaskList().deleteTask(indexSelected);
+                    break;
+                case FIND:
+                    String searchedString = words.length > 1
+                            ? words[1].strip()
+                            : "";
+                    Avo.getTaskList().searchAll(searchedString);
+                    break;
+                default:
+                    throw new UnknownCommandException();
                 }
             } catch (AvoException e) {
                 Ui.respond(e.getMessage());

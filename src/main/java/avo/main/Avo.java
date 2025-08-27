@@ -1,19 +1,32 @@
 package avo.main;
-import avo.storage.Storage;
-import avo.ui.Ui;
-import avo.tasks.TaskList;
-
 import java.io.File;
 
-/**Main file used to run Avo
- *
+import avo.storage.Storage;
+import avo.tasks.TaskList;
+import avo.ui.Ui;
+
+
+/**
+ * Main file used to run Avo
  */
 public class Avo {
-    public static String pathName = "data" + File.separator + "avo.txt";
-    public static TaskList taskList = new TaskList();
-    public static Storage storage = new Storage(pathName);
-    public static void main(String[] args){
+    private static String pathName = "data" + File.separator + "avo.txt";
+    private static TaskList taskList = new TaskList();
+    private static Storage storage = new Storage(getPathName());
+    public static void main(String[] args) {
         Ui.greet();
         Ui.uiLoop();
+    }
+
+    public static String getPathName() {
+        return pathName;
+    }
+
+    public static TaskList getTaskList() {
+        return taskList;
+    }
+
+    public static Storage getStorage() {
+        return storage;
     }
 }
