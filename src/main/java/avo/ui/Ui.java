@@ -8,7 +8,7 @@ import avo.exceptions.AvoException;
 import avo.exceptions.NoIndexException;
 import avo.exceptions.UnknownCommandException;
 import avo.main.Avo;
-import avo.Parser;
+import avo.parser.Parser;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
 import avo.tasks.Task;

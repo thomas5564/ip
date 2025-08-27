@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import avo.main.Avo;
-import avo.Parser;
+import avo.parser.Parser;
 import avo.tasks.Task;
 
 

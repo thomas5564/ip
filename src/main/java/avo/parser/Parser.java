@@ -1,4 +1,4 @@
-package avo;
+package avo.parser;
 import java.time.LocalDate;
 import java.util.Objects;
 

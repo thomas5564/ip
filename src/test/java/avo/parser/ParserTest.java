@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import avo.Parser;
 import avo.exceptions.EmptyInstructionException;
 import avo.exceptions.IncompleteInputException;
 import avo.tasks.Deadline;
