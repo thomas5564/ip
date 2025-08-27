@@ -1,7 +1,6 @@
 package avo.ui;
 
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
 
 import avo.commands.Command;
 import avo.exceptions.AvoException;
@@ -22,7 +21,7 @@ public class AvoSpeaker {
     /**
      * Greets the user.
      */
-    public static void greet() {
+    public static String greet() {
         String greetString = """
                 Hello! I'm Avo
                 Let me organise your tasks
@@ -32,40 +31,15 @@ public class AvoSpeaker {
                 Event - event <instruction> /from <start date in YYYY-MM-DD>
                        /to <end date in YYYY-MM-DD>
                 """;
-        System.out.println(borderfy(greetString));
+        return greetString;
     }
 
     /**
      * Bids goodbye to the user.
      */
-    public static void bye() {
+    public static String bye() {
         String byeString = "Bye. Hope to see you again soon!";
-        System.out.println(borderfy(byeString).stripTrailing());
-    }
-
-    /**
-     * Wraps the input string in the border as shown.
-     *
-     * @param s The string to be wrapped.
-     * @return The string wrapped with a border.
-     */
-    public static String borderfy(String s) {
-        String output = String.format("""
-                ____________________________________________________________
-                 %s
-                ____________________________________________________________
-                """, s);
-        return output;
-    }
-
-    /**
-     * Prints out the input as a response with a border.
-     *
-     * @param response The response to be wrapped and printed.
-     */
-    public static void respond(String response) {
-        String borderfiedResponse = borderfy(response);
-        System.out.println(borderfiedResponse);
+        return byeString.stripTrailing();
     }
 
     /**
@@ -73,13 +47,14 @@ public class AvoSpeaker {
      *
      * @param selectedTask   The task selected for removal.
      * @param numberOfTasks  The total number of tasks.
+     * @return Full response for removing a task
      */
-    public static void removeTaskResponse(Task selectedTask, int numberOfTasks) {
+    public static String removeTaskResponse(Task selectedTask, int numberOfTasks) {
         String fullResponse = "Noted. I've removed this task:\n "
                 + "         "
                 + selectedTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
-        AvoSpeaker.respond(fullResponse);
+        return fullResponse;
     }
 
     /**
@@ -87,47 +62,48 @@ public class AvoSpeaker {
      *
      * @param currentTask    The current task to be added.
      * @param numberOfTasks  The total number of tasks in the task list.
+     * @return Full response for adding a task
      */
-    public static void addTaskResponse(Task currentTask, int numberOfTasks) {
+    public static String addTaskResponse(Task currentTask, int numberOfTasks) {
         String fullResponse = "Got it. I've added this task:\n "
                 + "         "
                 + currentTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
-        AvoSpeaker.respond(fullResponse);
+        return fullResponse;
     }
 
     /**
-     * Prints out response for the marking of a task for completion.
-     *
-     * @param taskString The string representation of the task.
+     * Produces response to marking a task as done
+     * @param taskList being managed by Avo
+     * @return Appropriate response
      */
-    public static void markTaskResponse(String taskString) {
+    public static String markTaskResponse(TaskList taskList) {
         String output = "OK, I've marked this task as done:\n";
-        AvoSpeaker.respond(output + taskString);
+        return output + taskList.toString();
     }
 
     /**
-     * Prints out response for the unmarking of a task due to incompletion.
-     *
-     * @param taskString The string representation of the task.
+     * Produces response to marking a task as done
+     * @param taskList being managed by Avo
+     * @return Appropriate response
      */
-    public static void unmarkTaskResponse(String taskString) {
+    public static String unmarkTaskResponse(TaskList taskList) {
         String output = "OK, I've marked this task as not done yet:\n";
-        AvoSpeaker.respond(output + taskString);
+        return output + taskList.toString();
     }
 
     /**
-     * Prints out response for tasks matching a search.
-     *
-     * @param taskList       The list of tasks.
-     * @param searchedString The string being searched for.
+     * Produces response for finding a task
+     * @param taskList tasklist being managed bu Avo
+     * @param searchedString String that is searched for bu the user
+     * @return Appropriate response
      */
-    public static void findTaskResponse(TaskList taskList, String searchedString) {
+    public static String findTaskResponse(TaskList taskList, String searchedString) {
         if (taskList.isEmpty()) {
-            AvoSpeaker.respond(String.format("No tasks containing \"%s\" found!", searchedString));
+            return String.format("No tasks containing \"%s\" found!", searchedString);
         } else {
             String output = "Here are the matching tasks in your list:\n";
-            AvoSpeaker.respond(output + taskList);
+            return output + taskList;
         }
     }
 
@@ -147,69 +123,64 @@ public class AvoSpeaker {
     }
 
     /**
-     * Continuously gets the user's input and responds accordingly.
+     * Returns the appropriate response given the user's input
+     * @param input from the user
      */
-    public static void uiLoop() {
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
+    public static String getResponse(String input) {
         String[] words = new String[50];
-        while (running) {
-            try {
-                String input = scanner.nextLine();
-                words = input.split(" ");
-                String firstWord = words[0];
-                Command command = Parser.parseCommand(firstWord);
-                int indexSelected;
-                switch (command) {
-                case BYE:
-                    AvoSpeaker.bye();
-                    running = false;
-                    break;
-                case LIST:
-                    String showList = "Here are the tasks in your list:";
-                    System.out.println(AvoSpeaker.borderfy(showList + Avo.getTaskList().toString()));
-                    break;
-                case MARK:
-                    indexSelected = getSelectedIndex(words);
-                    Avo.getTaskList().mark(indexSelected);
-                    break;
-                case UNMARK:
-                    indexSelected = getSelectedIndex(words);
-                    Avo.getTaskList().unmark(indexSelected);
-                    break;
-                case DEADLINE:
-                    Deadline currentDeadline = Parser.parseDeadline(input.strip());
-                    Avo.getTaskList().addTask(currentDeadline, false);
-                    break;
-                case EVENT:
-                    Event currentEvent = Parser.parseEvent(input.strip());
-                    Avo.getTaskList().addTask(currentEvent, false);
-                    break;
-                case TODO:
-                    Task currentTask = Parser.parseTask(input.strip());
-                    Avo.getTaskList().addTask(currentTask, false);
-                    break;
-                case DELETE:
-                    indexSelected = getSelectedIndex(words);
-                    Avo.getTaskList().deleteTask(indexSelected);
-                    break;
-                case FIND:
-                    String searchedString = words.length > 1
-                            ? words[1].strip()
-                            : "";
-                    Avo.getTaskList().searchAll(searchedString);
-                    break;
-                default:
-                    throw new UnknownCommandException();
-                }
-            } catch (AvoException e) {
-                AvoSpeaker.respond(e.getMessage());
-            } catch (DateTimeParseException e) {
-                String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
-                AvoSpeaker.respond(e.getParsedString() + customMessage);
-            } catch (NumberFormatException e) {
-                AvoSpeaker.respond(words[1] + " is not a valid index");
+        try {
+            words = input.split(" ");
+            String firstWord = words[0];
+            Command command = Parser.parseCommand(firstWord);
+            int indexSelected;
+            TaskList taskList = Avo.getTaskList();
+            switch (command) {
+            case BYE:
+                return bye();
+            case LIST:
+                String prefix = "Here are the tasks in your list:";
+                return prefix + taskList.toString();
+            case MARK:
+                indexSelected = getSelectedIndex(words);
+                taskList.mark(indexSelected);
+                return markTaskResponse(taskList);
+            case UNMARK:
+                indexSelected = getSelectedIndex(words);
+                taskList.unmark(indexSelected);
+                return unmarkTaskResponse(taskList);
+            case DEADLINE:
+                Deadline currentDeadline = Parser.parseDeadline(input.strip());
+                taskList.addTask(currentDeadline, false);
+                return addTaskResponse(currentDeadline, taskList.length());
+            case EVENT:
+                Event currentEvent = Parser.parseEvent(input.strip());
+                taskList.addTask(currentEvent, false);
+                return addTaskResponse(currentEvent, taskList.length());
+            case TODO:
+                Task currentTask = Parser.parseTask(input.strip());
+                taskList.addTask(currentTask, false);
+                return addTaskResponse(currentTask, taskList.length());
+            case DELETE:
+                indexSelected = getSelectedIndex(words);
+                taskList.deleteTask(indexSelected);
+                return removeTaskResponse(taskList.get(indexSelected),
+                        taskList.length());
+            case FIND:
+                String searchedString = words.length > 1
+                        ? words[1].strip()
+                        : "";
+                TaskList results = taskList.searchAll(searchedString);
+                return findTaskResponse(results, searchedString);
+            default:
+                throw new UnknownCommandException();
             }
+        } catch (AvoException e) {
+            return e.getMessage();
+        } catch (DateTimeParseException e) {
+            String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
+            return e.getParsedString() + customMessage;
+        } catch (NumberFormatException e) {
+            return words[1] + " is not a valid index";
         }
     }
 }

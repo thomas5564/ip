@@ -15,9 +15,7 @@ public class Avo {
     private static Storage storage = new Storage(getPathName());
     public static void main(String[] args) {
         AvoSpeaker.greet();
-        AvoSpeaker.uiLoop();
     }
-
     public static String getPathName() {
         return pathName;
     }

@@ -2,8 +2,6 @@ package avo.tasks;
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
 import avo.main.Avo;
-import avo.ui.AvoSpeaker;
-
 
 /**
  * List of tasks where the tasks are added. Has a maximum capacity of 100.
@@ -18,6 +16,9 @@ public class TaskList {
     }
     public boolean isEmpty() {
         return numberOfTasks == 0;
+    }
+    public Task get(int index) {
+        return tasks[index];
     }
     @Override
     public String toString() {
@@ -41,13 +42,11 @@ public class TaskList {
         if (index >= numberOfTasks || index < 0) {
             throw new InvalidIndexException(index + 1, numberOfTasks);
         }
-        Task selectedTask = tasks[index];
         for (int i = index; i < numberOfTasks - 1; i++) {
             tasks[i] = tasks[i + 1];
         }
         tasks[numberOfTasks - 1] = null;
         numberOfTasks--;
-        AvoSpeaker.removeTaskResponse(selectedTask, numberOfTasks);
     }
 
     /**
@@ -60,7 +59,6 @@ public class TaskList {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
             tasks[index].mark();
-            AvoSpeaker.markTaskResponse(tasks[index].toString());
         }
         Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
     }
@@ -75,7 +73,6 @@ public class TaskList {
         numberOfTasks++;
         if (isAddingToMemory) {
             Avo.getStorage().appendToFile(currentTask.getStorageString());
-            AvoSpeaker.addTaskResponse(currentTask, numberOfTasks);
         }
     }
 
@@ -89,7 +86,6 @@ public class TaskList {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
             tasks[index].unmark();
-            AvoSpeaker.unmarkTaskResponse(tasks[index].toString());
         }
         Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
     }
@@ -97,8 +93,10 @@ public class TaskList {
     /**
      * Prints out a list of tasks with instructions that contain a certain keyword
      * @param keyword word that the user searched up
+     * @return Tasklist containing all tasks with a matching instruction
+     * @throws EmptySearchStringException if the searched string is empty
      */
-    public void searchAll(String keyword) throws EmptySearchStringException {
+    public TaskList searchAll(String keyword) throws EmptySearchStringException {
         if (keyword.isEmpty()) {
             throw new EmptySearchStringException();
         }
@@ -108,6 +106,6 @@ public class TaskList {
                 results.addTask(tasks[i], false);
             }
         }
-        AvoSpeaker.findTaskResponse(results, keyword);
+        return results;
     }
 }
