@@ -11,7 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
+import avo.responses.ErrorResponse;
+import avo.responses.Response;
 
 
 /**
@@ -55,10 +56,15 @@ public class MainWindow extends AnchorPane {
      */
     public void handleUserInput() {
         String input = userInput.getText();
-        String response = speaker.getResponse(input);
+        Response response = speaker.getResponse(input);
+        DialogBox avoDialog = DialogBox.getDukeDialog(response, avoImage);
+        if (response instanceof ErrorResponse) {
+            System.out.println("error123");
+            avoDialog.lookup(".label").getStyleClass().add("error-label");
+        }
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, avoImage)
+                avoDialog
         );
         userInput.setText("");
     }

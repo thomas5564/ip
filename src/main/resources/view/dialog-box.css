@@ -6,6 +6,13 @@
     -fx-border-radius: 1em 1em 0 1em;
 }
 
+.error-label.reply-label{
+    -fx-background-color: linear-gradient(to bottom right, #ff4c4c, #990000);
+    -fx-border-color: #cc0000;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
 .reply-label {
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;

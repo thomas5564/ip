@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import avo.responses.Response;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -53,6 +54,11 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
+    public static DialogBox getDukeDialog(Response response, Image img) {
+        var db = new DialogBox(response.getText(), img);
+        db.flip();
+        return db;
+    }
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
@@ -71,7 +77,6 @@ public class DialogBox extends HBox {
             dialog.getStyleClass().add("delete-label");
             break;
         default:
-            // Do nothing
         }
     }
 }

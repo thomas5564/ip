@@ -11,6 +11,9 @@ import avo.tasks.Deadline;
 import avo.tasks.Event;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
+import avo.responses.CommandResponse;
+import avo.responses.ErrorResponse;
+import avo.responses.Response;
 
 /**
  * Contains all methods with regard to the UI.
@@ -129,7 +132,7 @@ public class AvoSpeaker {
      * Returns the appropriate response given the user's input
      * @param input from the user
      */
-    public String getResponse(String input) {
+    public Response getResponse(String input) {
         String[] words = new String[50];
         try {
             words = input.split(" ");
@@ -138,52 +141,75 @@ public class AvoSpeaker {
             int indexSelected;
             switch (command) {
             case BYE:
-                return bye();
+                return new CommandResponse(bye(), Command.BYE);
             case LIST:
                 String prefix = "Here are the tasks in your list:";
-                return prefix + taskList.toString();
+                return new CommandResponse(
+                        prefix + taskList.toString(),
+                        Command.LIST
+                );
             case MARK:
                 indexSelected = getSelectedIndex(words, taskList);
                 taskList.mark(indexSelected);
-                return markTaskResponse(taskList);
+                return new CommandResponse(
+                        markTaskResponse(taskList),
+                        Command.MARK
+                );
             case UNMARK:
                 indexSelected = getSelectedIndex(words, taskList);
                 taskList.unmark(indexSelected);
-                return unmarkTaskResponse(taskList);
+                return new CommandResponse(
+                        unmarkTaskResponse(taskList),
+                        Command.UNMARK
+                );
             case DEADLINE:
                 Deadline currentDeadline = Parser.parseDeadline(input.strip());
                 taskList.addTask(currentDeadline, true);
-                return addTaskResponse(currentDeadline, taskList.length());
+                return new CommandResponse(
+                        addTaskResponse(currentDeadline, taskList.length()),
+                        Command.DEADLINE
+                );
             case EVENT:
                 Event currentEvent = Parser.parseEvent(input.strip());
                 taskList.addTask(currentEvent, true);
-                return addTaskResponse(currentEvent, taskList.length());
+                return new CommandResponse(
+                        addTaskResponse(currentEvent, taskList.length()),
+                        Command.EVENT
+                );
             case TODO:
                 Task currentTask = Parser.parseTask(input.strip());
                 taskList.addTask(currentTask, true);
-                return addTaskResponse(currentTask, taskList.length());
+                return new CommandResponse(
+                        addTaskResponse(currentTask, taskList.length()),
+                        Command.TODO
+                );
             case DELETE:
                 indexSelected = getSelectedIndex(words, taskList);
                 Task taskSelected = taskList.get(indexSelected);
                 taskList.deleteTask(indexSelected);
-                return removeTaskResponse(taskSelected,
-                        taskList.length());
+                return new CommandResponse(
+                        removeTaskResponse(taskSelected, taskList.length()),
+                        Command.BYE
+                );
             case FIND:
                 String searchedString = words.length > 1
                         ? words[1].strip()
                         : "";
                 TaskList results = taskList.searchAll(searchedString);
-                return findTaskResponse(results, searchedString);
+                return new CommandResponse(
+                        findTaskResponse(results, searchedString),
+                        Command.FIND
+                );
             default:
                 throw new UnknownCommandException();
             }
         } catch (AvoException e) {
-            return e.getMessage();
+            return new ErrorResponse(e.getMessage());
         } catch (DateTimeParseException e) {
             String customMessage = " was written in the wrong format \n Write dates in yyyy-mm-dd";
-            return e.getParsedString() + customMessage;
+            return new ErrorResponse(e.getParsedString() + customMessage);
         } catch (NumberFormatException e) {
-            return words[1] + " is not a valid index";
+            return new ErrorResponse(words[1] + " is not a valid index");
         }
     }
 }
