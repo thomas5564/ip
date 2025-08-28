@@ -152,20 +152,21 @@ public class AvoSpeaker {
                 return unmarkTaskResponse(taskList);
             case DEADLINE:
                 Deadline currentDeadline = Parser.parseDeadline(input.strip());
-                taskList.addTask(currentDeadline, false);
+                taskList.addTask(currentDeadline, true);
                 return addTaskResponse(currentDeadline, taskList.length());
             case EVENT:
                 Event currentEvent = Parser.parseEvent(input.strip());
-                taskList.addTask(currentEvent, false);
+                taskList.addTask(currentEvent, true);
                 return addTaskResponse(currentEvent, taskList.length());
             case TODO:
                 Task currentTask = Parser.parseTask(input.strip());
-                taskList.addTask(currentTask, false);
+                taskList.addTask(currentTask, true);
                 return addTaskResponse(currentTask, taskList.length());
             case DELETE:
                 indexSelected = getSelectedIndex(words, taskList);
+                Task taskSelected = taskList.get(indexSelected);
                 taskList.deleteTask(indexSelected);
-                return removeTaskResponse(taskList.get(indexSelected),
+                return removeTaskResponse(taskSelected,
                         taskList.length());
             case FIND:
                 String searchedString = words.length > 1

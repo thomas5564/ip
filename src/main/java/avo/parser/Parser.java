@@ -167,7 +167,7 @@ public class Parser {
      * @return a {@code Task} object created from the storage string
      */
     public static Task parseTodoFromStorage(String string) {
-        String[] a = string.split("//|");
+        String[] a = string.split("\\|");
         Task storedTask = new Task(a[2]);
         boolean isDone = Objects.equals(a[1], "x");
         if (isDone) {

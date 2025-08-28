@@ -70,6 +70,7 @@ public class TaskList {
         if (isStored) {
             storage.rewriteFileFromList(numberOfTasks, tasks);
         }
+        System.out.println(this.toString());
     }
 
     /**
@@ -94,9 +95,11 @@ public class TaskList {
      * @param isAddingToMemory if the task is being added to the data file
      */
     public void addTask(Task currentTask, boolean isAddingToMemory) {
+        System.out.println(numberOfTasks);
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
         if (isStored && isAddingToMemory) {
+            System.out.println("adding to avo.txt");
             storage.appendToFile(currentTask.getStorageString());
         }
     }

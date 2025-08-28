@@ -36,6 +36,11 @@ public class MainWindow extends AnchorPane {
         this.speaker = avo.getSpeaker();
     }
 
+    @FXML
+    public void initialize() {
+        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+    }
+
     /**
      * Adds greeting dialog box from avo
      */
@@ -55,5 +60,6 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, avoImage)
         );
+        userInput.setText("");
     }
 }
