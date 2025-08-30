@@ -1,7 +1,10 @@
 package avo.ui;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
 
+import avo.main.Main;
+import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +23,9 @@ import javafx.scene.layout.HBox;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
+    private static Image avoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/avo.jpg")));
+    private static Image userImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/user.jpg")));
+    private static Image angryAvoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/angryAvo.png")));
     @FXML
     private Label dialog;
     @FXML
@@ -50,17 +56,23 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
-    public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+    public static DialogBox getUserDialog(String text) {
+        return new DialogBox(text, userImage);
     }
 
-    public static DialogBox getDukeDialog(Response response, Image img) {
-        var db = new DialogBox(response.getText(), img);
+    public static DialogBox getAvoDialog(Response response) {
+        var db = new DialogBox(response.getText(), avoImage);
         db.flip();
         return db;
     }
-    public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+    public static DialogBox getErrorDialog(ErrorResponse errorResponse) {
+        var db = new DialogBox(errorResponse.getText(), angryAvoImage);
+        db.flip();
+        db.lookup(".label").getStyleClass().add("error-label");
+        return db;
+    }
+    public static DialogBox getAvoDialog(String text) {
+        var db = new DialogBox(text, avoImage);
         db.flip();
         return db;
     }

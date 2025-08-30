@@ -30,8 +30,6 @@ public class MainWindow extends AnchorPane {
     private String currentInput;
     private boolean isMenuOut = false;
     private boolean autoScrollEnabled = false;
-    private Image avoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/avo.jpg")));
-    private Image userImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/user.jpg")));
     private AvoSpeaker speaker;
 
     @FXML
@@ -82,7 +80,7 @@ public class MainWindow extends AnchorPane {
      */
     public void greet() {
         String greetString = speaker.greet();
-        DialogBox greetDialog = DialogBox.getDukeDialog(greetString, avoImage);
+        DialogBox greetDialog = DialogBox.getAvoDialog(greetString);
         dialogContainer.getChildren().add(greetDialog);
         scrollPane.setVvalue(0.0);
     }
@@ -127,12 +125,11 @@ public class MainWindow extends AnchorPane {
         }
         String input = inputCollator.getInput();
         Response response = speaker.getResponse(input);
-        DialogBox avoDialog = DialogBox.getDukeDialog(response, avoImage);
-        if (response instanceof ErrorResponse) {
-            avoDialog.lookup(".label").getStyleClass().add("error-label");
-        }
+        DialogBox avoDialog = response instanceof ErrorResponse
+                            ? DialogBox.getErrorDialog((ErrorResponse) response)
+                            : DialogBox.getAvoDialog(response);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getUserDialog(input),
                 avoDialog
         );
         for (Node node: datePickerContainer.getChildren()) {
@@ -175,7 +172,9 @@ public class MainWindow extends AnchorPane {
      * @param commandString corresponding label on the button
      */
     public void handleMenuCommand(String commandString) {
-        datePickerContainer.getChildren().clear();
+        if (!commandString.equals("Show List")) {
+            datePickerContainer.getChildren().clear();
+        }
         switch (commandString) {
         case "Show List":
             handleUserInput(() -> "list");

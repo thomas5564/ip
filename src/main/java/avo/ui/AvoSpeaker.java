@@ -32,7 +32,7 @@ public class AvoSpeaker {
                 Hello! I'm Avo
                 Let me organise your tasks.
                 Do you have anything to do? Key it in and send it over!
-                Otherwise, check out the other tasks in the menu
+                Otherwise, check out the other options in the menu
                 """;
         return greetString;
     }
@@ -77,22 +77,22 @@ public class AvoSpeaker {
 
     /**
      * Produces response to marking a task as done
-     * @param taskList being managed by Avo
+     * @param task to mark
      * @return Appropriate response
      */
-    public String markTaskResponse(TaskList taskList) {
+    public String markTaskResponse(Task task) {
         String output = "OK, I've marked this task as done:\n";
-        return output + taskList.toString();
+        return output + task.toString();
     }
 
     /**
      * Produces response to marking a task as done
-     * @param taskList being managed by Avo
+     * @param task to unmark
      * @return Appropriate response
      */
-    public String unmarkTaskResponse(TaskList taskList) {
+    public String unmarkTaskResponse(Task task) {
         String output = "OK, I've marked this task as not done yet:\n";
-        return output + taskList.toString();
+        return output + task.toString();
     }
 
     /**
@@ -149,14 +149,14 @@ public class AvoSpeaker {
                 indexSelected = getSelectedIndex(words, taskList);
                 taskList.mark(indexSelected);
                 return new CommandResponse(
-                        markTaskResponse(taskList),
+                        markTaskResponse(taskList.get(indexSelected)),
                         Command.MARK
                 );
             case UNMARK:
                 indexSelected = getSelectedIndex(words, taskList);
                 taskList.unmark(indexSelected);
                 return new CommandResponse(
-                        unmarkTaskResponse(taskList),
+                        unmarkTaskResponse(taskList.get(indexSelected)),
                         Command.UNMARK
                 );
             case DEADLINE:

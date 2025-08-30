@@ -37,7 +37,10 @@ public class TaskList {
     public boolean isEmpty() {
         return numberOfTasks == 0;
     }
-    public Task get(int index) {
+    public Task get(int index) throws InvalidIndexException {
+        if (index >= numberOfTasks || index < 0) {
+            throw new InvalidIndexException(index + 1, numberOfTasks);
+        }
         return tasks[index];
     }
     @Override
