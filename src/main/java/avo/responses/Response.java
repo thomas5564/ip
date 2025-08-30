@@ -1,7 +1,5 @@
 package avo.responses;
 
-import avo.commands.Command;
-
 /**
  * Class for all response types
  */

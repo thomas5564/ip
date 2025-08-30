@@ -9,3 +9,5 @@ E|x|live|2003-02-07|2004-12-21
 T|o|walk dog
 E|o|survive|2025-08-14|2025-08-21
 D|o|study for finals|2025-11-28
+D|o|eat|2025-08-27
+E|o|study|2025-08-28|2026-08-07
