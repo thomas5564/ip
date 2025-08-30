@@ -23,7 +23,7 @@ public class Deadline extends Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
         String formattedDate = deadline.format(formatter);
         String deadline = String.format("(by: %s)", formattedDate);
-        return String.format("[D]%s%s", super.toString(), deadline);
+        return String.format("[D]%s%s", super.toString().substring(4), deadline);
     }
 
     /**

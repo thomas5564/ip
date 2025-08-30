@@ -1,9 +1,7 @@
 package avo.tasks;
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
-import avo.main.Avo;
-import avo.ui.Ui;
-
+import avo.storage.Storage;
 
 /**
  * List of tasks where the tasks are added. Has a maximum capacity of 100.
@@ -12,12 +10,35 @@ import avo.ui.Ui;
 public class TaskList {
     private int numberOfTasks = 0;
     private final Task[] tasks = new Task[100];
+    private Storage storage;
+    private boolean isStored = false;
+
+    /**
+     * Constructor to use for the tasklist that Avo is managing
+     * @param storage storage instance where the tasks are stored
+     */
+    public TaskList(Storage storage) {
+        this.storage = storage;
+        this.isStored = true;
+        storage.readFile(this);
+    }
+
+    /**
+     * Constructor to use for any task lists made for
+     * ad-hoc use
+     */
+    public TaskList() {
+        this.storage = null;
+    }
 
     public int length() {
         return numberOfTasks;
     }
     public boolean isEmpty() {
         return numberOfTasks == 0;
+    }
+    public Task get(int index) {
+        return tasks[index];
     }
     @Override
     public String toString() {
@@ -41,13 +62,15 @@ public class TaskList {
         if (index >= numberOfTasks || index < 0) {
             throw new InvalidIndexException(index + 1, numberOfTasks);
         }
-        Task selectedTask = tasks[index];
         for (int i = index; i < numberOfTasks - 1; i++) {
             tasks[i] = tasks[i + 1];
         }
         tasks[numberOfTasks - 1] = null;
         numberOfTasks--;
-        Ui.removeTaskResponse(selectedTask, numberOfTasks);
+        if (isStored) {
+            storage.rewriteFileFromList(numberOfTasks, tasks);
+        }
+        System.out.println(this.toString());
     }
 
     /**
@@ -60,9 +83,10 @@ public class TaskList {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
             tasks[index].mark();
-            Ui.markTaskResponse(tasks[index].toString());
         }
-        Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
+        if (isStored) {
+            storage.rewriteFileFromList(numberOfTasks, tasks);
+        }
     }
 
     /**
@@ -73,9 +97,9 @@ public class TaskList {
     public void addTask(Task currentTask, boolean isAddingToMemory) {
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
-        if (isAddingToMemory) {
-            Avo.getStorage().appendToFile(currentTask.getStorageString());
-            Ui.addTaskResponse(currentTask, numberOfTasks);
+        if (isStored && isAddingToMemory) {
+            System.out.println("adding to avo.txt");
+            storage.appendToFile(currentTask.getStorageString());
         }
     }
 
@@ -89,16 +113,19 @@ public class TaskList {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
             tasks[index].unmark();
-            Ui.unmarkTaskResponse(tasks[index].toString());
         }
-        Avo.getStorage().rewriteFileFromList(numberOfTasks, tasks);
+        if (isStored) {
+            storage.rewriteFileFromList(numberOfTasks, tasks);
+        }
     }
 
     /**
      * Prints out a list of tasks with instructions that contain a certain keyword
      * @param keyword word that the user searched up
+     * @return Tasklist containing all tasks with a matching instruction
+     * @throws EmptySearchStringException if the searched string is empty
      */
-    public void searchAll(String keyword) throws EmptySearchStringException {
+    public TaskList searchAll(String keyword) throws EmptySearchStringException {
         if (keyword.isEmpty()) {
             throw new EmptySearchStringException();
         }
@@ -108,6 +135,6 @@ public class TaskList {
                 results.addTask(tasks[i], false);
             }
         }
-        Ui.findTaskResponse(results, keyword);
+        return results;
     }
 }

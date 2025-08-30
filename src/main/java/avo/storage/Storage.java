@@ -9,8 +9,7 @@ import java.util.Scanner;
 import avo.main.Avo;
 import avo.parser.Parser;
 import avo.tasks.Task;
-
-
+import avo.tasks.TaskList;
 
 
 /**
@@ -30,7 +29,6 @@ public class Storage {
             this.filePath = filePath;
             storageFile = new File(filePath);
             fileScanner = new Scanner(storageFile);
-            readFile();
         } catch (FileNotFoundException e) {
             System.out.println("Data file is not found. If you want your tasks to be saved,\n "
                     + "Do the following:\n"
@@ -79,11 +77,11 @@ public class Storage {
     /**
      * Reads the storage file and adds the stored tasks to the Task List
      */
-    public void readFile() {
+    public void readFile(TaskList taskList) {
         while (fileScanner.hasNext()) {
             String nextEntry = fileScanner.nextLine();
             Task nextTask = Parser.parseTaskFromStorage(nextEntry);
-            Avo.getTaskList().addTask(nextTask, false);
+            taskList.addTask(nextTask, false);
         }
         fileScanner.close();
     }

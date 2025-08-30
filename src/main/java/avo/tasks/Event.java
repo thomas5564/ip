@@ -28,7 +28,7 @@ public class Event extends Task {
         String formattedStartTime = startTime.format(formatter);
         String formattedEndTime = endTime.format(formatter);
         String duration = String.format("(from: %s to: %s)", formattedStartTime, formattedEndTime);
-        return String.format("[E]%s%s", super.toString(), duration);
+        return String.format("[E]%s%s", super.toString().substring(3), duration);
     }
 
     /**
