@@ -1,29 +1,33 @@
 .menu-root {
-    -fx-background-color: #2c3e50;   /* dark blue/grey background */
+    -fx-background-color: #2c3e50; /* dark blue/grey background */
 }
 
-.menu-root > Label {
+.menu-root > Button {
     -fx-text-fill: white;
+    -fx-background-color: transparent; /* removes default button bg */
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-padding: 6 10;
-    -fx-background-radius: 4;
+    -fx-background-radius: 0; /* remove rounded corners */
     -fx-cursor: hand;
+    -fx-border-color: transparent; /* remove border */
 }
 
-.menu-root > Label:hover {
+.menu-root > Button:hover {
     -fx-text-fill: #bee7a5;
 }
 
-.sublist Label {
+.sublist Button {
     -fx-text-fill: white;
-   -fx-font-size: 10px;
-   -fx-font-weight: bold;
-   -fx-padding: 0 0 10 20;
-   -fx-background-radius: 4;
-   -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 20; /* indent */
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
 }
 
-.sublist Label:hover {
+.sublist Button:hover {
     -fx-text-fill: #bee7a5;
 }

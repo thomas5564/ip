@@ -1,6 +1,8 @@
 package avo.ui;
 
+import avo.main.Main;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -14,10 +16,12 @@ import java.util.List;
  */
 public class Menu extends VBox {
     private HashMap<String, ArrayList<String>> buttonNames = new HashMap<>();
+    private MainWindow mainWindow;
     /**
      * Constructor for this class
      */
-    public Menu() {
+    public Menu(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/Menu.fxml"));
             fxmlLoader.setController(this);
@@ -34,10 +38,10 @@ public class Menu extends VBox {
         buttonNames.put("Show List", new ArrayList<>());
         for (String name: buttonNames.keySet()) {
             if (buttonNames.get(name).isEmpty()) {
-                Label label = new Label(name);
-                this.getChildren().add(label);
+                Button button = new Button(name);
+                this.getChildren().add(button);
             } else {
-                MenuDiv menuDiv = new MenuDiv(name, buttonNames.get(name));
+                MenuDiv menuDiv = new MenuDiv(name, buttonNames.get(name), mainWindow);
                 this.getChildren().add(menuDiv);
             }
         }

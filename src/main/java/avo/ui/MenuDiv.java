@@ -1,6 +1,8 @@
 package avo.ui;
 import java.util.ArrayList;
 
+import avo.main.Main;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -9,7 +11,8 @@ import javafx.scene.layout.VBox;
  * Menu bar class
  */
 public class MenuDiv extends VBox {
-    private Label label;
+    private MainWindow mainWindow;
+    private Button button;
     private String name;
     private boolean isListing = false;
     private VBox sublistBox = new VBox();
@@ -19,16 +22,18 @@ public class MenuDiv extends VBox {
      * @param name name of label
      * @param sublist sublist that is shown
      */
-    public MenuDiv(String name, ArrayList<String> sublist) {
-        this.label = new Label(name);
+    public MenuDiv(String name, ArrayList<String> sublist, MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
+        this.button = new Button(name);
+        button.setPickOnBounds(true);
         this.getStyleClass().add("menu-root");
         sublistBox.getStyleClass().add("sublist");
-        label.setOnMouseClicked(e -> toggleSublist(sublist));
+        button.setOnMouseClicked(e -> toggleSublist(sublist));
         for (String subitem : sublist) {
-            Label label = new Label(subitem);
-            sublistBox.getChildren().add(label);
+            Button button = new Button(subitem);
+            sublistBox.getChildren().add(button);
         }
-        this.getChildren().add(label);
+        this.getChildren().add(button);
         System.out.println(sublistBox.getStyleClass());
 
     }

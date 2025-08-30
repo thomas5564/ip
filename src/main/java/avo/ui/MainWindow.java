@@ -7,10 +7,9 @@ import avo.main.Main;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -82,9 +81,10 @@ public class MainWindow extends AnchorPane {
             commandBox.getChildren().clear();
             this.isMenuOut = false;
         } else {
-            Menu menu = new Menu();
+            Menu menu = new Menu(this);
             commandBox.getChildren().add(menu);
             this.isMenuOut = true;
         }
     }
+
 }
