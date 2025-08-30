@@ -65,10 +65,17 @@ public class MainWindow extends AnchorPane {
                     instruction);
             return input;
         };
-        userInput.setOnAction(e -> {
-            handleUserInput(todoInputCollator);
-        });
         userInput.setPromptText("Write to-do instruction...");
+        updateInputs(todoInputCollator);
+    }
+
+    /**
+     * Updates the input collation process
+     * @param inputCollator new input collator
+     */
+    public void updateInputs(InputCollator inputCollator) {
+        userInput.setOnAction(e -> handleUserInput(inputCollator));
+        sendButton.setOnAction(e -> handleUserInput(inputCollator));
     }
     /**
      * Adds greeting dialog box from avo
@@ -79,6 +86,7 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(greetDialog);
         scrollPane.setVvalue(0.0);
     }
+
     private InputCollator buildDatedTaskCollator(String formatString, String... labels) {
         List<DatePicker> pickers = new ArrayList<>();
         for (String labelText : labels) {
@@ -96,7 +104,7 @@ public class MainWindow extends AnchorPane {
             for (Node node: datePickerContainer.getChildren()) {
                 DatePicker dp = (DatePicker) node;
                 LocalDate date = dp.getValue();
-                inputs[counter] = date.toString();
+                inputs[counter] = date == null ? "-" : date.toString();
                 counter++;
             }
             String input = String.format(
@@ -178,9 +186,7 @@ public class MainWindow extends AnchorPane {
                     "event %s /from %s /to %s",
                     "start",
                     "end");
-            userInput.setOnAction(e -> {
-                handleUserInput(eventInputCollator);
-            });
+            updateInputs(eventInputCollator);
             toggleMenu();
             break;
 
@@ -188,9 +194,7 @@ public class MainWindow extends AnchorPane {
             InputCollator deadlineInputCollator = buildDatedTaskCollator(
                     "deadline %s /by %s",
                 "deadline");
-            userInput.setOnAction(e -> {
-                handleUserInput(deadlineInputCollator);
-            });
+            updateInputs(deadlineInputCollator);
             userInput.setPromptText("Write deadline instruction...");
             toggleMenu();
             break;
@@ -202,30 +206,22 @@ public class MainWindow extends AnchorPane {
                         instruction);
                 return input;
             };
-            userInput.setOnAction(e -> {
-                handleUserInput(todoInputCollator);
-            });
+            updateInputs(todoInputCollator);
             userInput.setPromptText("Write to-do instruction...");
             toggleMenu();
             break;
         case "Mark Task":
-            userInput.setOnAction(e -> {
-                handleUserInput(getIndexCollator("mark"));
-            });
+            updateInputs(getIndexCollator("mark"));
             userInput.setPromptText("Type task index to mark...");
             toggleMenu();
             break;
         case "Unmark Task":
-            userInput.setOnAction(e -> {
-                handleUserInput(getIndexCollator("unmark"));
-            });
+            updateInputs(getIndexCollator("unmark"));
             userInput.setPromptText("Type task index to unmark...");
             toggleMenu();
             break;
         case "Delete Task":
-            userInput.setOnAction(e -> {
-                handleUserInput(getIndexCollator("delete"));
-            });
+            updateInputs(getIndexCollator("delete"));
             userInput.setPromptText("Type task index to delete...");
             toggleMenu();
             break;

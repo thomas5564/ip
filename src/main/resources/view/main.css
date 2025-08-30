@@ -4,7 +4,6 @@
     -fx-background-image: url("../images/avocados.jpg"); /* Set image */
     -fx-background-size: stretch;
     -fx-background-repeat: round;
-
 }
 
 #navbar {

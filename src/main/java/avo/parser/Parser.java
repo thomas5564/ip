@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import avo.commands.Command;
+import avo.exceptions.EmptyDateException;
 import avo.exceptions.EmptyInstructionException;
 import avo.exceptions.IncompleteInputException;
 import avo.exceptions.UnknownCommandException;
@@ -33,7 +34,7 @@ public class Parser {
      * @return a {@code Deadline} object created from the input
      * @throws EmptyInstructionException if the input is empty or invalid
      */
-    public static Deadline parseDeadline(String input) throws EmptyInstructionException, IncompleteInputException {
+    public static Deadline parseDeadline(String input) throws EmptyInstructionException, IncompleteInputException, EmptyDateException {
         if (!input.startsWith("deadline")) {
             throw new IllegalArgumentException("Input must start with 'deadline'");
         }
@@ -49,8 +50,10 @@ public class Parser {
         }
 
         String deadlineDateString = parts[1].trim();
+        if (deadlineDateString.equals("-")) {
+            throw new EmptyDateException("deadline");
+        }
         LocalDate deadlineDate = LocalDate.parse(deadlineDateString);
-
         return new Deadline(instruction, deadlineDate);
     }
 
@@ -61,7 +64,7 @@ public class Parser {
      * @return a {@code Event} object created from the input
      * @throws EmptyInstructionException if the input is empty or invalid
      */
-    public static Event parseEvent(String input) throws EmptyInstructionException, IncompleteInputException {
+    public static Event parseEvent(String input) throws EmptyInstructionException, IncompleteInputException, EmptyDateException {
         if (!input.startsWith("event")) {
             throw new IllegalArgumentException("Input must start with 'event'");
         }
@@ -78,6 +81,14 @@ public class Parser {
 
         String startTimeString = parts[1].trim();
         String endTimeString = parts[2].trim();
+        if (startTimeString.equals("-")) {
+            if (endTimeString.equals("-")) {
+                throw new EmptyDateException("start time", "end time");
+            }
+            throw new EmptyDateException("start time");
+        } else if (endTimeString.equals("-")) {
+            throw new EmptyDateException("end time");
+        }
 
         LocalDate startTime = LocalDate.parse(startTimeString);
         LocalDate endTime = LocalDate.parse(endTimeString);
