@@ -1,6 +1,8 @@
 package avo.ui;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import avo.main.Avo;
@@ -9,7 +11,10 @@ import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -74,6 +79,35 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(greetDialog);
         scrollPane.setVvalue(0.0);
     }
+    private InputCollator buildDatedTaskCollator(String formatString, String... labels) {
+        List<DatePicker> pickers = new ArrayList<>();
+        for (String labelText : labels) {
+            DatePicker dp = new DatePicker();
+            dp.setPrefWidth(150);
+            dp.setPromptText(labelText);
+            datePickerContainer.getChildren().add(dp);
+            pickers.add(dp);
+        }
+        InputCollator currentInputCollator = () -> {
+            String[] inputs = new String[labels.length + 1];
+            int counter = 1;
+            String instruction = userInput.getText();
+            inputs[0] = instruction;
+            for (Node node: datePickerContainer.getChildren()) {
+                DatePicker dp = (DatePicker) node;
+                LocalDate date = dp.getValue();
+                inputs[counter] = date.toString();
+                counter++;
+            }
+            String input = String.format(
+                    formatString,
+                    (Object[]) inputs
+            );
+            return input;
+        };
+        return currentInputCollator;
+    }
+
 
     /**
      * Handle user inputs from the textfield and reflect it in the dialogbox
@@ -140,23 +174,10 @@ public class MainWindow extends AnchorPane {
             toggleMenu();
             break;
         case "Event":
-            DatePicker start = new DatePicker();
-            DatePicker end = new DatePicker();
-            start.setPrefWidth(150);
-            end.setPrefWidth(150);
-            datePickerContainer.getChildren().addAll(start, end);
-            userInput.setPromptText("Write event instruction...");
-            InputCollator eventInputCollator = () -> {
-                LocalDate startDate = start.getValue();
-                LocalDate endDate = end.getValue();
-                String instruction = userInput.getText();
-                String input = String.format(
-                        "event %s /from %s /to %s",
-                        instruction,
-                        startDate,
-                        endDate);
-                return input;
-            };
+            InputCollator eventInputCollator = buildDatedTaskCollator(
+                    "event %s /from %s /to %s",
+                    "start",
+                    "end");
             userInput.setOnAction(e -> {
                 handleUserInput(eventInputCollator);
             });
@@ -164,21 +185,9 @@ public class MainWindow extends AnchorPane {
             break;
 
         case "Deadline":
-            DatePicker deadline = new DatePicker();
-            deadline.setPrefHeight(30);
-            deadline.toFront();
-            deadline.setOnShowing(e -> System.out.println("DatePicker popup is showing"));
-            deadline.setPrefWidth(200);
-            datePickerContainer.getChildren().add(deadline);
-            InputCollator deadlineInputCollator = () -> {
-                LocalDate deadlineValue = deadline.getValue();
-                String instruction = userInput.getText();
-                String input = String.format(
-                        "deadline %s /by %s",
-                        instruction,
-                        deadlineValue);
-                return input;
-            };
+            InputCollator deadlineInputCollator = buildDatedTaskCollator(
+                    "deadline %s /by %s",
+                "deadline");
             userInput.setOnAction(e -> {
                 handleUserInput(deadlineInputCollator);
             });

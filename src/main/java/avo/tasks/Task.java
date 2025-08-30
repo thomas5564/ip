@@ -21,6 +21,7 @@ public class Task {
     public void unmark() {
         isDone = false;
     }
+
     @Override
     public String toString() {
         String mark = isDone ? "[x]" : "[ ]";
