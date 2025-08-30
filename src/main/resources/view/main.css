@@ -7,6 +7,15 @@
 
 }
 
+#navbar {
+  -fx-background-color: #bee7a5;
+}
+
+#avolabel {
+    -fx-font: bold 20px "Arial";
+    -fx-text-fill: green;
+}
+
 
 .text-field {
     -fx-background-color: #d9ffe2;
@@ -54,6 +63,9 @@
     -fx-background-color: transparent;
 }
 
+#dialogContainer {
+    -fx-padding: 50 0 0 0;
+}
 
 
 

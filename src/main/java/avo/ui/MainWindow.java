@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import avo.main.Avo;
 import avo.main.Main;
+import avo.responses.ErrorResponse;
+import avo.responses.Response;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -11,8 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import avo.responses.ErrorResponse;
-import avo.responses.Response;
+
 
 
 /**
@@ -20,6 +21,7 @@ import avo.responses.Response;
  */
 public class MainWindow extends AnchorPane {
     private Avo avo;
+    private boolean isMenuOut = false;
     private Image avoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/avo.jpg")));
     private Image userImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/user.jpg")));
     private AvoSpeaker speaker;
@@ -31,7 +33,11 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
     @FXML
+    private Button menuButton;
+    @FXML
     private TextField userInput;
+    @FXML
+    private VBox commandBox;
     public void setAvo(Avo avo) {
         this.avo = avo;
         this.speaker = avo.getSpeaker();
@@ -59,7 +65,6 @@ public class MainWindow extends AnchorPane {
         Response response = speaker.getResponse(input);
         DialogBox avoDialog = DialogBox.getDukeDialog(response, avoImage);
         if (response instanceof ErrorResponse) {
-            System.out.println("error123");
             avoDialog.lookup(".label").getStyleClass().add("error-label");
         }
         dialogContainer.getChildren().addAll(
@@ -67,5 +72,19 @@ public class MainWindow extends AnchorPane {
                 avoDialog
         );
         userInput.setText("");
+    }
+    /**
+     * toggle menu
+     */
+    public void toggleMenu() {
+        System.out.println("toggling menu");
+        if (isMenuOut) {
+            commandBox.getChildren().clear();
+            this.isMenuOut = false;
+        } else {
+            Menu menu = new Menu();
+            commandBox.getChildren().add(menu);
+            this.isMenuOut = true;
+        }
     }
 }

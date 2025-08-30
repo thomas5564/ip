@@ -7,13 +7,13 @@ import avo.exceptions.AvoException;
 import avo.exceptions.NoIndexException;
 import avo.exceptions.UnknownCommandException;
 import avo.parser.Parser;
+import avo.responses.CommandResponse;
+import avo.responses.ErrorResponse;
+import avo.responses.Response;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
-import avo.responses.CommandResponse;
-import avo.responses.ErrorResponse;
-import avo.responses.Response;
 
 /**
  * Contains all methods with regard to the UI.
@@ -74,7 +74,7 @@ public class AvoSpeaker {
         String fullResponse = "Got it. I've added this task:\n "
                 + "         "
                 + currentTask.toString()
-                + String.format("\n         Now you have %d tasks in the list.", numberOfTasks + 1);
+                + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
         return fullResponse;
     }
 
