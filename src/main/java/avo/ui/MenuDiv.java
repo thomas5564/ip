@@ -31,11 +31,13 @@ public class MenuDiv extends VBox {
         button.setOnMouseClicked(e -> toggleSublist(sublist));
         for (String subitem : sublist) {
             Button button = new Button(subitem);
+            button.setOnAction(e-> {
+                mainWindow.handleMenuCommand(button.getText());
+            });
             sublistBox.getChildren().add(button);
         }
         this.getChildren().add(button);
         System.out.println(sublistBox.getStyleClass());
-
     }
 
     /**

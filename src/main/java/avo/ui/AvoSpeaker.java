@@ -30,12 +30,9 @@ public class AvoSpeaker {
     public String greet() {
         String greetString = """
                 Hello! I'm Avo
-                Let me organise your tasks
-                Input your tasks as such:
-                Todo - todo <instruction>
-                Deadline - deadline <instruction> /by <deadline in YYYY-MM-DD>
-                Event - event <instruction> /from <start date in YYYY-MM-DD>
-                       /to <end date in YYYY-MM-DD>
+                Let me organise your tasks.
+                Do you have anything to do? Key it in and send it over!
+                Otherwise, check out the other tasks in the menu
                 """;
         return greetString;
     }

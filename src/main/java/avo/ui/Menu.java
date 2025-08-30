@@ -30,15 +30,18 @@ public class Menu extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ArrayList<String> taskTypes = new ArrayList<>(List.of("Event", "Deadline", "Todo"));
+        ArrayList<String> taskTypes = new ArrayList<>(List.of("Event", "Deadline", "To-do"));
         ArrayList<String> manageTask = new ArrayList<>(List.of("Mark Task", "Unmark Task"));
         buttonNames.put("Add Task", taskTypes);
         buttonNames.put("Manage Task", manageTask);
-        buttonNames.put("Remove Task", new ArrayList<>());
+        buttonNames.put("Delete Task", new ArrayList<>());
         buttonNames.put("Show List", new ArrayList<>());
         for (String name: buttonNames.keySet()) {
             if (buttonNames.get(name).isEmpty()) {
                 Button button = new Button(name);
+                button.setOnAction(e-> {
+                    mainWindow.handleMenuCommand(button.getText());
+                });
                 this.getChildren().add(button);
             } else {
                 MenuDiv menuDiv = new MenuDiv(name, buttonNames.get(name), mainWindow);

@@ -20,6 +20,15 @@
 .text-field {
     -fx-background-color: #d9ffe2;
     -fx-font: 20px "Arial";
+    -fx-prompt-text-fill: gray; /* must not be same as background */
+}
+
+.date-picker .arrow-button {
+    -fx-padding: 4;                 /* expand hit area */
+    -fx-background-color: transparent;
+}
+.date-picker .arrow {
+    -fx-shape: "M0,0 L0,4 L4,0 Z";  /* ensure icon fits hitbox */
 }
 
 Button {

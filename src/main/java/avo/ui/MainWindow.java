@@ -1,5 +1,6 @@
 package avo.ui;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import avo.main.Avo;
@@ -7,10 +8,11 @@ import avo.main.Main;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -20,7 +22,9 @@ import javafx.scene.layout.VBox;
  */
 public class MainWindow extends AnchorPane {
     private Avo avo;
+    private String currentInput;
     private boolean isMenuOut = false;
+    private boolean autoScrollEnabled = false;
     private Image avoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/avo.jpg")));
     private Image userImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/user.jpg")));
     private AvoSpeaker speaker;
@@ -37,16 +41,30 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private VBox commandBox;
+    @FXML
+    private HBox datePickerContainer;
     public void setAvo(Avo avo) {
         this.avo = avo;
         this.speaker = avo.getSpeaker();
     }
 
+    /**
+     * Initialises Avo to take in a new to-do task
+     */
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        InputCollator todoInputCollator = () -> {
+            String instruction = userInput.getText();
+            String input = String.format(
+                    "todo %s",
+                    instruction);
+            return input;
+        };
+        userInput.setOnAction(e -> {
+            handleUserInput(todoInputCollator);
+        });
+        userInput.setPromptText("Write to-do instruction...");
     }
-
     /**
      * Adds greeting dialog box from avo
      */
@@ -54,13 +72,18 @@ public class MainWindow extends AnchorPane {
         String greetString = speaker.greet();
         DialogBox greetDialog = DialogBox.getDukeDialog(greetString, avoImage);
         dialogContainer.getChildren().add(greetDialog);
+        scrollPane.setVvalue(0.0);
     }
 
     /**
      * Handle user inputs from the textfield and reflect it in the dialogbox
      */
-    public void handleUserInput() {
-        String input = userInput.getText();
+    public void handleUserInput(InputCollator inputCollator) {
+        if (!autoScrollEnabled) {
+            scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+            autoScrollEnabled = true;
+        }
+        String input = inputCollator.getInput();
         Response response = speaker.getResponse(input);
         DialogBox avoDialog = DialogBox.getDukeDialog(response, avoImage);
         if (response instanceof ErrorResponse) {
@@ -70,6 +93,12 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 avoDialog
         );
+        for (Node node: datePickerContainer.getChildren()) {
+            if (node instanceof DatePicker) {
+                DatePicker datePicker = (DatePicker) node;
+                datePicker.setValue(null);
+            }
+        }
         userInput.setText("");
     }
     /**
@@ -86,5 +115,114 @@ public class MainWindow extends AnchorPane {
             this.isMenuOut = true;
         }
     }
+    public InputCollator getIndexCollator(String command) {
+        InputCollator indexInputCollator = () -> {
+            String index = userInput.getText();
+            return String.format(
+                    "%s %s",
+                    command,
+                    index);
+        };
+        return indexInputCollator;
+    }
+    public void showList() {
+        handleUserInput(() -> "list");
+    }
+    /**
+     * handles responses to the menu button presses
+     * @param commandString corresponding label on the button
+     */
+    public void handleMenuCommand(String commandString) {
+        datePickerContainer.getChildren().clear();
+        switch (commandString) {
+        case "Show List":
+            handleUserInput(() -> "list");
+            toggleMenu();
+            break;
+        case "Event":
+            DatePicker start = new DatePicker();
+            DatePicker end = new DatePicker();
+            start.setPrefWidth(150);
+            end.setPrefWidth(150);
+            datePickerContainer.getChildren().addAll(start, end);
+            userInput.setPromptText("Write event instruction...");
+            InputCollator eventInputCollator = () -> {
+                LocalDate startDate = start.getValue();
+                LocalDate endDate = end.getValue();
+                String instruction = userInput.getText();
+                String input = String.format(
+                        "event %s /from %s /to %s",
+                        instruction,
+                        startDate,
+                        endDate);
+                return input;
+            };
+            userInput.setOnAction(e -> {
+                handleUserInput(eventInputCollator);
+            });
+            toggleMenu();
+            break;
 
+        case "Deadline":
+            DatePicker deadline = new DatePicker();
+            deadline.setPrefHeight(30);
+            deadline.toFront();
+            deadline.setOnShowing(e -> System.out.println("DatePicker popup is showing"));
+            deadline.setPrefWidth(200);
+            datePickerContainer.getChildren().add(deadline);
+            InputCollator deadlineInputCollator = () -> {
+                LocalDate deadlineValue = deadline.getValue();
+                String instruction = userInput.getText();
+                String input = String.format(
+                        "deadline %s /by %s",
+                        instruction,
+                        deadlineValue);
+                return input;
+            };
+            userInput.setOnAction(e -> {
+                handleUserInput(deadlineInputCollator);
+            });
+            userInput.setPromptText("Write deadline instruction...");
+            toggleMenu();
+            break;
+        case "To-do":
+            InputCollator todoInputCollator = () -> {
+                String instruction = userInput.getText();
+                String input = String.format(
+                        "todo %s",
+                        instruction);
+                return input;
+            };
+            userInput.setOnAction(e -> {
+                handleUserInput(todoInputCollator);
+            });
+            userInput.setPromptText("Write to-do instruction...");
+            toggleMenu();
+            break;
+        case "Mark Task":
+            userInput.setOnAction(e -> {
+                handleUserInput(getIndexCollator("mark"));
+            });
+            userInput.setPromptText("Type task index to mark...");
+            toggleMenu();
+            break;
+        case "Unmark Task":
+            userInput.setOnAction(e -> {
+                handleUserInput(getIndexCollator("unmark"));
+            });
+            userInput.setPromptText("Type task index to unmark...");
+            toggleMenu();
+            break;
+        case "Delete Task":
+            userInput.setOnAction(e -> {
+                handleUserInput(getIndexCollator("delete"));
+            });
+            userInput.setPromptText("Type task index to delete...");
+            toggleMenu();
+            break;
+        default:
+            userInput.clear();
+            break;
+        }
+    }
 }
