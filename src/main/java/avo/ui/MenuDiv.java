@@ -35,7 +35,6 @@ public class MenuDiv extends VBox {
             sublistBox.getChildren().add(button);
         }
         this.getChildren().add(button);
-        System.out.println(sublistBox.getStyleClass());
     }
 
     /**

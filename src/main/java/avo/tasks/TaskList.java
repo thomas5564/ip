@@ -73,7 +73,6 @@ public class TaskList {
         if (isStored) {
             storage.rewriteFileFromList(numberOfTasks, tasks);
         }
-        System.out.println(this.toString());
     }
 
     /**
