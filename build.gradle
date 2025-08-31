@@ -42,8 +42,15 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "Avo"
-    archiveClassifier = null
+    archiveBaseName.set("Avo")
+    archiveClassifier.set(null)
+    archiveVersion.set(null)
+
+    manifest {
+        attributes(
+                'Main-Class': 'avo.main.Launcher'
+        )
+    }
 }
 
 run{

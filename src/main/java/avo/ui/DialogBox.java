@@ -23,9 +23,21 @@ import javafx.scene.layout.HBox;
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
-    private static Image avoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/avo.jpg")));
-    private static Image userImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/user.jpg")));
-    private static Image angryAvoImage = new Image(Objects.requireNonNull(Main.class.getResourceAsStream("/images/angryAvo.png")));
+    private static Image avoImage = new Image(
+            Objects.requireNonNull(
+                    Main.class.getResourceAsStream("/images/avo.jpg")
+            )
+    );
+    private static Image userImage = new Image(
+            Objects.requireNonNull(
+                    Main.class.getResourceAsStream("/images/user.jpg")
+            )
+    );
+    private static Image angryAvoImage = new Image(
+            Objects.requireNonNull(
+                    Main.class.getResourceAsStream("/images/angryAvo.png")
+            )
+    );
     @FXML
     private Label dialog;
     @FXML
@@ -65,15 +77,15 @@ public class DialogBox extends HBox {
         db.flip();
         return db;
     }
+    public static DialogBox getAvoDialog(String text) {
+        var db = new DialogBox(text, avoImage);
+        db.flip();
+        return db;
+    }
     public static DialogBox getErrorDialog(ErrorResponse errorResponse) {
         var db = new DialogBox(errorResponse.getText(), angryAvoImage);
         db.flip();
         db.lookup(".label").getStyleClass().add("error-label");
-        return db;
-    }
-    public static DialogBox getAvoDialog(String text) {
-        var db = new DialogBox(text, avoImage);
-        db.flip();
         return db;
     }
 

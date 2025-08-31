@@ -3,10 +3,8 @@ package avo.ui;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import avo.main.Avo;
-import avo.main.Main;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import javafx.fxml.FXML;
@@ -15,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -144,7 +141,6 @@ public class MainWindow extends AnchorPane {
      * toggle menu
      */
     public void toggleMenu() {
-        System.out.println("toggling menu");
         if (isMenuOut) {
             commandBox.getChildren().clear();
             this.isMenuOut = false;

@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 import avo.parser.Parser;
@@ -23,16 +26,35 @@ public class Storage {
      * constructor for this class
      * @param filePath file path of storage file (./data/avo.txt)
      */
-    public Storage(String filePath) {
+    public Storage(String filePath) throws IOException, URISyntaxException {
         try {
             this.filePath = filePath;
             storageFile = new File(filePath);
             fileScanner = new Scanner(storageFile);
         } catch (FileNotFoundException e) {
-            System.out.println("Data file is not found. If you want your tasks to be saved,\n "
-                    + "Do the following:\n"
-                    + "1. Make a folder named \"data\" in your current directory\n"
-                    + "2. Add a text file named Avo.txt into it");
+            handleFileNotFound();
+            fileScanner = new Scanner(storageFile);
+        }
+    }
+
+    /**
+     * Creates the avo.txt file in the working directory
+     */
+    public void handleFileNotFound() throws IOException, URISyntaxException {
+        Path jarDir = Path.of(Storage.class
+                        .getProtectionDomain()
+                        .getCodeSource()
+                        .getLocation()
+                        .toURI())
+                .getParent();
+
+        Path dataDir = jarDir.resolve("data");
+        Path avoFile = dataDir.resolve("avo.txt");
+
+        Files.createDirectories(dataDir);
+
+        if (!Files.exists(avoFile)) {
+            Files.createFile(avoFile);
         }
     }
 

@@ -101,7 +101,6 @@ public class TaskList {
         tasks[numberOfTasks] = currentTask;
         numberOfTasks++;
         if (isStored && isAddingToMemory) {
-            System.out.println("adding to avo.txt");
             storage.appendToFile(currentTask.getStorageString());
         }
     }

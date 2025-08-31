@@ -141,8 +141,12 @@ public class AvoSpeaker {
                 return new CommandResponse(bye(), Command.BYE);
             case LIST:
                 String prefix = "Here are the tasks in your list:";
+                String emptyListResponse = "You haven't added any tasks in the list. Add some to get started!";
+                String response = taskList.isEmpty()
+                        ? emptyListResponse
+                        : prefix + taskList.toString();
                 return new CommandResponse(
-                        prefix + taskList.toString(),
+                        response,
                         Command.LIST
                 );
             case MARK:

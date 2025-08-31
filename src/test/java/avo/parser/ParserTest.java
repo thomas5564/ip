@@ -2,9 +2,9 @@ package avo.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import avo.exceptions.EmptyDateException;
 import org.junit.jupiter.api.Test;
 
+import avo.exceptions.EmptyDateException;
 import avo.exceptions.EmptyInstructionException;
 import avo.exceptions.IncompleteInputException;
 import avo.tasks.Deadline;
