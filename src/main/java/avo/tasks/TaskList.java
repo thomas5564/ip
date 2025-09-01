@@ -9,8 +9,6 @@ import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
 import avo.storage.Storage;
 
-import java.util.Objects;
-
 
 /**
  * Wraps an arraylist of tasks
@@ -30,7 +28,7 @@ public class TaskList {
         this.storage = storage;
         this.isStored = true;
         storage.readFile(this);
-        assert numberOfTasks >= 0 : "Invalid number of tasks read from storage!";
+        assert !tasks.isEmpty() : "Invalid number of tasks!";
     }
 
     /**
@@ -68,7 +66,7 @@ public class TaskList {
      * @throws InvalidIndexException if the index is less than 1 or more than the total number of tasks
      */
     public void deleteTask(int index) throws InvalidIndexException {
-        assert numberOfTasks >= 0 : "Invalid number of tasks!";
+        assert !tasks.isEmpty() : "Invalid number of tasks!";
         if (index >= tasks.size() || index < 0) {
             throw new InvalidIndexException(index + 1, tasks.size());
         }
@@ -84,7 +82,7 @@ public class TaskList {
      * @throws InvalidIndexException if the index is less than 1 or more than the total number of tasks
      */
     public void mark(int index) throws InvalidIndexException {
-        assert numberOfTasks >= 1 : "Invalid number of tasks!";
+        assert !tasks.isEmpty() : "Invalid number of tasks!";
         if (index > tasks.size() - 1 || index < 0) {
             throw new InvalidIndexException(index, tasks.size());
         } else {
@@ -113,7 +111,7 @@ public class TaskList {
      * @throws InvalidIndexException if the index given is invalid
      */
     public void unmark(int index) throws InvalidIndexException {
-        assert numberOfTasks >= 1 : "Invalid number of tasks!";
+        assert !tasks.isEmpty() : "Invalid number of tasks!";
 
         if (index > tasks.size() - 1 || index < 0) {
             throw new InvalidIndexException(index, tasks.size());
