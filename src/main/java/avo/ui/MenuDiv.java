@@ -24,9 +24,9 @@ public class MenuDiv extends VBox {
         this.mainWindow = mainWindow;
         this.button = new Button(name);
         button.setPickOnBounds(true);
+        button.setOnMouseClicked(e -> toggleSublist(sublist));
         this.getStyleClass().add("menu-root");
         sublistBox.getStyleClass().add("sublist");
-        button.setOnMouseClicked(e -> toggleSublist(sublist));
         for (String subitem : sublist) {
             Button button = new Button(subitem);
             button.setOnAction(e-> {

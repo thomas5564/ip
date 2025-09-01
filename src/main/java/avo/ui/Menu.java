@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
  * UI for allowing user to choose command
  */
 public class Menu extends VBox {
-    private HashMap<String, ArrayList<String>> buttonNames = new HashMap<>();
+    private HashMap<String, ArrayList<String>> commandMap = new HashMap<>();
     private MainWindow mainWindow;
     /**
      * Constructor for this class
@@ -28,23 +28,39 @@ public class Menu extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ArrayList<String> taskTypes = new ArrayList<>(List.of("Event", "Deadline", "To-do"));
-        ArrayList<String> manageTask = new ArrayList<>(List.of("Mark Task", "Unmark Task"));
-        buttonNames.put("Add Task", taskTypes);
-        buttonNames.put("Manage Task", manageTask);
-        buttonNames.put("Delete Task", new ArrayList<>());
-        buttonNames.put("Show List", new ArrayList<>());
-        for (String name: buttonNames.keySet()) {
-            if (buttonNames.get(name).isEmpty()) {
+        initialiseMap(commandMap);
+        initialiseButtons(mainWindow);
+    }
+
+    /**
+     * initialises menu buttons
+     * @param mainWindow
+     */
+    private void initialiseButtons(MainWindow mainWindow) {
+        for (String name: commandMap.keySet()) {
+            if (commandMap.get(name).isEmpty()) {
                 Button button = new Button(name);
                 button.setOnAction(e-> {
                     mainWindow.handleMenuCommand(button.getText());
                 });
                 this.getChildren().add(button);
             } else {
-                MenuDiv menuDiv = new MenuDiv(name, buttonNames.get(name), mainWindow);
+                MenuDiv menuDiv = new MenuDiv(name, commandMap.get(name), mainWindow);
                 this.getChildren().add(menuDiv);
             }
         }
+    }
+
+    /**
+     * Initialises the commands in the hashmap
+     * @param commandMap hashmap of commands
+     */
+    public void initialiseMap(HashMap<String, ArrayList<String>> commandMap) {
+        ArrayList<String> taskTypes = new ArrayList<>(List.of("Event", "Deadline", "To-do"));
+        ArrayList<String> manageTask = new ArrayList<>(List.of("Mark Task", "Unmark Task"));
+        commandMap.put("Add Task", taskTypes);
+        commandMap.put("Manage Task", manageTask);
+        commandMap.put("Delete Task", new ArrayList<>());
+        commandMap.put("Show List", new ArrayList<>());
     }
 }
