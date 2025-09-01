@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import java.util.Objects;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import avo.parser.Parser;
@@ -77,18 +79,13 @@ public class Storage {
 
     /**
      * Rewrites the storage file, writing the input tasks as their respective storage strings
-     * @param numberOfTasks current number of tasks in the task list
      * @param tasks task list itself
      */
-    public void rewriteFileFromList(int numberOfTasks, Task[] tasks) {
+    public void rewriteFileFromList(ArrayList<Task> tasks) {
         try {
-            int counter = 0;
             FileWriter fileClearer = new FileWriter(filePath, false);
             fileClearer.append("");
-            while (counter < numberOfTasks) {
-                appendToFile(tasks[counter].getStorageString());
-                counter++;
-            }
+            tasks.stream().forEach(task -> appendToFile(task.getStorageString()));
             fileClearer.close();
         } catch (FileNotFoundException e) {
             System.out.println("File is not found. If you want your tasks to be saved,\n "
