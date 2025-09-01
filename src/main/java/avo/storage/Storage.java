@@ -29,7 +29,8 @@ public class Storage {
      */
     public Storage(String filePath) throws IOException, URISyntaxException {
         try {
-            assert !Objects.equals(filePath, "");
+            assert !Objects.equals(filePath, "")
+                    : "Empty string used as file path!";
             this.filePath = filePath;
             storageFile = new File(filePath);
             fileScanner = new Scanner(storageFile);

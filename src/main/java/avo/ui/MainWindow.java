@@ -83,7 +83,7 @@ public class MainWindow extends AnchorPane {
     }
 
     private InputCollator buildDatedTaskCollator(String formatString, String... labels) {
-        assert labels.length >= 1;
+        assert labels.length >= 1 : "Invalid number of labels!";
         List<DatePicker> pickers = new ArrayList<>();
         for (String labelText : labels) {
             DatePicker dp = new DatePicker();
