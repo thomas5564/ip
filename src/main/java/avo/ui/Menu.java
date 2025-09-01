@@ -62,5 +62,6 @@ public class Menu extends VBox {
         commandMap.put("Manage Task", manageTask);
         commandMap.put("Delete Task", new ArrayList<>());
         commandMap.put("Show List", new ArrayList<>());
+        commandMap.put("Search", new ArrayList<>());
     }
 }

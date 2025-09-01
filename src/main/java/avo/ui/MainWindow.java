@@ -253,6 +253,18 @@ public class MainWindow extends AnchorPane {
             userInput.setPromptText("Type task index to unmark...");
             toggleMenu();
             break;
+        case "Search":
+            userInput.setPromptText("Type what you're searching for...");
+            InputCollator searchInputCollator = () -> {
+                String instruction = userInput.getText();
+                String input = String.format(
+                        "find %s",
+                        instruction);
+                return input;
+            };
+            updateInputs(searchInputCollator);
+            toggleMenu();
+            break;
         case "Delete Task":
             updateInputs(getIndexCollator("delete"));
             userInput.setPromptText("Type task index to delete...");
