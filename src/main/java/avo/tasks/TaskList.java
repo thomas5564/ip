@@ -1,18 +1,24 @@
 package avo.tasks;
+
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
 import avo.storage.Storage;
 
 import java.util.Objects;
 
+
 /**
- * List of tasks where the tasks are added. Has a maximum capacity of 100.
+ * Wraps an arraylist of tasks
  */
 
 public class TaskList {
-    private static final int MAXIMUM_LENGTH = 100;
-    private int numberOfTasks = 0;
-    private final Task[] tasks = new Task[MAXIMUM_LENGTH];
+
+    private final ArrayList<Task> tasks = new ArrayList<>();
     private Storage storage;
     private boolean isStored = false;
 
@@ -36,28 +42,24 @@ public class TaskList {
     }
 
     public int length() {
-        return numberOfTasks;
+        return tasks.size();
     }
+
     public boolean isEmpty() {
-        return numberOfTasks == 0;
+        return tasks.isEmpty();
     }
+
     public Task get(int index) throws InvalidIndexException {
-        if (index >= numberOfTasks || index < 0) {
-            throw new InvalidIndexException(index + 1, numberOfTasks);
+        if (index >= tasks.size() || index < 0) {
+            throw new InvalidIndexException(index + 1, tasks.size());
         }
-        return tasks[index];
+        return tasks.get(index);
     }
     @Override
     public String toString() {
-        StringBuilder listString = new StringBuilder();
-        for (int i = 0; i < tasks.length; i++) {
-            if (tasks[i] == null) {
-                break;
-            }
-            String line = "\n         " + (i + 1) + "." + tasks[i].toString();
-            listString.append(line);
-        }
-        return listString.toString();
+        return IntStream.range(0, tasks.size())
+                .mapToObj(i -> "\n         " + (i + 1) + "." + tasks.get(i))
+                .collect(Collectors.joining());
     }
 
     /**
@@ -67,16 +69,12 @@ public class TaskList {
      */
     public void deleteTask(int index) throws InvalidIndexException {
         assert numberOfTasks >= 0 : "Invalid number of tasks!";
-        if (index >= numberOfTasks || index < 0) {
-            throw new InvalidIndexException(index + 1, numberOfTasks);
+        if (index >= tasks.size() || index < 0) {
+            throw new InvalidIndexException(index + 1, tasks.size());
         }
-        for (int i = index; i < numberOfTasks - 1; i++) {
-            tasks[i] = tasks[i + 1];
-        }
-        tasks[numberOfTasks - 1] = null;
-        numberOfTasks--;
+        tasks.remove(index);
         if (isStored) {
-            storage.rewriteFileFromList(numberOfTasks, tasks);
+            storage.rewriteFileFromList(tasks);
         }
     }
 
@@ -87,13 +85,13 @@ public class TaskList {
      */
     public void mark(int index) throws InvalidIndexException {
         assert numberOfTasks >= 1 : "Invalid number of tasks!";
-        if (index > numberOfTasks - 1 || index < 0) {
-            throw new InvalidIndexException(index, numberOfTasks);
+        if (index > tasks.size() - 1 || index < 0) {
+            throw new InvalidIndexException(index, tasks.size());
         } else {
-            tasks[index].mark();
+            tasks.get(index).mark();
         }
         if (isStored) {
-            storage.rewriteFileFromList(numberOfTasks, tasks);
+            storage.rewriteFileFromList(tasks);
         }
     }
 
@@ -103,8 +101,7 @@ public class TaskList {
      * @param isAddingToMemory if the task is being added to the data file
      */
     public void addTask(Task currentTask, boolean isAddingToMemory) {
-        tasks[numberOfTasks] = currentTask;
-        numberOfTasks++;
+        tasks.add(currentTask);
         if (isStored && isAddingToMemory) {
             storage.appendToFile(currentTask.getStorageString());
         }
@@ -117,13 +114,14 @@ public class TaskList {
      */
     public void unmark(int index) throws InvalidIndexException {
         assert numberOfTasks >= 1 : "Invalid number of tasks!";
-        if (index > numberOfTasks - 1 || index < 0) {
-            throw new InvalidIndexException(index, numberOfTasks);
+
+        if (index > tasks.size() - 1 || index < 0) {
+            throw new InvalidIndexException(index, tasks.size());
         } else {
-            tasks[index].unmark();
+            tasks.get(index).unmark();
         }
         if (isStored) {
-            storage.rewriteFileFromList(numberOfTasks, tasks);
+            storage.rewriteFileFromList(tasks);
         }
     }
 
@@ -138,11 +136,9 @@ public class TaskList {
             throw new EmptySearchStringException();
         }
         TaskList results = new TaskList();
-        for (int i = 0; i < numberOfTasks; i++) {
-            if (tasks[i].getInstruction().contains(keyword)) {
-                results.addTask(tasks[i], false);
-            }
-        }
+        tasks.stream()
+                .filter(task -> task.getInstruction().contains(keyword))
+                .forEach(task -> results.addTask(task, false));
         return results;
     }
 }
