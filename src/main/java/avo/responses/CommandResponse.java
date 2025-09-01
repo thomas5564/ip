@@ -17,8 +17,4 @@ public class CommandResponse extends Response {
         super(text);
         this.commandType = commandType;
     }
-
-    public Command getCommandType() {
-        return commandType;
-    }
 }
