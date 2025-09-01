@@ -15,7 +15,7 @@ import avo.storage.Storage;
  */
 
 public class TaskList {
-    private final ArrayList<Task> tasks = new ArrayList<Task>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
     private Storage storage;
     private boolean isStored = false;
 
@@ -128,11 +128,9 @@ public class TaskList {
             throw new EmptySearchStringException();
         }
         TaskList results = new TaskList();
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getInstruction().contains(keyword)) {
-                results.addTask(tasks.get(i), false);
-            }
-        }
+        tasks.stream()
+                .filter(task -> task.getInstruction().contains(keyword))
+                .forEach(task -> results.addTask(task, false));
         return results;
     }
 }

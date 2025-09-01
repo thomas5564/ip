@@ -81,9 +81,7 @@ public class Storage {
         try {
             FileWriter fileClearer = new FileWriter(filePath, false);
             fileClearer.append("");
-            for (Task task: tasks) {
-                appendToFile(task.getStorageString());
-            }
+            tasks.stream().forEach(task -> appendToFile(task.getStorageString()));
             fileClearer.close();
         } catch (FileNotFoundException e) {
             System.out.println("File is not found. If you want your tasks to be saved,\n "
