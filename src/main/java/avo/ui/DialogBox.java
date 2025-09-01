@@ -38,6 +38,10 @@ public class DialogBox extends HBox {
                     Main.class.getResourceAsStream("/images/angryAvo.png")
             )
     );
+    @FXML
+    private Label dialog;
+    @FXML
+    private ImageView displayPicture;
 
     private DialogBox(String text, Image img) {
         try {
