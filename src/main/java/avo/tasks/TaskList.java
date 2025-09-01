@@ -3,6 +3,8 @@ import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
 import avo.storage.Storage;
 
+import java.util.Objects;
+
 /**
  * List of tasks where the tasks are added. Has a maximum capacity of 100.
  */
@@ -21,6 +23,7 @@ public class TaskList {
         this.storage = storage;
         this.isStored = true;
         storage.readFile(this);
+        assert numberOfTasks >= 0;
     }
 
     /**
@@ -62,6 +65,7 @@ public class TaskList {
      * @throws InvalidIndexException if the index is less than 1 or more than the total number of tasks
      */
     public void deleteTask(int index) throws InvalidIndexException {
+        assert numberOfTasks >= 1;
         if (index >= numberOfTasks || index < 0) {
             throw new InvalidIndexException(index + 1, numberOfTasks);
         }
@@ -81,6 +85,7 @@ public class TaskList {
      * @throws InvalidIndexException if the index is less than 1 or more than the total number of tasks
      */
     public void mark(int index) throws InvalidIndexException {
+        assert numberOfTasks >= 1;
         if (index > numberOfTasks - 1 || index < 0) {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
@@ -110,6 +115,7 @@ public class TaskList {
      * @throws InvalidIndexException if the index given is invalid
      */
     public void unmark(int index) throws InvalidIndexException {
+        assert numberOfTasks >= 1;
         if (index > numberOfTasks - 1 || index < 0) {
             throw new InvalidIndexException(index, numberOfTasks);
         } else {
