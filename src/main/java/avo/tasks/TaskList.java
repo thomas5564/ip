@@ -8,8 +8,9 @@ import avo.storage.Storage;
  */
 
 public class TaskList {
+    private static final int MAXIMUM_LENGTH = 100;
     private int numberOfTasks = 0;
-    private final Task[] tasks = new Task[100];
+    private final Task[] tasks = new Task[MAXIMUM_LENGTH];
     private Storage storage;
     private boolean isStored = false;
 
