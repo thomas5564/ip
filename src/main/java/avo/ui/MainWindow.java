@@ -2,7 +2,6 @@ package avo.ui;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import avo.main.Avo;
 import avo.responses.ErrorResponse;
@@ -86,23 +85,11 @@ public class MainWindow extends AnchorPane {
         assert labels.length >= 1 : "Invalid number of labels!";
         List<DatePicker> pickers = new ArrayList<>();
         for (String labelText : labels) {
-            DatePicker dp = new DatePicker();
-            dp.setPrefWidth(150);
-            dp.setPromptText(labelText);
-            datePickerContainer.getChildren().add(dp);
-            pickers.add(dp);
+            addDatePicker(pickers, labelText);
         }
         InputCollator currentInputCollator = () -> {
             String[] inputs = new String[labels.length + 1];
-            int counter = 1;
-            String instruction = userInput.getText();
-            inputs[0] = instruction;
-            for (Node node: datePickerContainer.getChildren()) {
-                DatePicker dp = (DatePicker) node;
-                LocalDate date = dp.getValue();
-                inputs[counter] = date == null ? "-" : date.toString();
-                counter++;
-            }
+            getInputsFromDatepickers(inputs);
             String input = String.format(
                     formatString,
                     (Object[]) inputs
@@ -110,6 +97,29 @@ public class MainWindow extends AnchorPane {
             return input;
         };
         return currentInputCollator;
+    }
+    public void getInputsFromDatepickers(String[] dateInputs) {
+        int counter = 1;
+        String instruction = userInput.getText();
+        dateInputs[0] = instruction;
+        for (Node node: datePickerContainer.getChildren()) {
+            DatePicker dp = (DatePicker) node;
+            LocalDate date = dp.getValue();
+            dateInputs[counter] = date == null ? "-" : date.toString();
+            counter++;
+        }
+    }
+    /**
+     * Adds configured date picker to the UI and into an arraylist
+     * @param pickers aforementioned arraylist
+     * @param labelText prompt text for date picker
+     */
+    public void addDatePicker(ArrayList<DatePicker> pickers, String labelText) {
+        DatePicker dp = new DatePicker();
+        dp.setPrefWidth(150);
+        dp.setPromptText(labelText);
+        datePickerContainer.getChildren().add(dp);
+        pickers.add(dp);
     }
 
 
@@ -122,22 +132,49 @@ public class MainWindow extends AnchorPane {
             autoScrollEnabled = true;
         }
         String input = inputCollator.getInput();
-        Response response = speaker.getResponse(input);
-        DialogBox avoDialog = response instanceof ErrorResponse
-                            ? DialogBox.getErrorDialog((ErrorResponse) response)
-                            : DialogBox.getAvoDialog(response);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input),
-                avoDialog
-        );
+        addDialogBoxes(input);
+        resetDatePickers();
+        userInput.setText("");
+    }
+
+    /**
+     * Resets date pickers to become empty
+     */
+    public void resetDatePickers() {
         for (Node node: datePickerContainer.getChildren()) {
             if (node instanceof DatePicker) {
                 DatePicker datePicker = (DatePicker) node;
                 datePicker.setValue(null);
             }
         }
-        userInput.setText("");
     }
+
+    /**
+     * For a given input from the user, this method will:
+     * 1. get the appropriate response from avo
+     * 2. reflect the input and response in the DialogContainer
+     * @param input user's input
+     */
+    public void addDialogBoxes(String input) {
+        Response response = speaker.getResponse(input);
+        DialogBox avoDialog = getResponseDialogBox(response);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input),
+                avoDialog
+        );
+    }
+
+    /**
+     * Gets the dialog box for a given response
+     * @param response from avo
+     * @return the Dialog Box
+     */
+    private static DialogBox getResponseDialogBox(Response response) {
+        return response instanceof ErrorResponse
+                ? DialogBox.getErrorDialog((ErrorResponse) response)
+                : DialogBox.getAvoDialog(response);
+    }
+
     /**
      * toggle menu
      */
@@ -152,14 +189,13 @@ public class MainWindow extends AnchorPane {
         }
     }
     public InputCollator getIndexCollator(String command) {
-        InputCollator indexInputCollator = () -> {
+        return () -> {
             String index = userInput.getText();
             return String.format(
                     "%s %s",
                     command,
                     index);
         };
-        return indexInputCollator;
     }
     public void showList() {
         handleUserInput(() -> "list");
@@ -183,6 +219,7 @@ public class MainWindow extends AnchorPane {
                     "start",
                     "end");
             updateInputs(eventInputCollator);
+            userInput.setPromptText("Write event instruction...");
             toggleMenu();
             break;
 
@@ -222,7 +259,8 @@ public class MainWindow extends AnchorPane {
             toggleMenu();
             break;
         default:
-            userInput.clear();
+            ErrorResponse errorResponse = new ErrorResponse("Invalid input!");
+            getResponseDialogBox(errorResponse);
             break;
         }
     }

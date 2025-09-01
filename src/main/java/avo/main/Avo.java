@@ -12,7 +12,7 @@ import avo.ui.AvoSpeaker;
  * Main file used to run Avo
  */
 public class Avo {
-    private String pathName;
+    private static final String PATH_NAME = "data" + File.separator + "avo.txt";
     private Storage storage;
     private TaskList taskList;
     private AvoSpeaker speaker;
@@ -23,8 +23,7 @@ public class Avo {
      */
     public Avo() {
         try {
-            this.pathName = "data" + File.separator + "avo.txt";
-            this.storage = new Storage(getPathName());
+            this.storage = new Storage(PATH_NAME);
             this.taskList = new TaskList(storage);
             this.speaker = new AvoSpeaker(taskList);
         } catch (IOException e) {
@@ -32,18 +31,6 @@ public class Avo {
         } catch (URISyntaxException e) {
             System.err.println("I/O error while creating file: " + e.getMessage());
         }
-    }
-
-    public String getPathName() {
-        return pathName;
-    }
-
-    public TaskList getTaskList() {
-        return taskList;
-    }
-
-    public Storage getStorage() {
-        return storage;
     }
 
     public AvoSpeaker getSpeaker() {
