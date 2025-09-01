@@ -41,3 +41,8 @@ jobs:
       - name: Install dos2unix on macOS
         if: runner.os == 'macOS'
         run: brew install dos2unix
+      - run: echo "✅ GitHub Actions is working!"
+
+
+
+
