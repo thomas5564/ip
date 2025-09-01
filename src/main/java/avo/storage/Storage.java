@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import java.util.Objects;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 import avo.parser.Parser;

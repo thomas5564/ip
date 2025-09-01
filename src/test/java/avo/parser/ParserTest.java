@@ -23,3 +23,4 @@ public class ParserTest {
         assertEquals(task.getStorageString(), "T|o|play games");
     }
 }
+

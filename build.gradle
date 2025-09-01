@@ -74,6 +74,23 @@ shadowJar {
     }
 }
 
+tasks {
+    distZip {
+        dependsOn(shadowJar)
+    }
+    distTar {
+        dependsOn(shadowJar)
+    }
+    startScripts {
+        dependsOn(shadowJar)
+    }
+}
+tasks.build {
+    dependsOn shadowJar
+}
+artifacts {
+    archives shadowJar
+}
 
 
 run{
