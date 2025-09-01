@@ -258,7 +258,8 @@ public class MainWindow extends AnchorPane {
             toggleMenu();
             break;
         default:
-            userInput.clear();
+            ErrorResponse errorResponse = new ErrorResponse("Invalid input!");
+            getResponseDialogBox(errorResponse);
             break;
         }
     }
