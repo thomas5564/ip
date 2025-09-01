@@ -24,9 +24,9 @@ public class MenuDiv extends VBox {
         this.mainWindow = mainWindow;
         this.button = new Button(name);
         button.setPickOnBounds(true);
+        button.setOnMouseClicked(e -> toggleSublist());
         this.getStyleClass().add("menu-root");
         sublistBox.getStyleClass().add("sublist");
-        button.setOnMouseClicked(e -> toggleSublist(sublist));
         for (String subitem : sublist) {
             Button button = new Button(subitem);
             button.setOnAction(e-> {
@@ -39,9 +39,8 @@ public class MenuDiv extends VBox {
 
     /**
      * Displays the sublist in the menu div itself
-     * @param subList
      */
-    public void toggleSublist(ArrayList<String> subList) {
+    public void toggleSublist() {
         if (!isListing) {
             this.getChildren().add(sublistBox);
             sublistBox.setVisible(true);
