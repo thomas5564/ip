@@ -84,7 +84,7 @@ public class TaskList {
     public void mark(int index) throws InvalidIndexException {
         assert !tasks.isEmpty() : "Invalid number of tasks!";
         if (index > tasks.size() - 1 || index < 0) {
-            throw new InvalidIndexException(index, tasks.size());
+            throw new InvalidIndexException(index + 1, tasks.size());
         } else {
             tasks.get(index).mark();
         }
@@ -114,7 +114,7 @@ public class TaskList {
         assert !tasks.isEmpty() : "Invalid number of tasks!";
 
         if (index > tasks.size() - 1 || index < 0) {
-            throw new InvalidIndexException(index, tasks.size());
+            throw new InvalidIndexException(index + 1, tasks.size());
         } else {
             tasks.get(index).unmark();
         }
