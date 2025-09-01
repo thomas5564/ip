@@ -5,7 +5,9 @@ plugins {
     id 'checkstyle'
     id 'org.openjfx.javafxplugin' version '0.1.0'
 }
-
+run {
+    enableAssertions = true
+}
 javafx {
     version = "21.0.2"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
@@ -22,6 +24,20 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
+
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '21.0.2', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '21.0.2', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '21.0.2', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '21.0.2', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '21.0.2', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '21.0.2', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '21.0.2', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '21.0.2', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '21.0.2', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '21.0.2', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '21.0.2', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '21.0.2', classifier: 'linux'
+
 }
 
 test {
@@ -46,12 +62,19 @@ shadowJar {
     archiveClassifier.set(null)
     archiveVersion.set(null)
 
+    // 🔑 Proper Gradle syntax to include all runtime dependencies
+    from {
+        project.configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
     manifest {
-        attributes(
-                'Main-Class': 'avo.main.Launcher'
-        )
+        attributes 'Main-Class': 'avo.main.Launcher'
     }
 }
+
+
 
 run{
     standardInput = System.in
