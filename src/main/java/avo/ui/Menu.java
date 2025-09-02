@@ -63,5 +63,6 @@ public class Menu extends VBox {
         commandMap.put("Delete Task", new ArrayList<>());
         commandMap.put("Show List", new ArrayList<>());
         commandMap.put("Search", new ArrayList<>());
+        commandMap.put("Exit", new ArrayList<>());
     }
 }

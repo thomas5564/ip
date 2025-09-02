@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root prefHeight="600.0" prefWidth="400.0"
+<fx:root fx:id ="root" prefHeight="600.0" prefWidth="400.0"
          stylesheets="@main.css"
          type="AnchorPane"
          xmlns="http://javafx.com/javafx/17"
@@ -27,14 +27,14 @@
             <children>
                 <Label fx:id="avolabel" text="Avo" />
 
-                <Button onAction="#toggleMenu" styleClass="navButtons" text="Menu"
+                <Button fx:id="menuButton" onAction="#toggleMenu" styleClass="navButtons" text="Menu"
                         StackPane.alignment="CENTER_LEFT">
                     <StackPane.margin>
                         <Insets left="10.0"/>
                     </StackPane.margin>
                 </Button>
 
-                <Button onAction="#showList" styleClass="navButtons" text="Show List"
+                <Button fx:id="showListButton" onAction="#showList" styleClass="navButtons" text="Show List"
                         StackPane.alignment="CENTER_RIGHT">
                     <StackPane.margin>
                         <Insets right="10.0"/>
