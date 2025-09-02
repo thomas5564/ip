@@ -16,6 +16,7 @@ import avo.tasks.Task;
  * contains all methods used to interpret strings
  */
 public class Parser {
+    private static LocalDate today = LocalDate.now();
     /**
      * interprets strings as commands
      */
@@ -56,7 +57,7 @@ public class Parser {
             throw new EmptyDateException("deadline");
         }
         LocalDate deadlineDate = LocalDate.parse(deadlineDateString);
-        return new Deadline(instruction, deadlineDate);
+        return new Deadline(instruction, deadlineDate, today);
     }
 
     /**
@@ -97,7 +98,7 @@ public class Parser {
         LocalDate startTime = LocalDate.parse(startTimeString);
         LocalDate endTime = LocalDate.parse(endTimeString);
 
-        return new Event(eventInstruction, startTime, endTime);
+        return new Event(eventInstruction, startTime, endTime, today);
     }
 
     /**
@@ -116,7 +117,7 @@ public class Parser {
             throw new EmptyInstructionException();
         }
 
-        return new Task(instruction);
+        return new Task(instruction, today);
     }
 
     /**
@@ -153,7 +154,8 @@ public class Parser {
         String[] a = string.split("\\|");
         LocalDate startTime = LocalDate.parse(a[3].strip());
         LocalDate endTime = LocalDate.parse(a[4].strip());
-        Event storedEvent = new Event(a[2], endTime, startTime);
+        LocalDate dateCreated = LocalDate.parse(a[3].strip());
+        Event storedEvent = new Event(a[2], endTime, startTime, dateCreated);
         boolean isDone = Objects.equals(a[1], "x");
         if (isDone) {
             storedEvent.mark();
@@ -169,7 +171,8 @@ public class Parser {
     public static Task parseDeadlineFromStorage(String string) {
         String[] a = string.split("\\|");
         LocalDate deadline = LocalDate.parse(a[3]);
-        Deadline storedEvent = new Deadline(a[2], deadline);
+        LocalDate dateCreated = LocalDate.parse(a[4]);
+        Deadline storedEvent = new Deadline(a[2], deadline, dateCreated);
         boolean isDone = Objects.equals(a[1], "x");
         if (isDone) {
             storedEvent.mark();
@@ -183,7 +186,8 @@ public class Parser {
      */
     public static Task parseTodoFromStorage(String string) {
         String[] a = string.split("\\|");
-        Task storedTask = new Task(a[2]);
+        LocalDate dateCreated = LocalDate.parse(a[3]);
+        Task storedTask = new Task(a[2], dateCreated);
         boolean isDone = Objects.equals(a[1], "x");
         if (isDone) {
             storedTask.mark();

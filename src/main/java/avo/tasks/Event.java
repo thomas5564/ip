@@ -12,12 +12,14 @@ public class Event extends Task {
 
     /**
      * Constructor for this class
+     *
      * @param instruction instruction for event
-     * @param startTime starting time for the event
-     * @param endTime ending time for the event
+     * @param startTime   starting time for the event
+     * @param endTime     ending time for the event
+     * @param dateCreated
      */
-    public Event(String instruction, LocalDate startTime, LocalDate endTime) {
-        super(instruction);
+    public Event(String instruction, LocalDate startTime, LocalDate endTime, LocalDate dateCreated) {
+        super(instruction, dateCreated);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -37,9 +39,10 @@ public class Event extends Task {
      */
     @Override
     public String getStorageString() {
-        return String.format("E|%s|%s|%s",
+        return String.format("E|%s|%s|%s|%s",
                 super.getStorageString().substring(2),
                 startTime,
-                endTime);
+                endTime,
+                getToday());
     }
 }
