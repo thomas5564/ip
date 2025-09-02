@@ -111,8 +111,15 @@ public class AvoSpeaker {
             return output + taskList;
         }
     }
+
+    /**
+     * gets response to stat
+     * @return response to stat
+     */
     public String statResponse() {
-        return String.format("You did %d tasks last week", taskList.getNumberDoneLW());
+        String lastWeekCount = String.format("You did %d tasks last week", taskList.getNumberDoneLW());
+        String lastWeekFR = String.format("Last week's finish rate: %.2f", taskList.getFinishRateLW());
+        return lastWeekCount + "\n" + lastWeekFR;
     }
 
     /**

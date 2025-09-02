@@ -1,37 +1,35 @@
 package avo.graphs;
+import java.util.HashMap;
+import java.util.Map;
 
-import avo.tasks.Task;
-import avo.tasks.TaskList;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.PieChart;
 
-import java.time.LocalDate;
-import java.util.function.Function;
-
+/**
+ * A generic PieChart that builds slices from a HashMap<String, Number>
+ */
 public class TaskPieChart extends PieChart {
-
     /**
-     * @param tasks         your TaskList
-     * @param dateSelector  which date to use for filtering into the week window
-     *                      e.g. Task::getCompletedAt, Task::getLastModifiedDate, Task::getDate
+     * Constructor for this class
+     * @param dataMap hashmap of values
      */
-    public TaskPieChart(TaskList tasks, Function<Task, LocalDate> dateSelector) {
+    public TaskPieChart(HashMap<String, ? extends Number> dataMap) {
         super();
-        updateChart(tasks, dateSelector);
-        setTitle("Tasks this week");
+        updateChart(dataMap);
     }
-
     /**
-     * update chart with the correct values
-     * @param tasks tasklist
-     * @param dateSelector date selector
+     * Updates the chart slices from a map.
+     * Keys become labels, values become slice sizes.
      */
-    public void updateChart(TaskList tasks, Function<Task, LocalDate> dateSelector) {
-        long done = tasks.getNumberDone();
-        long notDone = tasks.length() - tasks.getNumberDone();
-        setData(FXCollections.observableArrayList(
-                new PieChart.Data("Done", done),
-                new PieChart.Data("Not Done", notDone)
-        ));
+    public void updateChart(HashMap<String, ? extends Number> dataMap) {
+        var pieData = FXCollections.<PieChart.Data>observableArrayList();
+
+        for (Map.Entry<String, ? extends Number> entry : dataMap.entrySet()) {
+            String label = entry.getKey();
+            Number value = entry.getValue();
+            pieData.add(new PieChart.Data(label, value.doubleValue()));
+        }
+
+        setData(pieData);
     }
 }

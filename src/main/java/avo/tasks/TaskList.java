@@ -4,6 +4,7 @@ package avo.tasks;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
@@ -151,8 +152,21 @@ public class TaskList {
                 .filter(Task::getIsDone)
                 .filter(Task::isDoneLastWeek).count();
     }
-    public long getNumberCreatedLW() {
-        return tasks.stream()
-                .filter(Task::isMadeLastWeek).count();
+    public double getFinishRateLW() {
+        long numberCreated = tasks.stream()
+                .filter(Task::isMadeLastWeek)
+                .count();
+
+        if (numberCreated == 0) {
+            return 0.0;
+        }
+        long numberDone = tasks.stream()
+                .filter(Task::isMadeLastWeek)
+                .filter(Task::getIsDone)
+                .filter(Task::isDoneLastWeek)
+                .count();
+
+        return (double) numberDone / numberCreated;
     }
+
 }
