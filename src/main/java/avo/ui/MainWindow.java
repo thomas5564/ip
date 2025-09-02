@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import avo.main.Avo;
+import avo.responses.ByeResponse;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,7 +29,9 @@ public class MainWindow extends AnchorPane {
     private boolean isMenuOut = false;
     private boolean autoScrollEnabled = false;
     private AvoSpeaker speaker;
-
+    private boolean isGuiMode = false;
+    @FXML
+    private AnchorPane root;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -36,6 +40,8 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
     @FXML
     private Button menuButton;
+    @FXML
+    private Button showListButton;
     @FXML
     private TextField userInput;
     @FXML
@@ -48,21 +54,54 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
+     * Toggles the GUI mode and send the appropriate message
+     */
+    public void toggleGuiMode() {
+        String notification;
+        if (!isGuiMode) {
+            notification = """
+                    GUI mode is on!
+                    Press ALT key again to switch back to Command mode
+                    """;
+            showListButton.setVisible(true);
+            menuButton.setVisible(true);
+            updateInputs(getTodoCollator());
+            userInput.setPromptText("Write to-do instruction...");
+        } else {
+            notification = """
+                    Command mode is on!
+                    Press ALT again key to switch back to GUI mode
+                    """;
+            showListButton.setVisible(false);
+            menuButton.setVisible(false);
+            userInput.setPromptText("Write command...");
+            InputCollator inputCollator = () -> userInput.getText();
+            updateInputs(inputCollator);
+        }
+        DialogBox greetDialog = DialogBox.getAvoDialog(notification);
+        dialogContainer.getChildren().add(greetDialog);
+        isGuiMode = !isGuiMode;
+    }
+    /**
      * Initialises Avo to take in a new to-do task
      */
     @FXML
     public void initialize() {
-        InputCollator todoInputCollator = () -> {
-            String instruction = userInput.getText();
-            String input = String.format(
-                    "todo %s",
-                    instruction);
-            return input;
-        };
-        userInput.setPromptText("Write to-do instruction...");
-        updateInputs(todoInputCollator);
+        menuButton.setVisible(false);
+        showListButton.setVisible(false);
+        InputCollator inputCollator = () -> userInput.getText();
+        updateInputs(inputCollator);
+        root.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ALT) {
+                toggleGuiMode();
+                if (!autoScrollEnabled) {
+                    scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+                    autoScrollEnabled = true;
+                }
+            }
+        });
+        userInput.setPromptText("Write command...");
     }
-
     /**
      * Updates the input collation process
      * @param inputCollator new input collator
@@ -81,6 +120,19 @@ public class MainWindow extends AnchorPane {
         scrollPane.setVvalue(0.0);
     }
 
+    /**
+     * Gets the to-do input collator
+     */
+    public InputCollator getTodoCollator() {
+        InputCollator todoInputCollator = () -> {
+            String instruction = userInput.getText();
+            String input = String.format(
+                    "todo %s",
+                    instruction);
+            return input;
+        };
+        return todoInputCollator;
+    }
     private InputCollator buildDatedTaskCollator(String formatString, String... labels) {
         assert labels.length >= 1 : "Invalid number of labels!";
         ArrayList<DatePicker> pickers = new ArrayList<>();
@@ -170,6 +222,10 @@ public class MainWindow extends AnchorPane {
      * @return the Dialog Box
      */
     private static DialogBox getResponseDialogBox(Response response) {
+        if (response instanceof ByeResponse) {
+            System.exit(0);
+            return DialogBox.getAvoDialog(response);
+        }
         return response instanceof ErrorResponse
                 ? DialogBox.getErrorDialog((ErrorResponse) response)
                 : DialogBox.getAvoDialog(response);
@@ -232,14 +288,7 @@ public class MainWindow extends AnchorPane {
             toggleMenu();
             break;
         case "To-do":
-            InputCollator todoInputCollator = () -> {
-                String instruction = userInput.getText();
-                String input = String.format(
-                        "todo %s",
-                        instruction);
-                return input;
-            };
-            updateInputs(todoInputCollator);
+            updateInputs(getTodoCollator());
             userInput.setPromptText("Write to-do instruction...");
             toggleMenu();
             break;
@@ -269,6 +318,9 @@ public class MainWindow extends AnchorPane {
             updateInputs(getIndexCollator("delete"));
             userInput.setPromptText("Type task index to delete...");
             toggleMenu();
+            break;
+        case "Exit":
+            System.exit(0);
             break;
         default:
             ErrorResponse errorResponse = new ErrorResponse("Invalid input!");

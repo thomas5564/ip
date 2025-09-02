@@ -1,21 +1,21 @@
-D|o|run |2099-05-12
-E|x|cook dinner |2027-11-20|2028-04-15
+D|x|run |2099-05-12
+E|x|cook dinner |2028-04-15|2027-11-20
 D|x|read book |2101-01-01
-E|o|watch movie |2030-12-12|2032-07-09
-E|o|travel abroad |2044-08-30|2045-03-22
+E|o|watch movie |2032-07-09|2030-12-12
+E|o|travel abroad |2045-03-22|2044-08-30
 D|o|write code |2005-06-14
-E|x|call friend |2028-01-01|2029-10-25
-E|x|live|2004-12-21|2003-02-07
+E|x|call friend |2029-10-25|2028-01-01
+E|x|live|2003-02-07|2004-12-21
 T|x|walk dog
-E|x|survive|2025-08-21|2025-08-14
+E|x|survive|2025-08-14|2025-08-21
 D|o|study for finals|2025-11-28
 D|o|eat|2025-08-27
-E|o|study|2026-08-07|2025-08-28
+E|o|study|2025-08-28|2026-08-07
 T|o|list
 D|o|find internship|2025-12-11
 D|o|get employed|2030-08-10
 T|x|sweep floor
-T|o|mark 20
 T|o|remove 22
-E|x|study|2025-09-01|2029-09-07
-E|o|birthday bash|2025-09-06|2025-09-05
+E|x|study|2029-09-07|2025-09-01
+E|o|birthday bash|2025-09-05|2025-09-06
+T|o|d

@@ -7,6 +7,7 @@ import avo.exceptions.AvoException;
 import avo.exceptions.NoIndexException;
 import avo.exceptions.UnknownCommandException;
 import avo.parser.Parser;
+import avo.responses.ByeResponse;
 import avo.responses.CommandResponse;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
@@ -32,7 +33,8 @@ public class AvoSpeaker {
                 Hello! I'm Avo
                 Let me organise your tasks.
                 Do you have anything to do? Key it in and send it over!
-                Otherwise, check out the other options in the menu
+                If you are more comfortable using GUI,
+                Press ALT to switch to GUI mode
                 """;
         return greetString;
     }
@@ -138,7 +140,7 @@ public class AvoSpeaker {
             int indexSelected;
             switch (command) {
             case BYE:
-                return new CommandResponse(bye(), Command.BYE);
+                return new ByeResponse(bye());
             case LIST:
                 String prefix = "Here are the tasks in your list:";
                 String emptyListResponse = "You haven't added any tasks in the list. Add some to get started!";
