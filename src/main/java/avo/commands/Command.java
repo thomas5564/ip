@@ -12,5 +12,5 @@ public enum Command {
     TODO,
     DELETE,
     BYE,
-    FIND
+    STAT, FIND
 }

@@ -146,4 +146,13 @@ public class TaskList {
     public int getNumberDone() {
         return numberDone;
     }
+    public long getNumberDoneLW() {
+        return tasks.stream()
+                .filter(Task::getIsDone)
+                .filter(Task::isDoneLastWeek).count();
+    }
+    public long getNumberCreatedLW() {
+        return tasks.stream()
+                .filter(Task::isMadeLastWeek).count();
+    }
 }

@@ -52,7 +52,7 @@ public class Task {
     @Override
     public String toString() {
         String mark = isDone ? "[x]" : "[ ]";
-        return String.format("[T]%s%s", mark, instruction);
+        return String.format("[T]%s%s%s", mark, instruction);
     }
 
     /**
@@ -89,8 +89,8 @@ public class Task {
                 && !dateCreated.isAfter(startOfThisWeek.minusDays(1));
     }
     public boolean isDoneLastWeek() {
-        return !dateCreated.isBefore(startOfLastWeek)
-                && !dateCreated.isAfter(startOfThisWeek.minusDays(1));
+        return !dateDone.isBefore(startOfLastWeek)
+                && !dateDone.isAfter(startOfThisWeek.minusDays(1));
     }
 
     public void setDateDone(LocalDate dateDone) {
