@@ -11,11 +11,13 @@ public class Deadline extends Task {
 
     /**
      * Constructor for this class
+     *
      * @param instruction instruction for task
-     * @param deadline date time object that represents deadline
+     * @param deadline    date time object that represents deadline
+     * @param dateCreated
      */
-    public Deadline(String instruction, LocalDate deadline) {
-        super(instruction);
+    public Deadline(String instruction, LocalDate deadline, LocalDate dateCreated) {
+        super(instruction, dateCreated);
         this.deadline = deadline;
     }
     @Override
@@ -32,8 +34,9 @@ public class Deadline extends Task {
      */
     @Override
     public String getStorageString() {
-        return String.format("D|%s|%s",
+        return String.format("D|%s|%s|%s",
                 super.getStorageString().substring(2),
-                deadline);
+                deadline,
+                getToday());
     }
 }

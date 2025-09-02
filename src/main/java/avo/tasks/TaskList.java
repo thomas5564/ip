@@ -19,7 +19,7 @@ public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>();
     private Storage storage;
     private boolean isStored = false;
-
+    private int numberDone;
     /**
      * Constructor to use for the tasklist that Avo is managing
      * @param storage storage instance where the tasks are stored
@@ -91,6 +91,7 @@ public class TaskList {
         if (isStored) {
             storage.rewriteFileFromList(tasks);
         }
+        numberDone++;
     }
 
     /**
@@ -102,6 +103,9 @@ public class TaskList {
         tasks.add(currentTask);
         if (isStored && isAddingToMemory) {
             storage.appendToFile(currentTask.getStorageString());
+            if (currentTask.getIsDone()) {
+                numberDone++;
+            }
         }
     }
 
@@ -112,7 +116,6 @@ public class TaskList {
      */
     public void unmark(int index) throws InvalidIndexException {
         assert !tasks.isEmpty() : "Invalid number of tasks!";
-
         if (index > tasks.size() - 1 || index < 0) {
             throw new InvalidIndexException(index + 1, tasks.size());
         } else {
@@ -121,6 +124,7 @@ public class TaskList {
         if (isStored) {
             storage.rewriteFileFromList(tasks);
         }
+        numberDone--;
     }
 
     /**
@@ -138,5 +142,17 @@ public class TaskList {
                 .filter(task -> task.getInstruction().contains(keyword))
                 .forEach(task -> results.addTask(task, false));
         return results;
+    }
+    public int getNumberDone() {
+        return numberDone;
+    }
+    public long getNumberDoneLW() {
+        return tasks.stream()
+                .filter(Task::getIsDone)
+                .filter(Task::isDoneLastWeek).count();
+    }
+    public long getNumberCreatedLW() {
+        return tasks.stream()
+                .filter(Task::isMadeLastWeek).count();
     }
 }

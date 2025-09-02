@@ -111,6 +111,9 @@ public class AvoSpeaker {
             return output + taskList;
         }
     }
+    public String statResponse() {
+        return String.format("You did %d tasks last week", taskList.getNumberDoneLW());
+    }
 
     /**
      * Gets the selected index from a split user input.
@@ -201,6 +204,11 @@ public class AvoSpeaker {
                 TaskList results = taskList.searchAll(searchedString);
                 return new CommandResponse(
                         findTaskResponse(results, searchedString),
+                        Command.FIND
+                );
+            case STAT:
+                return new CommandResponse(
+                        statResponse(),
                         Command.FIND
                 );
             default:
