@@ -156,9 +156,10 @@ public class Parser {
         LocalDate endTime = LocalDate.parse(a[4].strip());
         LocalDate dateCreated = LocalDate.parse(a[3].strip());
         Event storedEvent = new Event(a[2], endTime, startTime, dateCreated);
-        boolean isDone = Objects.equals(a[1], "x");
+        boolean isDone = !Objects.equals(a[1], "-");
         if (isDone) {
-            storedEvent.mark();
+            LocalDate dateDone = LocalDate.parse(a[1]);
+            storedEvent.markFromStorage(dateDone);
         }
         return storedEvent;
     }
@@ -172,12 +173,13 @@ public class Parser {
         String[] a = string.split("\\|");
         LocalDate deadline = LocalDate.parse(a[3]);
         LocalDate dateCreated = LocalDate.parse(a[4]);
-        Deadline storedEvent = new Deadline(a[2], deadline, dateCreated);
-        boolean isDone = Objects.equals(a[1], "x");
+        Deadline storedDeadline = new Deadline(a[2], deadline, dateCreated);
+        boolean isDone = !Objects.equals(a[1], "-");
         if (isDone) {
-            storedEvent.mark();
+            LocalDate dateDone = LocalDate.parse(a[1]);
+            storedDeadline.markFromStorage(dateDone);
         }
-        return storedEvent;
+        return storedDeadline;
     }
     /**
      * Converts storage string to the to-do that it represents
@@ -188,9 +190,10 @@ public class Parser {
         String[] a = string.split("\\|");
         LocalDate dateCreated = LocalDate.parse(a[3]);
         Task storedTask = new Task(a[2], dateCreated);
-        boolean isDone = Objects.equals(a[1], "x");
+        boolean isDone = !Objects.equals(a[1].strip(), "-");
         if (isDone) {
-            storedTask.mark();
+            LocalDate dateDone = LocalDate.parse(a[1]);
+            storedTask.markFromStorage(dateDone);
         }
         return storedTask;
     }
