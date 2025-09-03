@@ -24,7 +24,6 @@ public class AvoSpeaker {
     public AvoSpeaker(TaskList taskList) {
         this.taskList = taskList;
     }
-
     /**
      * Greets the user.
      */
@@ -118,7 +117,9 @@ public class AvoSpeaker {
      */
     public String statResponse() {
         String lastWeekCount = String.format("You did %d tasks last week", taskList.getNumberDoneLW());
-        String lastWeekFR = String.format("Last week's finish rate: %.2f", taskList.getFinishRateLW());
+        String lastWeekFR = taskList.getFinishRateLW() == -1
+                ? "No tasks were created last week"
+                : String.format("Last week's finish rate: %.2f", taskList.getFinishRateLW());
         return lastWeekCount + "\n" + lastWeekFR;
     }
 

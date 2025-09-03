@@ -34,9 +34,8 @@ public class Deadline extends Task {
      */
     @Override
     public String getStorageString() {
-        return String.format("D|%s|%s|%s",
+        return String.format("D|%s|%s",
                 super.getStorageString().substring(2),
-                deadline,
-                getToday());
+                deadline);
     }
 }

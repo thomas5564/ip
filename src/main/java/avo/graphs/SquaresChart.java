@@ -14,7 +14,7 @@ import javafx.scene.shape.Rectangle;
  * red if it fails.
  */
 public class SquaresChart<T> extends HBox {
-    private static final int SIZE = 40;
+    private static final int SIZE = 10;
 
     /**
      * Builds a line of squares and colours them in if the item they

@@ -152,8 +152,8 @@ public class Parser {
      */
     public static Task parseEventFromStorage(String string) {
         String[] a = string.split("\\|");
-        LocalDate startTime = LocalDate.parse(a[3].strip());
-        LocalDate endTime = LocalDate.parse(a[4].strip());
+        LocalDate startTime = LocalDate.parse(a[4].strip());
+        LocalDate endTime = LocalDate.parse(a[5].strip());
         LocalDate dateCreated = LocalDate.parse(a[3].strip());
         Event storedEvent = new Event(a[2], endTime, startTime, dateCreated);
         boolean isDone = !Objects.equals(a[1], "-");
@@ -171,8 +171,8 @@ public class Parser {
      */
     public static Task parseDeadlineFromStorage(String string) {
         String[] a = string.split("\\|");
-        LocalDate deadline = LocalDate.parse(a[3]);
-        LocalDate dateCreated = LocalDate.parse(a[4]);
+        LocalDate deadline = LocalDate.parse(a[4]);
+        LocalDate dateCreated = LocalDate.parse(a[3]);
         Deadline storedDeadline = new Deadline(a[2], deadline, dateCreated);
         boolean isDone = !Objects.equals(a[1], "-");
         if (isDone) {

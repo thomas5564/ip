@@ -1,8 +1,7 @@
 package avo.tasks;
 
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -151,15 +150,15 @@ public class TaskList {
     public long getNumberDoneLW() {
         return tasks.stream()
                 .filter(Task::getIsDone)
-                .filter(Task::isDoneLastWeek).count();
+                .filter(Task::isDoneLastWeek)
+                .count();
     }
     public double getFinishRateLW() {
         long numberCreated = tasks.stream()
                 .filter(Task::isMadeLastWeek)
                 .count();
-
         if (numberCreated == 0) {
-            return 0.0;
+            return -1;
         }
         long numberDone = tasks.stream()
                 .filter(Task::isMadeLastWeek)
@@ -176,5 +175,15 @@ public class TaskList {
     public void sortByDateCreated() {
         tasks.sort(Comparator.comparing(Task::getDateCreated));
         storage.rewriteFileFromList(tasks);
+    }
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public Map<String, Long> getCompletionMap() {
+        return tasks.stream()
+                .collect(Collectors.groupingBy(
+                        t -> t.getIsDone() ? "Completed" : "Not Completed",
+                        Collectors.counting()
+                ));
     }
 }

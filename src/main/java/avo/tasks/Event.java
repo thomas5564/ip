@@ -39,10 +39,9 @@ public class Event extends Task {
      */
     @Override
     public String getStorageString() {
-        return String.format("E|%s|%s|%s|%s",
+        return String.format("E|%s|%s|%s",
                 super.getStorageString().substring(2),
                 startTime,
-                endTime,
-                getToday());
+                endTime);
     }
 }

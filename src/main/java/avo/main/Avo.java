@@ -36,4 +36,7 @@ public class Avo {
     public AvoSpeaker getSpeaker() {
         return speaker;
     }
+    public TaskList getTaskList() {
+        return taskList;
+    }
 }

@@ -30,6 +30,8 @@ public class MainWindow extends AnchorPane {
     private boolean autoScrollEnabled = false;
     private AvoSpeaker speaker;
     private boolean isGuiMode = false;
+    private boolean isStatsOpen = false;
+    private ChartContainer chartContainer;
     @FXML
     private AnchorPane root;
     @FXML
@@ -51,6 +53,7 @@ public class MainWindow extends AnchorPane {
     public void setAvo(Avo avo) {
         this.avo = avo;
         this.speaker = avo.getSpeaker();
+        this.chartContainer = new ChartContainer(avo.getTaskList());
     }
 
     /**
@@ -82,6 +85,18 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(greetDialog);
         isGuiMode = !isGuiMode;
     }
+
+    /**
+     * Toggles the stats window
+     */
+    public void toggleStatWindow() {
+        if (!isStatsOpen) {
+            scrollPane.setContent(chartContainer);
+        } else {
+            scrollPane.setContent(dialogContainer);
+        }
+        isStatsOpen = !isStatsOpen;
+    }
     /**
      * Initialises Avo to take in a new to-do task
      */
@@ -98,6 +113,9 @@ public class MainWindow extends AnchorPane {
                     scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
                     autoScrollEnabled = true;
                 }
+            }
+            if (e.getCode() == KeyCode.F2) {
+                toggleStatWindow();
             }
         });
         userInput.setPromptText("Write command...");

@@ -52,7 +52,7 @@ public class Task {
     @Override
     public String toString() {
         String mark = isDone ? "[x]" : "[ ]";
-        return String.format("[T]%s%s%s", mark, instruction);
+        return String.format("[T]%s%s", mark, instruction);
     }
 
     /**

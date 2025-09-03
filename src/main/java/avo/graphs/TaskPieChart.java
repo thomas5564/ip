@@ -13,7 +13,7 @@ public class TaskPieChart extends PieChart {
      * Constructor for this class
      * @param dataMap hashmap of values
      */
-    public TaskPieChart(HashMap<String, ? extends Number> dataMap) {
+    public TaskPieChart(Map<String, ? extends Number> dataMap) {
         super();
         updateChart(dataMap);
     }
@@ -21,7 +21,7 @@ public class TaskPieChart extends PieChart {
      * Updates the chart slices from a map.
      * Keys become labels, values become slice sizes.
      */
-    public void updateChart(HashMap<String, ? extends Number> dataMap) {
+    public void updateChart(Map<String, ? extends Number> dataMap) {
         var pieData = FXCollections.<PieChart.Data>observableArrayList();
 
         for (Map.Entry<String, ? extends Number> entry : dataMap.entrySet()) {
