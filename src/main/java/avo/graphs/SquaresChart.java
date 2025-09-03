@@ -19,8 +19,8 @@ public class SquaresChart<T> extends HBox {
     /**
      * Builds a line of squares and colours them in if the item they
      * represent returns true for a predicate
-     * @param items
-     * @param condition
+     * @param items items to be presented
+     * @param condition condition for them to pass the test
      */
     public SquaresChart(List<T> items, Predicate<T> condition) {
         super(5); // spacing

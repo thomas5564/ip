@@ -2,9 +2,9 @@ package avo.tasks;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
@@ -30,6 +30,7 @@ public class TaskList {
         this.isStored = true;
         storage.readFile(this);
         assert !tasks.isEmpty() : "Invalid number of tasks!";
+        sortByDateCreated();
     }
 
     /**
@@ -169,4 +170,11 @@ public class TaskList {
         return (double) numberDone / numberCreated;
     }
 
+    /**
+     * Sorts the tasks by date and rewrites them in storage accordingly
+     */
+    public void sortByDateCreated() {
+        tasks.sort(Comparator.comparing(Task::getDateCreated));
+        storage.rewriteFileFromList(tasks);
+    }
 }

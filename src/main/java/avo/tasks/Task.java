@@ -96,4 +96,7 @@ public class Task {
     public void setDateDone(LocalDate dateDone) {
         this.dateDone = dateDone;
     }
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
 }
