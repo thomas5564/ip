@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 public class TaskTest {
     @Test
     public void storageStringTest() {
+        LocalDate dateCreated = LocalDate.parse("2004-12-21");
         Event event = new Event("play games",
                 LocalDate.parse("2003-02-07"),
                 LocalDate.parse("2004-12-21"), dateCreated);

@@ -1,16 +1,15 @@
 package avo.ui;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import avo.graphs.SquaresChart;
 import avo.graphs.TaskPieChart;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contains charts to show insights
