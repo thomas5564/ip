@@ -2,6 +2,8 @@ package avo.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 import avo.exceptions.EmptyDateException;
@@ -10,9 +12,6 @@ import avo.exceptions.IncompleteInputException;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
 import avo.tasks.Task;
-
-import java.time.LocalDate;
-
 
 public class ParserTest {
     @Test
