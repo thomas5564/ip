@@ -99,4 +99,8 @@ public class Task {
     public LocalDate getDateCreated() {
         return dateCreated;
     }
+    public LocalDate getWeekEnd() {
+        LocalDate weekEnd = startOfThisWeek.plusDays(6);
+        return weekEnd;
+    }
 }

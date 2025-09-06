@@ -190,4 +190,7 @@ public class TaskList {
                         Collectors.counting()
                 ));
     }
+    public Map<String, Double> getFinishRateMap () {
+        return null;
+    }
 }
