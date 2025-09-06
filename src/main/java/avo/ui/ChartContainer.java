@@ -10,7 +10,6 @@ import avo.graphs.TaskPieChart;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.Axis;
 import javafx.scene.layout.VBox;
 
 /**

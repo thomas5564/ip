@@ -12,7 +12,7 @@ import javafx.scene.chart.NumberAxis;
 /**
  * Bar chart that shows finish rate on each week
  */
-public class TaskBarChart extends BarChart implements Updateable {
+public class TaskBarChart extends BarChart<String, Number> implements Updateable {
     private TaskList taskList;
     /**
      * @param taskList tasklist of all tasks
