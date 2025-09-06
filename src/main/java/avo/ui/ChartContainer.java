@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import avo.graphs.SquaresChart;
+import avo.graphs.TaskBarChart;
 import avo.graphs.TaskPieChart;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.Axis;
 import javafx.scene.layout.VBox;
 
 /**
@@ -30,14 +32,18 @@ public class ChartContainer extends VBox {
         }
         SquaresChart squaresChart = new SquaresChart<>(taskList.getTasks(), Task::getIsDone);
         TaskPieChart pieChart = new TaskPieChart(taskList);
+        TaskBarChart barChart = new TaskBarChart(taskList);
+        barChart.prefWidthProperty().bind(this.widthProperty());
         squaresChart.prefWidthProperty().bind(this.widthProperty());
         pieChart.prefWidthProperty().bind(this.widthProperty());
         this.graphs = new ArrayList<>();
         graphs.add(squaresChart);
         graphs.add(pieChart);
+        graphs.add(barChart);
         this.getChildren().addAll(
             squaresChart,
-            pieChart
+            pieChart,
+            barChart
         );
     }
 

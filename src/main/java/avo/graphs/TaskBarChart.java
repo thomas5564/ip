@@ -1,14 +1,13 @@
 package avo.graphs;
 
+import java.util.Map;
+
 import avo.tasks.TaskList;
 import avo.ui.Updateable;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
-
-import java.util.Map;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 
 /**
  * Bar chart that shows finish rate on each week
@@ -16,13 +15,19 @@ import java.util.Map;
 public class TaskBarChart extends BarChart implements Updateable {
     private TaskList taskList;
     /**
-     * @param axis label for an axis
-     * @param axis1 label for another axis
      * @param taskList tasklist of all tasks
      */
-    public TaskBarChart(Axis axis, Axis axis1, TaskList taskList) {
-        super(axis, axis1);
+    public TaskBarChart(TaskList taskList) {
+        super(new CategoryAxis(), new NumberAxis());
         this.taskList = taskList;
+
+        // Configure axes
+        CategoryAxis xAxis = (CategoryAxis) getXAxis();
+        xAxis.setLabel("Week");
+
+        NumberAxis yAxis = (NumberAxis) getYAxis();
+        yAxis.setLabel("Finish rate (%)");
+        yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, null, "%"));
     }
 
     @Override
