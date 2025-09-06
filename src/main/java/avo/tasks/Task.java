@@ -100,7 +100,6 @@ public class Task {
         return dateCreated;
     }
     public LocalDate getWeekEnd() {
-        LocalDate weekEnd = startOfThisWeek.plusDays(6);
-        return weekEnd;
+        return dateCreated.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
     }
 }

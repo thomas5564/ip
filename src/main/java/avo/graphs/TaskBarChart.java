@@ -28,6 +28,7 @@ public class TaskBarChart extends BarChart implements Updateable {
         NumberAxis yAxis = (NumberAxis) getYAxis();
         yAxis.setLabel("Finish rate (%)");
         yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, null, "%"));
+        update();
     }
 
     @Override
