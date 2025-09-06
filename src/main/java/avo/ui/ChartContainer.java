@@ -5,14 +5,18 @@ import avo.graphs.TaskPieChart;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains charts to show insights
  */
 public class ChartContainer extends VBox {
+    private List<Updateable> graphs;
     /**
      * Constructor for this class
      */
@@ -26,12 +30,24 @@ public class ChartContainer extends VBox {
             e.printStackTrace();
         }
         SquaresChart squaresChart = new SquaresChart<>(taskList.getTasks(), Task::getIsDone);
-        TaskPieChart pieChart = new TaskPieChart(taskList.getCompletionMap());
+        TaskPieChart pieChart = new TaskPieChart(taskList);
         squaresChart.prefWidthProperty().bind(this.widthProperty());
         pieChart.prefWidthProperty().bind(this.widthProperty());
+        this.graphs = new ArrayList<>();
+        graphs.add(squaresChart);
+        graphs.add(pieChart);
         this.getChildren().addAll(
             squaresChart,
             pieChart
         );
+    }
+
+    /**
+     * Updates the charts on
+     */
+    public void updateCharts() {
+        for (Updateable u: graphs) {
+            u.update();
+        }
     }
 }

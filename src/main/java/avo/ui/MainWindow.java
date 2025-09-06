@@ -205,6 +205,7 @@ public class MainWindow extends AnchorPane {
         addDialogBoxes(input);
         resetDatePickers();
         userInput.setText("");
+        chartContainer.updateCharts();
     }
 
     /**

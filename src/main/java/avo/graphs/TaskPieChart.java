@@ -1,35 +1,37 @@
 package avo.graphs;
-import java.util.HashMap;
 import java.util.Map;
 
+import avo.tasks.TaskList;
+import avo.ui.Updateable;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.PieChart;
 
 /**
- * A generic PieChart that builds slices from a HashMap<String, Number>
+ * A generic PieChart that builds slices from the task list
  */
-public class TaskPieChart extends PieChart {
+public class TaskPieChart extends PieChart implements Updateable {
+    private TaskList taskList;
+    private Map<String, ? extends Number> dataMap;
     /**
      * Constructor for this class
-     * @param dataMap hashmap of values
+     * @param taskList to provide hashmap of values
      */
-    public TaskPieChart(Map<String, ? extends Number> dataMap) {
+    public TaskPieChart(TaskList taskList) {
         super();
-        updateChart(dataMap);
+        this.taskList = taskList;
+        this.dataMap = taskList.getCompletionMap();
+        update();
     }
-    /**
-     * Updates the chart slices from a map.
-     * Keys become labels, values become slice sizes.
-     */
-    public void updateChart(Map<String, ? extends Number> dataMap) {
-        var pieData = FXCollections.<PieChart.Data>observableArrayList();
-
-        for (Map.Entry<String, ? extends Number> entry : dataMap.entrySet()) {
-            String label = entry.getKey();
-            Number value = entry.getValue();
-            pieData.add(new PieChart.Data(label, value.doubleValue()));
-        }
-
-        setData(pieData);
+    @Override
+    public void update() {
+        Platform.runLater(() -> {
+            dataMap = taskList.getCompletionMap();
+            var pieData = FXCollections.<PieChart.Data>observableArrayList();
+            dataMap.forEach((label, value) ->
+                    pieData.add(new PieChart.Data(label, value.doubleValue())));
+            setData(pieData);
+        });
     }
+
 }
