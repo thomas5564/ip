@@ -190,7 +190,12 @@ public class TaskList {
                         Collectors.counting()
                 ));
     }
-    public Map<String, Double> getFinishRateMap () {
-        return null;
+    public Map<String, Double> getFinishRateMap() {
+        return tasks.stream()
+                .collect(Collectors.groupingBy(
+                        task -> task.getWeekEnd().toString(),
+                        Collectors.averagingDouble(task -> task.getIsDone() ? 1.0 : 0.0)
+                ));
     }
+
 }
