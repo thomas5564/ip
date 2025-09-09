@@ -63,10 +63,10 @@ public class ChartContainer extends VBox {
             Label noTasksLabel = new Label("no tasks added last week");
             noTasksLabel.getStyleClass().add("no-tasks");
             pieContainer.getChildren().add(noTasksLabel);
-            return; // ✅ stop here if no tasks
+            return;
         }
 
-        TaskPieChart pieChart = new TaskPieChart(taskList.getTaskLW());
+        TaskPieChart pieChart = new TaskPieChart(taskList);
         pieChart.prefWidthProperty().bind(this.widthProperty());
         graphs.add(pieChart);
         pieContainer.getChildren().add(pieChart);
@@ -84,8 +84,8 @@ public class ChartContainer extends VBox {
             return;
         }
 
-        SquaresChart<Task> squaresChart = new SquaresChart<>(
-                taskList.getWeeklyTasks().getTasks(),
+        SquaresChart squaresChart = new SquaresChart(
+                taskList,
                 Task::getIsDone
         );
         squaresChart.prefWidthProperty().bind(this.widthProperty());

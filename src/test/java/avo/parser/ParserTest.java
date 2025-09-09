@@ -29,7 +29,7 @@ public class ParserTest {
         Deadline deadline = Parser.parseDeadline("deadline play games /by 2003-02-07");
         // D|mark|instruction|dueDate|dateCreated
         assertEquals(
-                String.format("D|-|play games|2025-09-06|2003-02-07", today),
+                String.format("D|-|play games|%s|2003-02-07", today),
                 deadline.getStorageString()
         );
 

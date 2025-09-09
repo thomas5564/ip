@@ -26,7 +26,7 @@ public class TaskPieChart extends PieChart implements Updateable {
     @Override
     public void update() {
         Platform.runLater(() -> {
-            dataMap = taskList.getCompletionMap();
+            dataMap = taskList.getTaskLW().getCompletionMap();
             var pieData = FXCollections.<PieChart.Data>observableArrayList();
             dataMap.forEach((label, value) ->
                     pieData.add(new PieChart.Data(label, value.doubleValue())));

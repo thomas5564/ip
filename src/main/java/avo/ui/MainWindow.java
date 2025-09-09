@@ -284,6 +284,14 @@ public class MainWindow extends AnchorPane {
             datePickerContainer.getChildren().clear();
         }
         switch (commandString) {
+        case "Show Weekly List":
+            handleUserInput(() -> "listw");
+            toggleMenu();
+            break;
+        case "View Stats":
+            handleUserInput(() -> "stat");
+            toggleMenu();
+            break;
         case "Show List":
             handleUserInput(() -> "list");
             toggleMenu();

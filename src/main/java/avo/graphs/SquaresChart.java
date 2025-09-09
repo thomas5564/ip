@@ -3,6 +3,8 @@ package avo.graphs;
 import java.util.List;
 import java.util.function.Predicate;
 
+import avo.tasks.Task;
+import avo.tasks.TaskList;
 import avo.ui.Updateable;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -14,20 +16,22 @@ import javafx.scene.shape.Rectangle;
  * Each square is filled green if it passes the condition,
  * red if it fails.
  */
-public class SquaresChart<T> extends HBox implements Updateable {
+public class SquaresChart extends HBox implements Updateable {
     private static final int SIZE = 10;
-    private List<T> items;
-    private Predicate<T> condition;
+    private TaskList taskList;
+    private List<Task> items;
+    private Predicate<Task> condition;
     /**
      * Builds a line of squares and colours them in if the item they
      * represent returns true for a predicate
-     * @param items items to be presented
+     * @param taskList to be presented
      * @param condition condition for them to pass the test
      */
-    public SquaresChart(List<T> items, Predicate<T> condition) {
+    public SquaresChart(TaskList taskList, Predicate<Task> condition) {
         super(5); // spacing
-        this.items = items;
+        this.items = taskList.getTasks();
         this.condition = condition;
+        this.taskList = taskList;
         addSquares();
     }
 
@@ -41,7 +45,8 @@ public class SquaresChart<T> extends HBox implements Updateable {
      * Adds squares to the chart
      */
     public void addSquares() {
-        for (T item : items) {
+        items = taskList.getWeeklyTasks().getTasks();
+        for (Task item : items) {
             Rectangle square = new Rectangle(SIZE, SIZE);
 
             if (condition.test(item)) {

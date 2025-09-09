@@ -213,7 +213,7 @@ public class AvoSpeaker {
                 taskList.deleteTask(indexSelected);
                 return new CommandResponse(
                         removeTaskResponse(taskSelected, taskList.length()),
-                        Command.BYE
+                        Command.DELETE
                 );
             case FIND:
                 String searchedString = words.length > 1
@@ -227,7 +227,7 @@ public class AvoSpeaker {
             case STAT:
                 return new CommandResponse(
                         statResponse(),
-                        Command.FIND
+                        Command.STAT
                 );
             default:
                 throw new UnknownCommandException();
