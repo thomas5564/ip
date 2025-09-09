@@ -32,7 +32,6 @@ public class TaskList {
         this.storage = storage;
         this.isStored = true;
         storage.readFile(this);
-        assert !tasks.isEmpty() : "Invalid number of tasks!";
         sortByDateCreated();
     }
 
@@ -148,14 +147,18 @@ public class TaskList {
                 .forEach(task -> results.addTask(task, false));
         return results;
     }
-    public int getNumberDone() {
-        return numberDone;
-    }
     public long getNumberDoneLW() {
         return tasks.stream()
                 .filter(Task::getIsDone)
                 .filter(Task::isDoneLastWeek)
                 .count();
+    }
+    public TaskList getTaskLW() {
+        TaskList taskList = new TaskList();
+        tasks.stream()
+                .filter(Task::isDoneLastWeek)
+                .forEach(task -> taskList.addTask(task, false));
+        return taskList;
     }
     public double getFinishRateLW() {
         long numberCreated = tasks.stream()
@@ -190,18 +193,25 @@ public class TaskList {
                         Collectors.counting()
                 ));
     }
+
+    /**
+     * Get a map with the string representation of the end of the weeks as the key,
+     * and the corresponding finish rate (FR) for the week as the value.
+     * @return The date-finishRate map for tasks completed in the last 30 days
+     */
     public Map<String, Double> getFinishRateMap() {
         return tasks.stream()
+                .filter(Task::isMadeFourWeeksAgo)
                 .collect(Collectors.groupingBy(
                         task -> task.getWeekEnd().toString(),
                         Collectors.averagingDouble(task -> task.getIsDone() ? 1.0 : 0.0)
                 ));
     }
-    public TaskList getTasksMadeTW() {
-        TaskList results = new TaskList();
+    public TaskList getWeeklyTasks() {
+        TaskList taskList = new TaskList();
         tasks.stream()
                 .filter(Task::isMadeThisWeek)
-                .forEach(task -> results.addTask(task, false));
-        return results;
+                .forEach(task -> taskList.addTask(task, false));
+        return taskList;
     }
 }
