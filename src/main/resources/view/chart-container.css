@@ -21,3 +21,8 @@
     -fx-background-radius: 5;
     -fx-padding: 10;
 }
+.no-tasks {
+    -fx-font-style: italic;
+    -fx-text-fill: black; /* or #a0a0a0 for more control */
+}
+

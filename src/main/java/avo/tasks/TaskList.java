@@ -32,7 +32,6 @@ public class TaskList {
         this.storage = storage;
         this.isStored = true;
         storage.readFile(this);
-        assert !tasks.isEmpty() : "Invalid number of tasks!";
         sortByDateCreated();
     }
 
