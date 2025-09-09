@@ -9,6 +9,7 @@ import avo.graphs.TaskBarChart;
 import avo.graphs.TaskPieChart;
 import avo.tasks.Task;
 import avo.tasks.TaskList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
@@ -17,6 +18,12 @@ import javafx.scene.layout.VBox;
  */
 public class ChartContainer extends VBox {
     private List<Updateable> graphs;
+    @FXML
+    private VBox squaresContainer;
+    @FXML
+    private VBox pieContainer;
+    @FXML
+    private VBox barContainer;
     /**
      * Constructor for this class
      */
@@ -39,11 +46,10 @@ public class ChartContainer extends VBox {
         graphs.add(squaresChart);
         graphs.add(pieChart);
         graphs.add(barChart);
-        this.getChildren().addAll(
-            squaresChart,
-            pieChart,
-            barChart
-        );
+        barChart.setMinHeight(400);
+        squaresContainer.getChildren().add(squaresChart);
+        pieContainer.getChildren().add(pieChart);
+        barContainer.getChildren().add(barChart);
     }
 
     /**

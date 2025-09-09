@@ -21,15 +21,28 @@ public class TaskBarChart extends BarChart<String, Number> implements Updateable
         super(new CategoryAxis(), new NumberAxis());
         this.taskList = taskList;
 
-        // Configure axes
+        // overall chart height
+        this.setPrefHeight(600.0);
+        this.setMaxHeight(Double.MAX_VALUE);
+
+        // Configure X axis
         CategoryAxis xAxis = (CategoryAxis) getXAxis();
         xAxis.setLabel("Week");
+        xAxis.setTickLabelRotation(90);
 
+        // Configure Y axis
         NumberAxis yAxis = (NumberAxis) getYAxis();
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(100);
+        yAxis.setTickUnit(20);
         yAxis.setLabel("Finish rate (%)");
         yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, null, "%"));
+
         update();
     }
+
+
 
     @Override
     public void update() {

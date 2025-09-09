@@ -34,6 +34,7 @@ public class AvoSpeaker {
                 Do you have anything to do? Key it in and send it over!
                 If you are more comfortable using GUI,
                 Press ALT to switch to GUI mode
+                To view your statistics, press F2.
                 """;
         return greetString;
     }
@@ -160,6 +161,15 @@ public class AvoSpeaker {
                         : prefix + taskList.toString();
                 return new CommandResponse(
                         response,
+                        Command.LIST
+                );
+            case LISTW:
+                String weekprefix = "Here are the tasks from this week:";
+                String output = taskList.isEmpty()
+                        ? "You haven't added any tasks this week. Add some to get started!"
+                        : weekprefix + taskList.getTasksMadeTW().toString();
+                return new CommandResponse(
+                        output,
                         Command.LIST
                 );
             case MARK:

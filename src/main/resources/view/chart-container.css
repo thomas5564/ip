@@ -1,0 +1,23 @@
+/* Grey background for the whole root container */
+#root {
+    -fx-background-color: #d3d3d3; /* Light grey */
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+/* Style for all labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333; /* Dark grey text */
+    -fx-padding: 5 0 5 0;
+}
+
+/* Style for each section VBox (squares, pie, bar) */
+#squaresContainer, #pieContainer, #barContainer {
+    -fx-background-color: #f0f0f0; /* Slightly lighter grey panels */
+    -fx-border-color: #b0b0b0;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}

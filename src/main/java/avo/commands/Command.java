@@ -12,5 +12,7 @@ public enum Command {
     TODO,
     DELETE,
     BYE,
-    STAT, FIND
+    STAT,
+    LISTW,
+    FIND
 }

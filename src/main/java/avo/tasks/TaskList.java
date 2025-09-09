@@ -197,5 +197,11 @@ public class TaskList {
                         Collectors.averagingDouble(task -> task.getIsDone() ? 1.0 : 0.0)
                 ));
     }
-
+    public TaskList getTasksMadeTW() {
+        TaskList results = new TaskList();
+        tasks.stream()
+                .filter(Task::isMadeThisWeek)
+                .forEach(task -> results.addTask(task, false));
+        return results;
+    }
 }
