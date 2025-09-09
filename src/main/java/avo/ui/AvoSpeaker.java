@@ -167,7 +167,7 @@ public class AvoSpeaker {
                 String weekprefix = "Here are the tasks from this week:";
                 String output = taskList.isEmpty()
                         ? "You haven't added any tasks this week. Add some to get started!"
-                        : weekprefix + taskList.getTasksMadeTW().toString();
+                        : weekprefix + taskList.getWeeklyTasks().toString();
                 return new CommandResponse(
                         output,
                         Command.LIST

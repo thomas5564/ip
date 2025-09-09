@@ -36,8 +36,11 @@ public class ChartContainer extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SquaresChart squaresChart = new SquaresChart<>(taskList.getTasks(), Task::getIsDone);
-        TaskPieChart pieChart = new TaskPieChart(taskList);
+        SquaresChart squaresChart = new SquaresChart<>(
+                taskList.getWeeklyTasks().getTasks(),
+                Task::getIsDone
+        );
+        TaskPieChart pieChart = new TaskPieChart(taskList.getTaskLW());
         TaskBarChart barChart = new TaskBarChart(taskList);
         barChart.prefWidthProperty().bind(this.widthProperty());
         squaresChart.prefWidthProperty().bind(this.widthProperty());
