@@ -13,7 +13,7 @@ D|2025-09-10|finish 2100 assignment 2|2025-08-18|2025-08-20
 T|2025-08-19|gym session|2025-08-18
 T|2025-08-19|draft resume|2025-08-19
 T|2025-08-22|apply for scholarships|2025-08-20
-E|-|Hackathon|2025-08-20|2025-08-21|2025-08-23
+E|-|Hackathon|2025-08-20|2025-08-23|2025-08-21
 T|-|finish book|2025-08-21
 T|2025-08-23|2103 lecture notes summary|2025-08-22
 T|-|CS2109S prep|2025-08-23
@@ -21,7 +21,7 @@ D|-|midterm prep schedule|2025-08-23|2025-08-28
 T|2025-08-25|call advisor|2025-08-24
 T|-|fix project bugs|2025-08-25
 T|2025-08-27|grocery restock|2025-08-26
-E|-|Weekend trip|2025-08-26|2025-08-27|2025-08-28
+E|-|Weekend trip|2025-08-26|2025-08-28|2025-08-27
 T|-|finalise presentation slides|2025-08-27
 D|2025-08-30|submit 2103 milestone|2025-08-27|2025-08-30
 T|-|2100 practice problems|2025-08-28
@@ -30,9 +30,10 @@ T|-|team sync up|2025-08-30
 D|-|submit teammates review|2025-08-31|2025-09-05
 T|-|watch 2100 lecture 11|2025-09-01
 D|2025-09-10|submit teammates review|2025-09-01|2025-09-05
-E|2025-09-10|CS2103 group project meeting|2025-09-02|2025-09-03|2025-09-04
+E|2025-09-10|CS2103 group project meeting|2025-09-02|2025-09-04|2025-09-03
 T|-|play|2025-09-10
 T|2025-09-10|play|2025-09-10
 T|-|have fun|2025-09-10
 T|-|test|2025-09-10
 T|2025-09-10|testing123|2025-09-10
+T|-|mark 33|2025-09-10

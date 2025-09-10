@@ -20,6 +20,7 @@ import avo.exceptions.EmptyDateException;
 import avo.exceptions.EmptyInstructionException;
 import avo.exceptions.IncompleteInputException;
 import avo.exceptions.InvalidEventDateException;
+import avo.main.Avo;
 import avo.parser.Parser;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
@@ -66,7 +67,8 @@ class StorageTest {
         Event event = Parser.parseEvent("event play games /from 2003-02-07 /to 2004-12-21");
         Deadline deadline = Parser.parseDeadline("deadline play games /by 2003-02-07");
         Task task = Parser.parseTask("todo play games");
-        TaskList taskList = new TaskList(storage);
+        Avo avo = new Avo();
+        TaskList taskList = new TaskList(storage, avo);
         taskList.addTask(event, false);
         taskList.addTask(deadline, false);
         taskList.addTask(task, false);

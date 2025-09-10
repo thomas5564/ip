@@ -33,7 +33,7 @@ public class Task {
         isDone = true;
     }
     public int getIndex(TaskList taskList) {
-        return taskList.getTasks().indexOf(this);
+        return taskList.getTasks().indexOf(this) + 1;
     }
 
     /**
