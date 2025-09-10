@@ -155,8 +155,10 @@ public class TaskList {
     public TaskList getTaskLW() {
         TaskList taskList = new TaskList();
         tasks.stream()
-                .filter(Task::isDoneLastWeek)
-                .forEach(task -> taskList.addTask(task, false));
+                .filter(Task::isMadeLastWeek)
+                .forEach(task -> {
+                    taskList.addTask(task, false);
+                });
         return taskList;
     }
     public double getFinishRateLW() {
@@ -187,6 +189,7 @@ public class TaskList {
     }
     public Map<String, Long> getLastWeekCompletionMap() {
         return tasks.stream()
+                .filter(Task::isMadeLastWeek)
                 .collect(Collectors.groupingBy(
                         t -> t.isDoneLastWeek() ? "Completed" : "Not Completed",
                         Collectors.counting()
@@ -203,7 +206,7 @@ public class TaskList {
                 .filter(Task::isMadeFourWeeksAgo)
                 .collect(Collectors.groupingBy(
                         task -> task.getWeekEnd().toString(),
-                        Collectors.averagingDouble(task -> task.getIsDone() ? 1.0 : 0.0)
+                        Collectors.averagingDouble(task -> task.getIsDoneInWeekCreated() ? 1.0 : 0.0)
                 ));
     }
     public TaskList getWeeklyTasks() {

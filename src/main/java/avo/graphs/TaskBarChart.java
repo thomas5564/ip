@@ -3,7 +3,6 @@ package avo.graphs;
 import java.util.Map;
 
 import avo.tasks.TaskList;
-import avo.ui.Updateable;
 import javafx.application.Platform;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -12,7 +11,7 @@ import javafx.scene.chart.NumberAxis;
 /**
  * Bar chart that shows finish rate on each week
  */
-public class TaskBarChart extends BarChart<String, Number> implements Updateable {
+public class TaskBarChart extends BarChart<String, Number> {
     private TaskList taskList;
     /**
      * @param taskList tasklist of all tasks
@@ -42,9 +41,9 @@ public class TaskBarChart extends BarChart<String, Number> implements Updateable
         update();
     }
 
-
-
-    @Override
+    /**
+     * Update the chart
+     */
     public void update() {
         Platform.runLater(() -> {
             Map<String, Double> finishRateMap = taskList.getFinishRateMap();
@@ -53,11 +52,11 @@ public class TaskBarChart extends BarChart<String, Number> implements Updateable
             Series<String, Number> series = new Series<>();
             series.setName("Weekly Finish Rate");
 
-            // Add data points (week → rate)
-            finishRateMap.forEach((week, rate) -> {
-                series.getData().add(new Data<>(week, rate * 100)); // as percentage
-            });
-
+            finishRateMap.entrySet().stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .forEach(entry -> {
+                        series.getData().add(new Data<>(entry.getKey(), entry.getValue() * 100)); // as percentage
+                    });
             this.getData().clear();
             this.getData().add(series);
         });

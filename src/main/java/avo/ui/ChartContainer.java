@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
  * Contains charts to show insights
  */
 public class ChartContainer extends VBox {
-    private final List<Updateable> graphs = new ArrayList<>();
+    private final List<Updateable> updateables = new ArrayList<>();
 
     @FXML
     private VBox squaresContainer;
@@ -49,7 +49,7 @@ public class ChartContainer extends VBox {
      * Updates all charts
      */
     public void updateCharts() {
-        for (Updateable u : graphs) {
+        for (Updateable u : updateables) {
             u.update();
         }
     }
@@ -68,7 +68,6 @@ public class ChartContainer extends VBox {
 
         TaskPieChart pieChart = new TaskPieChart(taskList);
         pieChart.prefWidthProperty().bind(this.widthProperty());
-        graphs.add(pieChart);
         pieContainer.getChildren().add(pieChart);
     }
 
@@ -89,7 +88,7 @@ public class ChartContainer extends VBox {
                 Task::getIsDone
         );
         squaresChart.prefWidthProperty().bind(this.widthProperty());
-        graphs.add(squaresChart);
+        updateables.add(squaresChart);
         squaresContainer.getChildren().add(squaresChart);
     }
 
@@ -108,7 +107,6 @@ public class ChartContainer extends VBox {
         TaskBarChart barChart = new TaskBarChart(taskList);
         barChart.prefWidthProperty().bind(this.widthProperty());
         barChart.setMinHeight(400);
-        graphs.add(barChart);
         barContainer.getChildren().add(barChart);
     }
 }

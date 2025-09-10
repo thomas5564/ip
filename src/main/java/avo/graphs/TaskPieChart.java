@@ -2,7 +2,6 @@ package avo.graphs;
 import java.util.Map;
 
 import avo.tasks.TaskList;
-import avo.ui.Updateable;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.PieChart;
@@ -10,7 +9,7 @@ import javafx.scene.chart.PieChart;
 /**
  * A generic PieChart that builds slices from the task list
  */
-public class TaskPieChart extends PieChart implements Updateable {
+public class TaskPieChart extends PieChart {
     private TaskList taskList;
     private Map<String, ? extends Number> dataMap;
     /**
@@ -23,7 +22,10 @@ public class TaskPieChart extends PieChart implements Updateable {
         this.dataMap = taskList.getLastWeekCompletionMap();
         update();
     }
-    @Override
+
+    /**
+     * Update the chart
+     */
     public void update() {
         Platform.runLater(() -> {
             dataMap = taskList.getTaskLW().getLastWeekCompletionMap();

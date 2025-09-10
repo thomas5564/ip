@@ -1,7 +1,38 @@
-T|-|watch 2100 lecture 11|2025-09-08
-T|-|eat|2025-09-09
-T|-|play|2025-09-09
-T|-|ate|2025-09-09
-T|-|study|2025-09-09
-T|-|unmark|2025-09-09
-T|-|list|2025-09-09
+T|2025-06-11|watch 2100 lecture 10|2025-08-10
+T|2025-08-11|watch 2100 lecture 10|2025-08-10
+T|-|draft 2103 essay|2025-08-11
+T|2025-08-13|meeting with project team|2025-08-12
+T|-|CS2040S practice quiz|2025-08-13
+T|2025-08-15|buy groceries|2025-08-14
+T|2025-09-10|laundry|2025-08-15
+D|2025-08-16|submit tutorial 5|2025-08-15|2025-08-16
+T|-|call family|2025-08-16
+E|2025-08-17|NUS open house volunteering|2025-08-16|2025-08-17|2025-08-17
+T|-|check internship portal|2025-08-17
+D|2025-09-10|finish 2100 assignment 2|2025-08-18|2025-08-20
+T|2025-08-19|gym session|2025-08-18
+T|2025-08-19|draft resume|2025-08-19
+T|2025-08-22|apply for scholarships|2025-08-20
+E|-|Hackathon|2025-08-20|2025-08-21|2025-08-23
+T|-|finish book|2025-08-21
+T|2025-08-23|2103 lecture notes summary|2025-08-22
+T|-|CS2109S prep|2025-08-23
+D|-|midterm prep schedule|2025-08-23|2025-08-28
+T|2025-08-25|call advisor|2025-08-24
+T|-|fix project bugs|2025-08-25
+T|2025-08-27|grocery restock|2025-08-26
+E|-|Weekend trip|2025-08-26|2025-08-27|2025-08-28
+T|-|finalise presentation slides|2025-08-27
+D|2025-08-30|submit 2103 milestone|2025-08-27|2025-08-30
+T|-|2100 practice problems|2025-08-28
+T|2025-08-30|clean room|2025-08-29
+T|-|team sync up|2025-08-30
+D|-|submit teammates review|2025-08-31|2025-09-05
+T|-|watch 2100 lecture 11|2025-09-01
+D|-|submit teammates review|2025-09-01|2025-09-05
+E|2025-09-04|CS2103 group project meeting|2025-09-02|2025-09-03|2025-09-04
+T|-|play|2025-09-10
+T|-|play|2025-09-10
+T|-|have fun|2025-09-10
+T|-|test|2025-09-10
+T|-|testing123|2025-09-10
