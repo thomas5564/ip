@@ -31,7 +31,7 @@ D|-|submit teammates review|2025-08-31|2025-09-05
 T|-|watch 2100 lecture 11|2025-09-01
 D|2025-09-10|submit teammates review|2025-09-01|2025-09-05
 E|2025-09-10|CS2103 group project meeting|2025-09-02|2025-09-04|2025-09-03
-T|-|play|2025-09-10
+T|2025-09-10|play|2025-09-10
 T|2025-09-10|play|2025-09-10
 T|-|have fun|2025-09-10
 T|-|test|2025-09-10
