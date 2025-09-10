@@ -4,7 +4,6 @@ package avo.tasks;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -183,13 +182,13 @@ public class TaskList {
         tasks.sort(Comparator.comparing(Task::getDateCreated));
         storage.rewriteFileFromList(tasks);
     }
-    public List<Task> getTasks() {
+    public ArrayList<Task> getTasks() {
         return tasks;
     }
-    public Map<String, Long> getCompletionMap() {
+    public Map<String, Long> getLastWeekCompletionMap() {
         return tasks.stream()
                 .collect(Collectors.groupingBy(
-                        t -> t.getIsDone() ? "Completed" : "Not Completed",
+                        t -> t.isDoneLastWeek() ? "Completed" : "Not Completed",
                         Collectors.counting()
                 ));
     }

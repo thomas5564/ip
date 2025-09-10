@@ -6,6 +6,7 @@ import avo.commands.Command;
 import avo.exceptions.EmptyDateException;
 import avo.exceptions.EmptyInstructionException;
 import avo.exceptions.IncompleteInputException;
+import avo.exceptions.InvalidEventDateException;
 import avo.exceptions.UnknownCommandException;
 import avo.tasks.Deadline;
 import avo.tasks.Event;
@@ -69,7 +70,7 @@ public class Parser {
      */
     public static Event parseEvent(String input) throws EmptyInstructionException,
             IncompleteInputException,
-            EmptyDateException {
+            EmptyDateException, InvalidEventDateException {
         if (!input.startsWith("event")) {
             throw new IllegalArgumentException("Input must start with 'event'");
         }
@@ -97,7 +98,9 @@ public class Parser {
 
         LocalDate startTime = LocalDate.parse(startTimeString);
         LocalDate endTime = LocalDate.parse(endTimeString);
-
+        if (startTime.isAfter(endTime)) {
+            throw new InvalidEventDateException(startTime, endTime);
+        }
         return new Event(eventInstruction, startTime, endTime, today);
     }
 

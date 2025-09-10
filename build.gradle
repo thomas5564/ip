@@ -102,3 +102,4 @@ artifacts {
 run{
     standardInput = System.in
 }
+
