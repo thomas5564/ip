@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import avo.exceptions.EmptySearchStringException;
 import avo.exceptions.InvalidIndexException;
+import avo.main.Avo;
 import avo.storage.Storage;
 
 
@@ -18,18 +18,19 @@ import avo.storage.Storage;
  */
 
 public class TaskList {
-
+    private static Avo avo;
     private final ArrayList<Task> tasks = new ArrayList<>();
     private Storage storage;
     private boolean isStored = false;
     private int numberDone;
     /**
-     * Constructor to use for the tasklist that Avo is managing
+     * Constructor to use for the main tasklist that Avo is managing
      * @param storage storage instance where the tasks are stored
      */
-    public TaskList(Storage storage) {
+    public TaskList(Storage storage, Avo avo) {
         this.storage = storage;
         this.isStored = true;
+        this.avo = avo;
         storage.readFile(this);
         sortByDateCreated();
     }
@@ -58,8 +59,8 @@ public class TaskList {
     }
     @Override
     public String toString() {
-        return IntStream.range(0, tasks.size())
-                .mapToObj(i -> "\n         " + (i + 1) + "." + tasks.get(i))
+        return tasks.stream()
+                .map(task -> "\n" + task.getIndex(avo.getMainTaskList()) + "." + task)
                 .collect(Collectors.joining());
     }
 

@@ -53,7 +53,7 @@ public class MainWindow extends AnchorPane {
     public void setAvo(Avo avo) {
         this.avo = avo;
         this.speaker = avo.getSpeaker();
-        this.chartContainer = new ChartContainer(avo.getTaskList());
+        this.chartContainer = new ChartContainer(avo.getMainTaskList());
     }
 
     /**

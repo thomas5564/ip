@@ -25,13 +25,15 @@ public class Task {
         this.dateCreated = dateCreated;
         this.dateDone = null;
     }
-
     /**
      * Marks the task as done and sets the date of completion to the current date.
      */
     public void mark() {
         this.dateDone = LocalDate.now();
         isDone = true;
+    }
+    public int getIndex(TaskList taskList) {
+        return taskList.getTasks().indexOf(this);
     }
 
     /**

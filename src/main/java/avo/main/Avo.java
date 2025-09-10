@@ -24,7 +24,7 @@ public class Avo {
     public Avo() {
         try {
             this.storage = new Storage(PATH_NAME);
-            this.taskList = new TaskList(storage);
+            this.taskList = new TaskList(storage, this);
             this.speaker = new AvoSpeaker(taskList);
         } catch (IOException e) {
             System.err.println("Could not resolve JAR location: " + e.getMessage());
@@ -32,11 +32,10 @@ public class Avo {
             System.err.println("I/O error while creating file: " + e.getMessage());
         }
     }
-
+    public TaskList getMainTaskList() {
+        return taskList;
+    }
     public AvoSpeaker getSpeaker() {
         return speaker;
-    }
-    public TaskList getTaskList() {
-        return taskList;
     }
 }
