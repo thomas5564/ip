@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-
 /**
  * A row of squares representing items in a list.
  * Each square is filled green if it passes the condition,
@@ -18,21 +17,19 @@ import javafx.scene.shape.Rectangle;
  */
 public class SquaresChart extends HBox implements Updateable {
     private static final int SIZE = 10;
-    private TaskList taskList;
-    private List<Task> items;
-    private Predicate<Task> condition;
+    private final TaskList taskList;
+    private final Predicate<Task> condition;
+
     /**
-     * Builds a line of squares and colours them in if the item they
-     * represent returns true for a predicate
-     * @param taskList to be presented
-     * @param condition condition for them to pass the test
+     * constructor for this class
+     * @param taskList that will produce that weekly tasks
+     * @param condition on which to evaluate each item
      */
     public SquaresChart(TaskList taskList, Predicate<Task> condition) {
-        super(5); // spacing
-        this.items = taskList.getTasks();
-        this.condition = condition;
+        super(5);
         this.taskList = taskList;
-        addSquares();
+        this.condition = condition;
+        addSquares(); // initial paint
     }
 
     @Override
@@ -41,20 +38,14 @@ public class SquaresChart extends HBox implements Updateable {
         addSquares();
     }
 
-    /**
-     * Adds squares to the chart
-     */
-    public void addSquares() {
-        items = taskList.getWeeklyTasks().getTasks();
-        for (Task item : items) {
+    private void addSquares() {
+        // recompute directly from the live main list every time
+        List<Task> weekly = taskList.getWeeklyTasks();
+        System.out.println("Weekly count: " + weekly.size());
+        for (Task item : weekly) {
             Rectangle square = new Rectangle(SIZE, SIZE);
-
-            if (condition.test(item)) {
-                square.setFill(Color.LIMEGREEN);
-            } else {
-                square.setFill(Color.CRIMSON);
-            }
-            square.setStroke(Color.BLACK); // outline
+            square.setFill(condition.test(item) ? Color.LIMEGREEN : Color.CRIMSON);
+            square.setStroke(Color.BLACK);
             this.getChildren().add(square);
         }
     }

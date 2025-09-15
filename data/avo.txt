@@ -1,39 +1,16 @@
-T|2025-09-10|watch 2100 lecture 10|2025-08-10
-T|2025-08-11|watch 2100 lecture 10|2025-08-10
-T|-|draft 2103 essay|2025-08-11
-T|2025-08-13|meeting with project team|2025-08-12
-T|-|CS2040S practice quiz|2025-08-13
-T|2025-08-15|buy groceries|2025-08-14
-T|2025-09-10|laundry|2025-08-15
-D|2025-08-16|submit tutorial 5|2025-08-15|2025-08-16
-T|-|call family|2025-08-16
-E|2025-08-17|NUS open house volunteering|2025-08-16|2025-08-17|2025-08-17
-T|-|check internship portal|2025-08-17
-D|2025-09-10|finish 2100 assignment 2|2025-08-18|2025-08-20
-T|2025-08-19|gym session|2025-08-18
-T|2025-08-19|draft resume|2025-08-19
-T|2025-08-22|apply for scholarships|2025-08-20
-E|-|Hackathon|2025-08-20|2025-08-23|2025-08-21
-T|-|finish book|2025-08-21
-T|2025-08-23|2103 lecture notes summary|2025-08-22
-T|-|CS2109S prep|2025-08-23
-D|-|midterm prep schedule|2025-08-23|2025-08-28
-T|2025-08-25|call advisor|2025-08-24
-T|-|fix project bugs|2025-08-25
-T|2025-08-27|grocery restock|2025-08-26
-E|-|Weekend trip|2025-08-26|2025-08-28|2025-08-27
-T|-|finalise presentation slides|2025-08-27
-D|2025-08-30|submit 2103 milestone|2025-08-27|2025-08-30
-T|-|2100 practice problems|2025-08-28
-T|2025-08-30|clean room|2025-08-29
-T|-|team sync up|2025-08-30
-D|-|submit teammates review|2025-08-31|2025-09-05
-T|-|watch 2100 lecture 11|2025-09-01
-D|2025-09-10|submit teammates review|2025-09-01|2025-09-05
-E|2025-09-10|CS2103 group project meeting|2025-09-02|2025-09-04|2025-09-03
-T|2025-09-10|play|2025-09-10
-T|2025-09-10|play|2025-09-10
-T|-|have fun|2025-09-10
-T|-|test|2025-09-10
-T|2025-09-10|testing123|2025-09-10
-T|-|mark 33|2025-09-10
+T|2025-09-10|next week 2100 tut|2025-09-09
+T|2025-09-10|2100 assignment|2025-09-09
+T|2025-09-10|finalise 2103 ip features|2025-09-10
+E|-|Complete next week homework|2025-09-10|2025-09-14|2025-09-11
+D|-|start revision for midterms|2025-09-10|2025-09-19
+T|2025-09-10|2100 quiz|2025-09-10
+T|2025-09-11|2100 lab|2025-09-10
+D|-|prepare for 2101 ca1|2025-09-10|2025-09-16
+T|2025-09-11|edit slides for 2101|2025-09-11
+T|2025-09-11|acc homework|2025-09-11
+T|2025-09-12|2334 lectures|2025-09-11
+T|2025-09-12|2334 quiz|2025-09-11
+T|2025-09-13|submit 2100|2025-09-12
+T|2025-09-13|pack long pants|2025-09-12
+T|2025-09-14|test nic code|2025-09-14
+T|2025-09-15|ok|2025-09-15

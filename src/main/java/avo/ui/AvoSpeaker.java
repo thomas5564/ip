@@ -9,6 +9,7 @@ import avo.exceptions.UnknownCommandException;
 import avo.parser.Parser;
 import avo.responses.ByeResponse;
 import avo.responses.CommandResponse;
+import avo.responses.DeletionResponse;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
 import avo.tasks.Deadline;
@@ -21,6 +22,11 @@ import avo.tasks.TaskList;
  */
 public class AvoSpeaker {
     private TaskList taskList;
+
+    /**
+     * Constructor for this class
+     * @param taskList that avo is managing
+     */
     public AvoSpeaker(TaskList taskList) {
         this.taskList = taskList;
     }
@@ -169,9 +175,9 @@ public class AvoSpeaker {
             case LISTW:
                 String weekprefix = "Here are the tasks from this week:"
                         + "\n Note: the indices you see are the tasks' indices in the main task list";
-                String output = taskList.isEmpty()
+                String output = taskList.getWeeklyTasks().isEmpty()
                         ? "You haven't added any tasks this week. Add some to get started!"
-                        : weekprefix + taskList.getWeeklyTasks().toString();
+                        : weekprefix + taskList.getWeeklyTasksString();
                 return new CommandResponse(
                         output,
                         Command.LIST
@@ -207,6 +213,7 @@ public class AvoSpeaker {
             case TODO:
                 Task currentTask = Parser.parseTask(input.strip());
                 taskList.addTask(currentTask, true);
+                System.out.println(currentTask.isMadeThisWeek());
                 return new CommandResponse(
                         addTaskResponse(currentTask, taskList.length()),
                         Command.TODO
@@ -215,9 +222,10 @@ public class AvoSpeaker {
                 indexSelected = getSelectedIndex(words, taskList);
                 Task taskSelected = taskList.get(indexSelected);
                 taskList.deleteTask(indexSelected);
-                return new CommandResponse(
+                return new DeletionResponse(
                         removeTaskResponse(taskSelected, taskList.length()),
-                        Command.DELETE
+                        Command.DELETE,
+                        taskSelected
                 );
             case FIND:
                 String searchedString = words.length > 1

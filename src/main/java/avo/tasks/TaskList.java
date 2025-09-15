@@ -2,6 +2,7 @@ package avo.tasks;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -201,18 +202,26 @@ public class TaskList {
      * @return The date-finishRate map for tasks completed in the last 30 days
      */
     public Map<String, Double> getFinishRateMap() {
-        return tasks.stream()
-                .filter(Task::isMadeFourWeeksAgo)
+        Map<String, Double> rates = tasks.stream()
+                .filter(Task::isMadeInPrevious4weeks)
                 .collect(Collectors.groupingBy(
                         task -> task.getWeekEnd().toString(),
                         Collectors.averagingDouble(task -> task.getIsDoneInWeekCreated() ? 1.0 : 0.0)
                 ));
+        return rates;
     }
-    public TaskList getWeeklyTasks() {
-        TaskList taskList = new TaskList();
-        tasks.stream()
+
+    // In TaskList
+    public List<Task> getWeeklyTasks() {
+        return tasks.stream()
                 .filter(Task::isMadeThisWeek)
-                .forEach(task -> taskList.addTask(task, false));
-        return taskList;
+                .toList();
+    }
+
+    public String getWeeklyTasksString() {
+        return tasks.stream()
+                .filter(Task::isMadeThisWeek)
+                .map(task -> "\n" + task.getIndex(avo.getMainTaskList()) + "." + task)
+                .collect(Collectors.joining());
     }
 }

@@ -155,7 +155,7 @@ public class Task {
      *
      * @return true if the task was created four weeks ago
      */
-    public boolean isMadeFourWeeksAgo() {
+    public boolean isMadeInPrevious4weeks() {
         LocalDate start = getStartOfThisWeek().minusWeeks(4);
         LocalDate end = getStartOfThisWeek().minusDays(1);
         return isBetween(dateCreated, start, end);
@@ -188,7 +188,7 @@ public class Task {
         return getStartOfLastWeek().plusDays(6);
     }
     public LocalDate getWeekEnd() {
-        return dateCreated.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY)).plusDays(7);
+        return dateCreated.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).plusDays(6);
     }
     public boolean getIsDoneInWeekCreated() {
         LocalDate start = dateCreated.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));

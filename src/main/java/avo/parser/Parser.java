@@ -17,7 +17,6 @@ import avo.tasks.Task;
  * contains all methods used to interpret strings
  */
 public class Parser {
-    private static LocalDate today = LocalDate.now();
     /**
      * interprets strings as commands
      */
@@ -39,6 +38,7 @@ public class Parser {
     public static Deadline parseDeadline(String input) throws EmptyInstructionException,
             IncompleteInputException,
             EmptyDateException {
+        LocalDate today = LocalDate.now();
         if (!input.startsWith("deadline")) {
             throw new IllegalArgumentException("Input must start with 'deadline'");
         }
@@ -71,6 +71,7 @@ public class Parser {
     public static Event parseEvent(String input) throws EmptyInstructionException,
             IncompleteInputException,
             EmptyDateException, InvalidEventDateException {
+        LocalDate today = LocalDate.now();
         if (!input.startsWith("event")) {
             throw new IllegalArgumentException("Input must start with 'event'");
         }
@@ -112,6 +113,7 @@ public class Parser {
      * @throws EmptyInstructionException if the input is empty or invalid
      */
     public static Task parseTask(String input) throws EmptyInstructionException {
+        LocalDate today = LocalDate.now();
         if (!input.startsWith("todo")) {
             throw new IllegalArgumentException("Input must start with 'todo'");
         }
@@ -119,7 +121,6 @@ public class Parser {
         if (instruction.isEmpty()) {
             throw new EmptyInstructionException();
         }
-
         return new Task(instruction, today);
     }
 
