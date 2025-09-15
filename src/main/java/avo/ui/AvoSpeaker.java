@@ -213,7 +213,6 @@ public class AvoSpeaker {
             case TODO:
                 Task currentTask = Parser.parseTask(input.strip());
                 taskList.addTask(currentTask, true);
-                System.out.println(currentTask.isMadeThisWeek());
                 return new CommandResponse(
                         addTaskResponse(currentTask, taskList.length()),
                         Command.TODO

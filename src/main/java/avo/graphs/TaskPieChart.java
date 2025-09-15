@@ -7,7 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.scene.chart.PieChart;
 
 /**
- * A generic PieChart that builds slices from the task list
+ * A PieChart that builds slices from the task list. It shows
+ * the proportion of tasks done last week out of all the tasks that were created last week.
+ * Note: deleting a task made last week will cause the chart to adjust accordingly
  */
 public class TaskPieChart extends PieChart {
     private TaskList taskList;

@@ -96,7 +96,7 @@ public class ChartContainer extends VBox {
      */
     public void updateBarContainer() {
         if (taskList.getFinishRateMap().isEmpty()) {
-            Label noTasksLabel = new Label("no tasks added in the last 4 weeks");
+            Label noTasksLabel = new Label("no tasks added in the previous 4 weeks");
             noTasksLabel.getStyleClass().add("no-tasks");
             barContainer.getChildren().add(noTasksLabel);
             return;

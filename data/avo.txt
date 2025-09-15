@@ -1,7 +1,7 @@
 T|2025-09-10|next week 2100 tut|2025-09-09
 T|2025-09-10|2100 assignment|2025-09-09
-T|2025-09-10|finalise 2103 ip features|2025-09-10
-E|-|Complete next week homework|2025-09-10|2025-09-14|2025-09-11
+T|2025-09-15|finalise 2103 ip features|2025-09-10
+E|-|Complete next week homework|2025-09-10|2025-09-11|2025-09-14
 D|-|start revision for midterms|2025-09-10|2025-09-19
 T|2025-09-10|2100 quiz|2025-09-10
 T|2025-09-11|2100 lab|2025-09-10
@@ -13,4 +13,4 @@ T|2025-09-12|2334 quiz|2025-09-11
 T|2025-09-13|submit 2100|2025-09-12
 T|2025-09-13|pack long pants|2025-09-12
 T|2025-09-14|test nic code|2025-09-14
-T|2025-09-15|ok|2025-09-15
+T|-|ok|2025-09-15

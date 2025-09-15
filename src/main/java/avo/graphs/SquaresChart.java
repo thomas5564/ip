@@ -41,7 +41,6 @@ public class SquaresChart extends HBox implements Updateable {
     private void addSquares() {
         // recompute directly from the live main list every time
         List<Task> weekly = taskList.getWeeklyTasks();
-        System.out.println("Weekly count: " + weekly.size());
         for (Task item : weekly) {
             Rectangle square = new Rectangle(SIZE, SIZE);
             square.setFill(condition.test(item) ? Color.LIMEGREEN : Color.CRIMSON);
