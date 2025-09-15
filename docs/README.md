@@ -12,7 +12,7 @@ AddressBook Level 3 (AB3) is for those who **prefer to use a desktop app for man
 3. Copy the file to the folder you want to use as the home folder.
 4. Run the file using java -jar Avo.jar . A GUI similar to below should appear:
 
-<img src="images/Ui.png" alt="Ui" width="300"/>
+<img src="Ui.png" alt="Ui" width="300"/>
 
 5. Some example commands you can try:
     * `list` — lists all persons.
