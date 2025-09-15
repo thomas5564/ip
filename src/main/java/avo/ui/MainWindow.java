@@ -77,6 +77,7 @@ public class MainWindow extends AnchorPane {
                     Command mode is on!
                     Press ALT again key to switch back to GUI mode
                     """;
+            datePickerContainer.getChildren().clear();
             showListButton.setVisible(false);
             menuButton.setVisible(false);
             userInput.setPromptText("Write command...");
