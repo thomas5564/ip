@@ -61,7 +61,7 @@ public class AvoSpeaker {
      * @return Full response for removing a task
      */
     public String removeTaskResponse(Task selectedTask, int numberOfTasks) {
-        String fullResponse = "Noted. I've removed this task:\n "
+        String fullResponse = "Okay, I've removed this task:\n "
                 + "         "
                 + selectedTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
@@ -76,7 +76,7 @@ public class AvoSpeaker {
      * @return Full response for adding a task
      */
     public String addTaskResponse(Task currentTask, int numberOfTasks) {
-        String fullResponse = "Got it. I've added this task:\n "
+        String fullResponse = "Adding this task,pronto! \n "
                 + "         "
                 + currentTask.toString()
                 + String.format("\n         Now you have %d tasks in the list.", numberOfTasks);
@@ -89,7 +89,7 @@ public class AvoSpeaker {
      * @return Appropriate response
      */
     public String markTaskResponse(Task task) {
-        String output = "OK, I've marked this task as done:\n";
+        String output = "Wahoo, I've marked this task as done:\n";
         return output + task.toString();
     }
 
@@ -99,7 +99,7 @@ public class AvoSpeaker {
      * @return Appropriate response
      */
     public String unmarkTaskResponse(Task task) {
-        String output = "OK, I've marked this task as not done yet:\n";
+        String output = "ok :( , I've marked this task as not done yet:\n";
         return output + task.toString();
     }
 
@@ -111,7 +111,7 @@ public class AvoSpeaker {
      */
     public String findTaskResponse(TaskList taskList, String searchedString) {
         if (taskList.isEmpty()) {
-            return String.format("No tasks containing \"%s\" found!", searchedString);
+            return String.format("um, no tasks containing \"%s\" found!", searchedString);
         } else {
             String output = "Here are the matching tasks in your list:\n";
             return output + taskList;
