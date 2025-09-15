@@ -19,7 +19,7 @@
         </VBox>
         <VBox prefHeight="600.0" prefWidth="100.0">
             <children>
-                <Label text="Weekly Finish rate" />
+                <Label text="Weekly Finish rate for previous 4 weeks" />
                 <VBox fx:id="barContainer" prefHeight="600.0" prefWidth="100.0" VBox.vgrow="ALWAYS"/>
             </children>
         </VBox>
