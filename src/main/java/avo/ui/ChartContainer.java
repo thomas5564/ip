@@ -19,13 +19,15 @@ import javafx.scene.layout.VBox;
  */
 public class ChartContainer extends VBox {
     private final List<Updateable> updateables = new ArrayList<>();
-
+    private TaskList taskList;
     @FXML
     private VBox squaresContainer;
     @FXML
     private VBox pieContainer;
     @FXML
     private VBox barContainer;
+    private TaskBarChart barChart;
+    private TaskPieChart pieChart;
 
     /**
      * Constructor for this class
@@ -39,72 +41,68 @@ public class ChartContainer extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        addBarChart(taskList);
-        addPieChart(taskList);
-        addSquaresChart(taskList);
+        this.taskList = taskList;
+        updateBarContainer();
+        updatePieContainer();
+        updateSquaresContainer();
     }
 
     /**
-     * Updates all charts
+     * updates the charts containing data from previous weeks
      */
-    public void updateCharts() {
-        for (Updateable u : updateables) {
-            u.update();
-        }
+    public void updatePastDataCharts() {
+        pieChart.update();
+        barChart.update();
     }
 
     /**
      * Adds the pie chart showing the completion rate of last week's tasks
-     * @param taskList of all tasks
      */
-    public void addPieChart(TaskList taskList) {
+    public void updatePieContainer() {
         if (taskList.getTaskLW().isEmpty()) {
             Label noTasksLabel = new Label("no tasks added last week");
             noTasksLabel.getStyleClass().add("no-tasks");
             pieContainer.getChildren().add(noTasksLabel);
             return;
         }
-
-        TaskPieChart pieChart = new TaskPieChart(taskList);
+        pieChart = new TaskPieChart(taskList);
         pieChart.prefWidthProperty().bind(this.widthProperty());
         pieContainer.getChildren().add(pieChart);
     }
 
     /**
      * Adds the squares chart showing the completion rate of this week's tasks
-     * @param taskList of all tasks
      */
-    public void addSquaresChart(TaskList taskList) {
-        if (taskList.getWeeklyTasks().isEmpty()) {
-            Label noTasksLabel = new Label("no tasks added this week");
-            noTasksLabel.getStyleClass().add("no-tasks");
-            squaresContainer.getChildren().add(noTasksLabel);
-            return;
-        }
-
+    public void updateSquaresContainer() {
         SquaresChart squaresChart = new SquaresChart(
                 taskList,
                 Task::getIsDone
         );
-        squaresChart.prefWidthProperty().bind(this.widthProperty());
         updateables.add(squaresChart);
-        squaresContainer.getChildren().add(squaresChart);
+        if (taskList.getWeeklyTasks().isEmpty()) {
+            squaresContainer.getChildren().clear();
+            Label noTasksLabel = new Label("no tasks added this week");
+            noTasksLabel.getStyleClass().add("no-tasks");
+            squaresContainer.getChildren().add(noTasksLabel);
+        } else {
+            squaresContainer.getChildren().clear();
+            squaresContainer.getChildren().add(squaresChart);
+            squaresChart.prefWidthProperty().bind(this.widthProperty());
+        }
     }
 
     /**
      * Adds the bar chart showing the completion rate for the past 4 weeks
-     * @param taskList of all tasks
      */
-    public void addBarChart(TaskList taskList) {
+    public void updateBarContainer() {
         if (taskList.getFinishRateMap().isEmpty()) {
-            Label noTasksLabel = new Label("no tasks added in the last 4 weeks");
+            Label noTasksLabel = new Label("no tasks added in the previous 4 weeks");
             noTasksLabel.getStyleClass().add("no-tasks");
             barContainer.getChildren().add(noTasksLabel);
             return;
         }
 
-        TaskBarChart barChart = new TaskBarChart(taskList);
+        barChart = new TaskBarChart(taskList);
         barChart.prefWidthProperty().bind(this.widthProperty());
         barChart.setMinHeight(400);
         barContainer.getChildren().add(barChart);

@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import avo.main.Avo;
 import avo.responses.ByeResponse;
+import avo.responses.DeletionResponse;
 import avo.responses.ErrorResponse;
 import avo.responses.Response;
+import avo.tasks.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -202,10 +204,10 @@ public class MainWindow extends AnchorPane {
             autoScrollEnabled = true;
         }
         String input = inputCollator.getInput();
-        addDialogBoxes(input);
+        handleAvoResponse(input);
         resetDatePickers();
         userInput.setText("");
-        chartContainer.updateCharts();
+        chartContainer.updateSquaresContainer();
     }
 
     /**
@@ -226,13 +228,23 @@ public class MainWindow extends AnchorPane {
      * 2. reflect the input and response in the DialogContainer
      * @param input user's input
      */
-    public void addDialogBoxes(String input) {
-        Response response = speaker.getResponse(input);
+    public void handleAvoResponse(String input) {
+        Response response = getResponse(input);
+        if (response instanceof DeletionResponse) {
+            Task taskDeleted = ((DeletionResponse) response).getTask();
+            if (!taskDeleted.isMadeThisWeek()) {
+                chartContainer.updatePastDataCharts();
+            }
+        }
         DialogBox avoDialog = getResponseDialogBox(response);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input),
                 avoDialog
         );
+    }
+
+    private Response getResponse(String input) {
+        return speaker.getResponse(input);
     }
 
     /**

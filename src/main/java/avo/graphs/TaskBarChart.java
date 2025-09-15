@@ -9,8 +9,13 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 
 /**
- * Bar chart that shows finish rate on each week
+ * A bar chart displaying task completion rates over the past four weeks.
+ * For each of the last four weeks, the chart shows the percentage of tasks
+ * that were completed within the same week they were created.
+ * Note: if a task from any of the past four weeks is deleted, the chart
+ * will automatically update to reflect the change.
  */
+
 public class TaskBarChart extends BarChart<String, Number> {
     private TaskList taskList;
     /**
