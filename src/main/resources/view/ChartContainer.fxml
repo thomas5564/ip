@@ -13,13 +13,13 @@
         </VBox>
         <VBox prefHeight="200.0" prefWidth="100.0">
             <children>
-                <Label text="Last week performance" />
+                <Label text="Last week's performance" />
                 <VBox fx:id="pieContainer" prefHeight="200.0" prefWidth="100.0" />
             </children>
         </VBox>
         <VBox prefHeight="600.0" prefWidth="100.0">
             <children>
-                <Label text="Weekly Finish rate for previous 4 weeks" />
+                <Label text="Weekly finish rate for previous 4 weeks" />
                 <VBox fx:id="barContainer" prefHeight="600.0" prefWidth="100.0" VBox.vgrow="ALWAYS"/>
             </children>
         </VBox>
